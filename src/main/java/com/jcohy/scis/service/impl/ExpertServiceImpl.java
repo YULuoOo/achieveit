@@ -31,6 +31,12 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
+    public int register(Long num, String name ,String password, String sex) throws Exception {
+        return expertsRepository.register(num,name,password,sex);
+    }
+
+
+    @Override
     public Page<Expert> findAll(Pageable pageable) {
         return expertsRepository.findAll(pageable);
     }

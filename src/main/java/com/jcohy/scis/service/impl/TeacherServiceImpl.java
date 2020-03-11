@@ -29,6 +29,12 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
+    public int register(Long num, String name ,String password, String sex) throws Exception {
+        return teacherRepository.register(num,name,password,sex);
+    }
+
+
+    @Override
     public Page<Teacher> findAll(Pageable pageable) {
         return teacherRepository.findAll(pageable);
     }

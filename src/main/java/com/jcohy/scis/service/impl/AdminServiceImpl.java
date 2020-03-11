@@ -28,6 +28,12 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public int register(Long num, String name ,String password, String sex) throws Exception {
+        return adminRepository.register(num,name,password,sex);
+    }
+
+
+    @Override
     public Page<Admin> findAll(Pageable pageable) {
         return adminRepository.findAll(pageable);
     }

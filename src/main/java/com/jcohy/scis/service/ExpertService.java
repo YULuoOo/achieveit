@@ -27,6 +27,15 @@ public interface ExpertService {
 
 
     /**
+     * 用户注册
+     * @param num
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    int register(Long num, String name, String password, String sex) throws Exception;
+
+    /**
      * 分页查询
      * @param pageable
      * @return

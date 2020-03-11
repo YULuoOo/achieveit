@@ -143,39 +143,41 @@ public class LoginController {
                     studentService.register(num, name, password,sex);
                     login = studentService.login(num, password);
                     session.setAttribute("user",login);
-                    logger.warn("!!!!!!");
                     return JsonResult.ok().set("returnUrl", "/student/main");
                 }
             }else if(StringUtils.trim(role).equals("teacher")){
                 Teacher login = teacherService.login(num, password);
-                if(login == null){
-                    return JsonResult.fail("登录失败,用户名不存在");
+                if(login != null){
+                    return JsonResult.fail("注册失败,用户名已存在");
                 }
-                if(!login.getPassword().equals(password)){
-                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                else {
+                    teacherService.register(num, name, password,sex);
+                    login = teacherService.login(num, password);
+                    session.setAttribute("user",login);
+                    return JsonResult.ok().set("returnUrl", "/teacher/main");
                 }
-                session.setAttribute("user",login);
-                return JsonResult.ok().set("returnUrl", "/teacher/main");
             }else if(StringUtils.trim(role).equals("expert")){
                 Expert login = expertService.login(num, password);
-                if(login == null){
-                    return JsonResult.fail("登录失败,用户名不存在");
+                if(login != null){
+                    return JsonResult.fail("注册失败,用户名已存在");
                 }
-                if(!login.getPassword().equals(password)){
-                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                else {
+                    expertService.register(num, name, password,sex);
+                    login = expertService.login(num, password);
+                    session.setAttribute("user",login);
+                    return JsonResult.ok().set("returnUrl", "/expert/main");
                 }
-                session.setAttribute("user",login);
-                return JsonResult.ok().set("returnUrl", "/expert/main");
             }else if(StringUtils.trim(role).equals("admin")){
                 Admin login = adminService.login(num, password);
-                if(login == null){
-                    return JsonResult.fail("登录失败,用户名不存在");
+                if(login != null){
+                    return JsonResult.fail("注册失败,用户名已存在");
                 }
-                if(!login.getPassword().equals(password)){
-                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                else {
+                    adminService.register(num, name, password,sex);
+                    login = adminService.login(num, password);
+                    session.setAttribute("user",login);
+                    return JsonResult.ok().set("returnUrl", "/admin/main");
                 }
-                session.setAttribute("user",login);
-                return JsonResult.ok().set("returnUrl", "/admin/main");
             }
         } catch (Exception e) {
             return JsonResult.fail(e.getMessage());
