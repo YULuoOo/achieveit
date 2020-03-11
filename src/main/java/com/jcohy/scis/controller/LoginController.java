@@ -108,6 +108,80 @@ public class LoginController {
         return JsonResult.fail("角色不存在");
     }
 
+    /**
+     * 注册处理
+     * @param num
+     * @param name
+     * @param password
+     * @param role
+     * @param sex
+     * @return
+     */
+    @PostMapping("/regi")
+    @ResponseBody
+    public JsonResult register(Long num,
+                               String name,
+                               String password,
+                               @RequestParam(required = false) String role,
+                               @RequestParam(required = false) String sex,
+                               HttpServletRequest request){
+        try {
+            if(num == null || StringUtils.isEmpty(password) || StringUtils.isEmpty(name)){
+                return JsonResult.fail("用户名或者名字或者密码不能为空");
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("role",role);
+            session.setAttribute("sex",sex);
+
+            logger.error("num:{} name:{} password:{}  type:{}  sex:{}",num,name,password,role,sex);
+            if(StringUtils.trim(role).equals("student")){
+                Student login = studentService.login(num, password);
+                if(login != null){
+                    return JsonResult.fail("注册失败,用户名已存在");
+                }
+                else {
+                    studentService.register(num, name, password,sex);
+                    login = studentService.login(num, password);
+                    session.setAttribute("user",login);
+                    logger.warn("!!!!!!");
+                    return JsonResult.ok().set("returnUrl", "/student/main");
+                }
+            }else if(StringUtils.trim(role).equals("teacher")){
+                Teacher login = teacherService.login(num, password);
+                if(login == null){
+                    return JsonResult.fail("登录失败,用户名不存在");
+                }
+                if(!login.getPassword().equals(password)){
+                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                }
+                session.setAttribute("user",login);
+                return JsonResult.ok().set("returnUrl", "/teacher/main");
+            }else if(StringUtils.trim(role).equals("expert")){
+                Expert login = expertService.login(num, password);
+                if(login == null){
+                    return JsonResult.fail("登录失败,用户名不存在");
+                }
+                if(!login.getPassword().equals(password)){
+                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                }
+                session.setAttribute("user",login);
+                return JsonResult.ok().set("returnUrl", "/expert/main");
+            }else if(StringUtils.trim(role).equals("admin")){
+                Admin login = adminService.login(num, password);
+                if(login == null){
+                    return JsonResult.fail("登录失败,用户名不存在");
+                }
+                if(!login.getPassword().equals(password)){
+                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                }
+                session.setAttribute("user",login);
+                return JsonResult.ok().set("returnUrl", "/admin/main");
+            }
+        } catch (Exception e) {
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.fail("角色不存在");
+    }
 
     /**
      * 注销用户

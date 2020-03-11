@@ -28,6 +28,11 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
+    public int register(Long num, String name ,String password, String sex) throws Exception {
+        return studentRepository.register(num,name,password,sex);
+    }
+
+    @Override
     public Page<Student> findAll(Pageable pageable) {
         return studentRepository.findAll(pageable);
     }

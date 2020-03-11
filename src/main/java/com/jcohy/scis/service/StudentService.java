@@ -23,6 +23,15 @@ public interface StudentService {
      */
     Student login(Long num, String password) throws Exception;
 
+    /**
+     * 用户注册
+     * @param num  学生学号
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    int register(Long num, String name, String password, String sex) throws Exception;
+
 
     /**
      * 分页查询

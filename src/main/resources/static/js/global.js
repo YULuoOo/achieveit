@@ -131,7 +131,9 @@
         $(".blog-user").empty();
         // $(".blog-user").append(loginHtml);
         $(".blog-user").append('<a href="/index"><i class="fa fa-user-circle-o"></i></a>'+
-            '<a href="/index">登陆</a>');
+            '<a href="/index">登陆</a> <a href="/index"><i class="fa fa-user-circle-o"></i></a>'+
+                                                 '<a href="/register">注册</a>');
+
 
     }
 
