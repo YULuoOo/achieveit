@@ -3,14 +3,8 @@ package com.jcohy.scis.controller;
 import com.jcohy.lang.StringUtils;
 import com.jcohy.scis.common.JsonResult;
 import com.jcohy.scis.exception.ServiceException;
-import com.jcohy.scis.model.Admin;
-import com.jcohy.scis.model.Expert;
-import com.jcohy.scis.model.Student;
-import com.jcohy.scis.model.Teacher;
-import com.jcohy.scis.service.AdminService;
-import com.jcohy.scis.service.ExpertService;
-import com.jcohy.scis.service.StudentService;
-import com.jcohy.scis.service.TeacherService;
+import com.jcohy.scis.model.*;
+import com.jcohy.scis.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +35,9 @@ public class LoginController {
 
     @Autowired
     private ExpertService expertService;
+
+    @Autowired
+    private StaffService staffService;
 
 
     /**
@@ -101,6 +98,16 @@ public class LoginController {
                 }
                 session.setAttribute("user",login);
                 return JsonResult.ok().set("returnUrl", "/admin/main");
+            }else if(StringUtils.trim(role).equals("staff")){
+                Staff login = staffService.login(num, password);
+                if(login == null){
+                    return JsonResult.fail("登录失败,用户名不存在");
+                }
+                if(!login.getPassword().equals(password)){
+                    return JsonResult.fail("登录失败,用户名账号密码不匹配");
+                }
+                session.setAttribute("user",login);
+                return JsonResult.ok().set("returnUrl", "/staff/main");
             }
         } catch (Exception e) {
             return JsonResult.fail(e.getMessage());
@@ -123,6 +130,7 @@ public class LoginController {
                                String name,
                                String password,
                                @RequestParam(required = false) String role,
+                               @RequestParam(required = false) String title,
                                @RequestParam(required = false) String sex,
                                HttpServletRequest request){
         try {
@@ -177,6 +185,18 @@ public class LoginController {
                     login = adminService.login(num, password);
                     session.setAttribute("user",login);
                     return JsonResult.ok().set("returnUrl", "/admin/main");
+                }
+            }else if(StringUtils.trim(role).equals("staff")){
+                session.setAttribute("title",title);
+                Staff login = staffService.login(num, password);
+                if(login != null){
+                    return JsonResult.fail("注册失败,用户名已存在");
+                }
+                else {
+                    staffService.register(num, name, password,sex,title);
+                    login = staffService.login(num, password);
+                    session.setAttribute("user",login);
+                    return JsonResult.ok().set("returnUrl", "/staff/main");
                 }
             }
         } catch (Exception e) {
@@ -241,6 +261,13 @@ public class LoginController {
             }
             dbUser.setPassword(newPassword);
             adminService.updatePassword(dbUser);
+        }else if(role.equals("staff")){
+            Staff dbUser = staffService.findByNum(num);
+            if(!dbUser.getPassword().equals(oldPassword)){
+                return JsonResult.fail("旧密码不正确");
+            }
+            dbUser.setPassword(newPassword);
+            staffService.updatePassword(dbUser);
         }
         return JsonResult.ok();
     }

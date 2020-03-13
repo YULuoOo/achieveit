@@ -43,11 +43,23 @@
                         <option value="teacher">老师</option>
                         <option value="expert">专家</option>
                         <option value="admin">管理员</option>
+                        <option value="staff">员工</option>
                     </select>
                 <#--<input type="radio" name="role" value="student" title="学生" checked>-->
                     <#--<input type="radio" name="role" value="teacher" title="老师" >-->
                     <#--<input type="radio" name="role" value="expert" title="专家" >-->
                     <#--<input type="radio" name="role" value="admin" title="管理员" >-->
+                </div>
+                 <div class="layui-input-block" style="margin-left: 0">
+                    <select name="title" lay-verify="">
+                        <option value="">请选择职位</option>
+                        <option value="项目经理">项目经理</option>
+                        <option value="项目成员">项目成员</option>
+                        <option value="配置管理员">配置管理员</option>
+                        <option value="EPG Leader">EPG Leader</option>
+                        <option value="QA管理员">QA管理员</option>
+                        <option value="项目上级">项目上级</option>
+                    </select>
                 </div>
                 <div class="layui-input-block" style="margin-left: 0">
                     <select name="sex" lay-verify="">

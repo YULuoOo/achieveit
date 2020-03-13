@@ -40,6 +40,7 @@
                         <option value="teacher">老师</option>
                         <option value="expert">专家</option>
                         <option value="admin">管理员</option>
+                        <option value="staff">员工</option>
                     </select>
                 <#--<input type="radio" name="role" value="student" title="学生" checked>-->
                     <#--<input type="radio" name="role" value="teacher" title="老师" >-->
