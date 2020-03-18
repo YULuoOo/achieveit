@@ -49,8 +49,8 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-file-text"></i>项目管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-url="${ctx!}/student/index" data-id="1">我的项目</a></dd>
-                            <dd><a href="javascript:;" data-url="${ctx!}/student/form" data-id="2">项目申报</a></dd>
+                            <dd><a href="javascript:;" data-url="${ctx!}/staff/index" data-id="1">我的项目</a></dd>
+                            <dd><a href="javascript:;" data-url="${ctx!}/staff/form" data-id="2">项目申报</a></dd>
                         </dl>
                     </li>
                 </ul>
