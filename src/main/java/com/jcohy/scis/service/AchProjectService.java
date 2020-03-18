@@ -25,4 +25,9 @@ public interface AchProjectService {
      */
     int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate) throws Exception;
 
+    /**
+     * 删除项目
+     * @param id
+     */
+    void delete(Integer id);
 }

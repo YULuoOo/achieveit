@@ -1,5 +1,6 @@
 package com.jcohy.scis.service.impl;
 
+import com.jcohy.scis.exception.ServiceException;
 import com.jcohy.scis.model.Ach_project;
 import com.jcohy.scis.repository.AchProjectRepository;
 import com.jcohy.scis.repository.ProjectRepository;
@@ -27,5 +28,13 @@ public class AchProjectServiceImpl implements AchProjectService{
     @Override
     public int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate) throws Exception {
         return achProjectRepository.createProject(name,desc,tech,area,func,status,enddate,startdate);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        achProjectRepository.deleteById(id);
     }
 }

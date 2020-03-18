@@ -64,4 +64,16 @@ public class StaffController extends BaseController{
         return JsonResult.ok();
     }
 
+    @DeleteMapping("/project/{id}/del")
+    @ResponseBody
+    public JsonResult del(@PathVariable("id") Integer id){
+        try {
+            achProjectService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail("删除失败");
+        }
+        return JsonResult.ok();
+    }
+
 }

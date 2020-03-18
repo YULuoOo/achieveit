@@ -70,12 +70,12 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             $.ajax({
                 type: "DELETE",
                 dataType: "json",
-                url: "/student/project/" + id + "/del",
+                url: "/staff/project/" + id + "/del",
                 success: function (ret) {
                     if (ret.isOk) {
                         layer.msg("操作成功", {time: 2000}, function () {
                             layer.close(index);
-                            window.location.href = "/student/index";
+                            window.location.href = "/staff/index";
                         });
                     } else {
                         layer.msg(ret.msg, {time: 2000});
