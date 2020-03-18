@@ -25,5 +25,5 @@ nbdist/
 .nb-gradle/
 
 ### database and dev ###
-application.yml
-application-dev.yml
+!.application.yml
+!.gapplication-dev.yml
