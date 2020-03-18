@@ -23,3 +23,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### database and dev ###
+application.yml
+application-dev.yml
