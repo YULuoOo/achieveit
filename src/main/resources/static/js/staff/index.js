@@ -24,18 +24,19 @@ layui.define([ 'layer',  'table','common'], function (exports) {
     table.on('tool(table)', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            if($("#detail-view-"+data.id).length > 0){
-                $("#detail-view-"+data.id).hide();
-                $("#detail-view-"+data.id).remove();
-            }else{
-                createHtml(obj);
-                $("#detail-view-"+data.id).show();
-            }
+            common.frame_show('查看','/staff/detail?id='+data.id);
+            // if($("#detail-view-"+data.id).length > 0){
+            //     $("#detail-view-"+data.id).hide();
+            //     $("#detail-view-"+data.id).remove();
+            // }else{
+            //     createHtml(obj);
+            //     $("#detail-view-"+data.id).show();
+            // }
 
         }else if(obj.event === 'del'){
             del(data.id);
         } else if(obj.event === 'edit'){
-            common.frame_show('编辑','/student/form?id='+data.id);
+            common.frame_show('编辑','/staff/form?id='+data.id);
         }
     });
 
@@ -62,11 +63,11 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             });
         },
         editData: function (id) {
-            common.frame_show('编辑','/student/form?id='+id);
+            common.frame_show('编辑','/staff/form?id='+id);
         }
     };
     function del(id) {
-        layer.confirm('真的删除行么', function (index) {
+        layer.confirm('确定删除么？', function (index) {
             $.ajax({
                 type: "DELETE",
                 dataType: "json",

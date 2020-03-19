@@ -18,6 +18,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select * from ach_project", nativeQuery = true)
     List<Ach_project> getAchProjectList();
 
+    @Query(value = "select * from ach_project where id = ?1",nativeQuery = true)
+    Ach_project getOne(Integer integer);
+
     @Transactional
     @Modifying
     @Query(value = "insert into ach_project (pro_name,pro_desc,pro_tech,pro_area,pro_func,pro_status,pro_enddate,pro_startdate) values(?1,?2,?3,?4,?5,?6,?7,?8)",nativeQuery = true)

@@ -43,6 +43,20 @@ public class StaffController extends BaseController{
         return page;
     }
 
+    @GetMapping("/project/{id}/get")
+    @ResponseBody
+    public Ach_project getProject(@PathVariable("id") Integer id){
+        Ach_project ach_project;
+        try
+        {
+            ach_project = achProjectService.getAchProject(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return ach_project;
+    }
+
     @PostMapping("/project/create")
     @ResponseBody
     public JsonResult createProject(@RequestParam(required = false)  String name,

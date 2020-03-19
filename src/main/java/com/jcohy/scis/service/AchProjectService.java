@@ -30,4 +30,10 @@ public interface AchProjectService {
      * @param id
      */
     void delete(Integer id);
+
+    /**
+     * 查看项目
+     * @param id
+     */
+    Ach_project getAchProject(Integer id);
 }

@@ -72,7 +72,7 @@
                             公司项目管理系统
                             <span style="padding-left:1em;">用户帐号：${Session.user.num?c}</span>
                             <span style="padding-left:1em;">用户姓名：${Session.user.name}</span>
-                            <span style="padding-left:1em;">角色：${Session.title}</span>
+                            <span style="padding-left:1em;">角色：${Session.user.title}</span>
                         </p>
                     </div>
                 </div>

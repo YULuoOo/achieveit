@@ -9,7 +9,7 @@
     form.verify({
         name: function (value) {
             if (value.length <= 0 || value.length > 20) {
-                return "名称必须1到00位"
+                return "名称必须1到20位"
             }
         },
         // description:function (value) {
@@ -58,6 +58,6 @@
             $("#group").hide();
         }
     });
-    exports('student/form', {});
+    exports('staff/form', {});
 });
 

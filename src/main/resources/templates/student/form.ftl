@@ -97,7 +97,9 @@
                         <label class="layui-form-label">项目类型</label>
                         <div class="layui-input-inline">
                             <select name="type" lay-filter="required" lay-verify="required">
-                                <option value="">请选择项目类型</option>
+                                <option value="0">请选择项目类型</option>
+                                <option value="1">创新项目</option>
+                                <option value="2">创业项目</option>
                             <#list types as x>
                                 <option value="${x.id}"
                                     <#if (project.type.name == x.name)> selected="selected" </#if>

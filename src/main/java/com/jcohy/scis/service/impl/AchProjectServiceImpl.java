@@ -25,6 +25,7 @@ public class AchProjectServiceImpl implements AchProjectService{
         return achProjectRepository.getAchProjectList();
     }
 
+
     @Override
     public int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate) throws Exception {
         return achProjectRepository.createProject(name,desc,tech,area,func,status,enddate,startdate);
@@ -36,5 +37,14 @@ public class AchProjectServiceImpl implements AchProjectService{
             throw new ServiceException("主键不能为空");
         }
         achProjectRepository.deleteById(id);
+    }
+
+    @Override
+    public Ach_project getAchProject(Integer id)
+    {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.getOne(id);
     }
 }
