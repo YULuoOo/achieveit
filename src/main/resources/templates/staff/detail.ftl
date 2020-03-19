@@ -87,7 +87,7 @@
                         <label class="layui-form-label">项目名</label>
                         <div class="layui-input-inline">
 
-                            <input id="pro_name" type="text"  name="name" lay-verify="required"   placeholder="请输入项目名" value="${project.pro_name}"
+                            <input readonly="readonly" id="pro_name" type="text"  name="name" lay-verify="required"   placeholder="请输入项目名" value="${project.pro_name}"
                                     class="layui-input ">
 
                         </div>
@@ -97,7 +97,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">采用技术：</label>
                         <div class="layui-input-block">
-                            <input id="pro_tech" type="text"  name="tech"   placeholder="请输入项目采用技术"
+                            <input readonly="readonly" id="pro_tech" type="text"  name="tech"   placeholder="请输入项目采用技术"
                                     class="layui-input ">
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">业务领域：</label>
                         <div class="layui-input-block">
-                            <input type="text"  name="area"   placeholder="请输入项目业务领域"
+                            <input readonly="readonly" id="pro_area" type="text"  name="area"   placeholder="请输入项目业务领域"
                                     class="layui-input ">
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">核心功能：</label>
                         <div class="layui-input-block">
-                            <input readonly="readonly" type="text"  name="func"   placeholder="请输入项目核心功能"
+                            <input readonly="readonly" id="pro_func" type="text"  name="func"   placeholder="请输入项目核心功能"
                                     class="layui-input ">
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">项目开始时间:</label>
                         <div class="layui-input-block">
-                            <input readonly="readonly" type="text"  name="startdate"   placeholder="以“XXXX-YY-DD为例”"
+                            <input readonly="readonly" id="pro_startdate" type="text"  name="startdate"   placeholder="以“XXXX-YY-DD为例”"
                                    autocomplete="off" class="layui-input ">
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">项目结束时间:</label>
                         <div class="layui-input-block">
-                            <input readonly="readonly" type="text"  name="enddate"   placeholder="以“XXXX-YY-DD为例”"
+                            <input readonly="readonly" id="pro_enddate" type="text"  name="enddate"   placeholder="以“XXXX-YY-DD为例”"
                                    autocomplete="off" class="layui-input ">
                         </div>
                     </div>
@@ -137,12 +137,9 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">描述：</label>
                         <div class="layui-input-block">
-                            <textarea readonly="readonly" description" name="desc" placeholder="请输入内容：必填"  class="layui-textarea" style="width: 60%">${(project.pro_desc)!}</textarea>
+                            <textarea readonly="readonly" id="pro_desc" name="desc" placeholder="请输入内容：必填"  class="layui-textarea" style="width: 60%">${(project.pro_desc)!}</textarea>
                         </div>
                     </div>
-
-
-
 
 
                     <div class="layui-form-item">

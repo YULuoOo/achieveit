@@ -25,19 +25,45 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
     $.ajax({
         type: "GET",
         dataType: "json",
-        url:"staff/project/"+getQueryVariable("id")+"/get",
+        url:"/staff/project/"+getQueryVariable("id")+"/get",
         success:function (ret) {
-            if(ret != null){
-                $("#pro_name").html(ret.pro_name);
-                $("#pro_tech").html("123456");
-                document.getElementsByName("area").item(0).innerHTML = getQueryVariable("id");
+            if(ret.isOk){
+                console.log(ret.data.pro_name);
+                $("#pro_name").val(ret.data.pro_name);
+                $("#pro_tech").val(ret.data.pro_tech);
+                $("#pro_area").val(ret.data.pro_area);
+                $("#pro_func").val(ret.data.pro_func);
+                $("#pro_startdate").val(new Date(ret.data.pro_startdate).format("yyyy-MM-dd"));
+                $("#pro_enddate").val(new Date(ret.data.pro_enddate).format("yyyy-MM-dd"));
+                $("#pro_desc").val(ret.data.pro_desc)
+                console.log((new Date()).format("yyyy-MM-dd hh:mm:ss"));
+                console.log(new Date(ret.data.pro_startdate).format("yyyy-MM-dd"));
+                console.log(new Date(ret.data.pro_enddate).format("yyyy-MM-dd"));
+               ;
             }else{
-                $("#pro_name").html("3333");
-                $("#pro_tech").html("123");
-                document.getElementsByName("area").item(0).innerHTML = getQueryVariable("id");
+                layer.msg(ret.msg, {time: 2000});
             }
         }
     });
+
+    Date.prototype.format = function(fmt)
+    { //author: meizz
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
 
     function getQueryVariable(variable)
     {

@@ -45,16 +45,16 @@ public class StaffController extends BaseController{
 
     @GetMapping("/project/{id}/get")
     @ResponseBody
-    public Ach_project getProject(@PathVariable("id") Integer id){
+    public JsonResult getProject(@PathVariable("id") Integer id){
         Ach_project ach_project;
         try
         {
             ach_project = achProjectService.getAchProject(id);
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return JsonResult.fail("获取数据失败");
         }
-        return ach_project;
+        return JsonResult.ok().set("data",ach_project);
     }
 
     @PostMapping("/project/create")
