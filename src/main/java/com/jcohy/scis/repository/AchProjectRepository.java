@@ -25,4 +25,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Modifying
     @Query(value = "insert into ach_project (pro_name,pro_desc,pro_tech,pro_area,pro_func,pro_status,pro_enddate,pro_startdate) values(?1,?2,?3,?4,?5,?6,?7,?8)",nativeQuery = true)
     int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE ach_project SET pro_name=?1,pro_desc=?2,pro_tech=?3,pro_area=?4,pro_func=?5,pro_enddate=?6,pro_startdate=?7 WHERE id=?8",nativeQuery = true)
+    int updateProject(String name, String desc, String tech, String area, String func,  Date enddate, Date startdate, Integer id);
 }

@@ -40,6 +40,11 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
+    public int updateProject(String name, String desc, String tech, String area, String func,  Date enddate, Date startdate, Integer id) throws Exception {
+        return achProjectRepository.updateProject(name,desc,tech,area,func,enddate,startdate,id);
+    }
+
+    @Override
     public Ach_project getAchProject(Integer id)
     {
         if(id == null){

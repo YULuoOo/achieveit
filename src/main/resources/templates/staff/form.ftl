@@ -84,7 +84,7 @@
                     <#--</div>-->
 
                     <div class="layui-form-item" style="margin-top: 10px">
-                        <label class="layui-form-label">项目名</label>
+                        <label class="layui-form-label">项目名称：</label>
                         <div class="layui-input-inline">
                             <input type="text" name="name" lay-verify="required"  placeholder="请输入项目名" value="${project.name}"
                                    autocomplete="off" class="layui-input ">
@@ -96,7 +96,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">采用技术：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="tech"   placeholder="请输入项目采用技术"
+                            <input type="text" name="tech"   placeholder="请输入项目采用技术(必填）"
                                    autocomplete="off" class="layui-input ">
                         </div>
                     </div>
@@ -118,25 +118,25 @@
                     </div>
 
                     <div class="layui-form-item">
-                    <label class="layui-form-label">项目开始时间:</label>
+                    <label class="layui-form-label">开始时间：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="startdate"   placeholder="以“XXXX-YY-DD为例”"
+                        <input type="text" name="startdate"   placeholder="以“YYYY-MM-DD”为例(必填）"
                                autocomplete="off" class="layui-input ">
                     </div>
                 </div>
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label">项目结束时间:</label>
+                        <label class="layui-form-label">结束时间：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="enddate"   placeholder="以“XXXX-YY-DD为例”"
+                            <input type="text" name="enddate"   placeholder="以“YYYY-MM-DD”为例(必填）"
                                    autocomplete="off" class="layui-input ">
                         </div>
                     </div>
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label">描述：</label>
+                        <label class="layui-form-label">项目描述：</label>
                         <div class="layui-input-block">
-                                <textarea id="description" name="desc" placeholder="请输入内容：必填"  class="layui-textarea" style="width: 60%">${(project.desc)!}</textarea>
+                                <textarea id="description" name="desc" placeholder="请输入内容描述(必填）"  class="layui-textarea" style="width: 60%">${(project.desc)!}</textarea>
                         </div>
                     </div>
 

@@ -36,4 +36,12 @@ public interface AchProjectService {
      * @param id
      */
     Ach_project getAchProject(Integer id);
+
+    /**
+     * 编辑项目
+     *
+     * @return
+     * @throws Exception
+     */
+    int updateProject(String name, String desc, String tech, String area, String func,  Date enddate, Date startdate, Integer id) throws Exception;
 }

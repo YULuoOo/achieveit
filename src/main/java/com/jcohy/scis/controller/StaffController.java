@@ -90,4 +90,26 @@ public class StaffController extends BaseController{
         return JsonResult.ok();
     }
 
+    @PutMapping("/project/{id}/update")
+    @ResponseBody
+    public JsonResult updateProject(@RequestParam(required = false)  String name,
+                                    @RequestParam(required = false)  String desc,
+                                    @RequestParam(required = false)  String tech,
+                                    @RequestParam(required = false)  String area,
+                                    @RequestParam(required = false)  String func,
+//                                   @RequestParam(required = false)  int status,
+                                    @RequestParam(required = false) String enddate,
+                                    @RequestParam(required = false) String startdate,
+                                    @PathVariable("id") Integer id
+    ){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            achProjectService.updateProject(name,desc,tech,area,func,format.parse(enddate),format.parse(startdate),id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
 }
