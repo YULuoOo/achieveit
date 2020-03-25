@@ -130,5 +130,5 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         });
     });
 
-    exports('student/index', datalist);
+    exports('staff/index', datalist);
 });
