@@ -18,6 +18,12 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select * from ach_project", nativeQuery = true)
     List<Ach_project> getAchProjectList();
 
+    @Query(value = "select name" +
+            " from staff st" +
+            " inner join staff_project sp on st.id = sp.staff_id" +
+            " where sp.pro_id = 1;", nativeQuery = true)
+    List<String> getProjectMemberList(Integer integer);
+
     @Query(value = "select * from ach_project where id = ?1",nativeQuery = true)
     Ach_project getOne(Integer integer);
 

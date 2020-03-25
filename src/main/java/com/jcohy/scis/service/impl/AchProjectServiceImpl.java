@@ -2,8 +2,8 @@ package com.jcohy.scis.service.impl;
 
 import com.jcohy.scis.exception.ServiceException;
 import com.jcohy.scis.model.Ach_project;
+import com.jcohy.scis.model.Staff;
 import com.jcohy.scis.repository.AchProjectRepository;
-import com.jcohy.scis.repository.ProjectRepository;
 import com.jcohy.scis.service.AchProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,13 @@ public class AchProjectServiceImpl implements AchProjectService{
         return achProjectRepository.getAchProjectList();
     }
 
+    @Override
+    public List<String> getProjectMemberList(Integer id) {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.getProjectMemberList(id);
+    }
 
     @Override
     public int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate) throws Exception {

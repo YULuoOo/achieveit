@@ -43,6 +43,20 @@ public class StaffController extends BaseController{
         return page;
     }
 
+    @GetMapping("/project/{id}/member")
+    @ResponseBody
+    public JsonResult getMember(@PathVariable("id") Integer id) {
+        List<String> members;
+        try
+        {
+            members= achProjectService.getProjectMemberList(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.fail("获取数据失败");
+        }
+        return JsonResult.ok().set("data",members);
+    }
+
     @GetMapping("/project/{id}/get")
     @ResponseBody
     public JsonResult getProject(@PathVariable("id") Integer id){

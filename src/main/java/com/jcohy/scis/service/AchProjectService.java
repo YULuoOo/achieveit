@@ -1,7 +1,7 @@
 package com.jcohy.scis.service;
 
 import com.jcohy.scis.model.Ach_project;
-import com.jcohy.scis.model.Project;
+import com.jcohy.scis.model.Staff;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,11 @@ public interface AchProjectService {
      */
     List<Ach_project> getAchProjectList();
 
+    /**
+     *  项目成员列表
+     * @return
+     */
+    List<String> getProjectMemberList(Integer id);
     /**
      * 申请立项
      *

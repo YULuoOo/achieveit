@@ -23,6 +23,19 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
     $.ajax({
         type: "GET",
         dataType: "json",
+        url:"/staff/project/"+getQueryVariable("id")+"/member",
+        success:function (ret) {
+            if(ret.isOk){
+                $("#pro_member").val(ret.data);
+            }else{
+                layer.msg(ret.msg, {time: 2000});
+            }
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
         url:"/staff/project/"+getQueryVariable("id")+"/get",
         success:function (ret) {
             if(ret.isOk){

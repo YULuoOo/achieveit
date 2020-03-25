@@ -141,6 +141,14 @@
                         </div>
                     </div>
 
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">项目成员：</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" id="pro_member" type="text"  name="tech"   placeholder="无"
+                                   class="layui-input ">
+                        </div>
+                    </div>
+
                     <div class="layui-form-item" style="text-align:center;">
                         <button class="layui-btn" lay-submit lay-filter="edit" id ="edit">编辑</button>
                     </div>
