@@ -31,9 +31,25 @@
             success: function(ret){
                 if(ret.isOk){
                     layer.msg("操作成功", {time: 2000},function(){
+//                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+//                        parent.layer.close(index);
+//                        parent.location.reload()
+//                                top.layui.element.tabDelete("tab", top.jQuery(".layui-tab-title .layui-this").attr("lay-id"));
+//
+//                       var fileName = window.location.href.match(/.*\/(.*\.*)/i)[1];
+//                       $.each(parent.layui.$('#LAY_app_tabsheader>li'), function(index, li) {
+//                           var $li = $(li);
+//                           if ($li.attr('lay-id').indexOf(fileName) > -1) {
+//                               $li.find('.layui-tab-close').trigger('click');
+//                               return
+//                           }
+//                       })
+//                       window.location.href = "/staff/index";
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index);
-                        window.location.href = "/staff/index";
+//                        document.querySelector("#flush").onclick();
+                        window.location.href = "/staff/form";
+
                     });
                 }else{
                     layer.msg(ret.msg, {time: 2000});
