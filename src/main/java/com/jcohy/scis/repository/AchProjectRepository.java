@@ -18,10 +18,7 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select * from ach_project", nativeQuery = true)
     List<Ach_project> getAchProjectList();
 
-    @Query(value = "select name" +
-            " from staff st" +
-            " inner join staff_project sp on st.id = sp.staff_id" +
-            " where sp.pro_id = 1;", nativeQuery = true)
+    @Query(value = "select name from staff st inner join staff_project sp on st.id = sp.staff_id where sp.pro_id = ?1", nativeQuery = true)
     List<String> getProjectMemberList(Integer integer);
 
     @Query(value = "select * from ach_project where id = ?1",nativeQuery = true)
@@ -36,4 +33,6 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Modifying
     @Query(value = "UPDATE ach_project SET pro_name=?1,pro_desc=?2,pro_tech=?3,pro_area=?4,pro_func=?5,pro_enddate=?6,pro_startdate=?7 WHERE id=?8",nativeQuery = true)
     int updateProject(String name, String desc, String tech, String area, String func,  Date enddate, Date startdate, Integer id);
+
+
 }
