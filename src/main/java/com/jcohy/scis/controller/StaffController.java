@@ -5,12 +5,16 @@ import com.jcohy.scis.common.JsonResult;
 import com.jcohy.scis.common.PageJson;
 import com.jcohy.scis.model.*;
 import com.jcohy.scis.service.*;
+import com.sun.media.jfxmedia.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import sun.rmi.runtime.Log;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +37,48 @@ public class StaffController extends BaseController{
     public PageJson<Ach_project> all(){
         PageRequest pageRequest = getPageRequest();
         List<Ach_project> text_messages = achProjectService.getAchProjectList();
+
+        // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
+        PageJson<Ach_project> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //对不同的角色返回不同的需要审批内容
+    @GetMapping("/project/process")
+    @ResponseBody
+    public PageJson<Ach_project> getProcess(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        int status = -1;
+        //每个角色看到的不同 乳配置管理员 看到1-4
+        switch (user.getTitle()){
+            case "项目经理":
+                status = -1;
+                break;
+            case "项目成员":
+                status = -1;
+                break;
+            case "配置管理员":
+                status = 1;
+                break;
+            case "EPG Leader":
+                status = 2;
+                break;
+            case "QA管理员":
+                status = 3;
+                break;
+            case "项目上级":
+                status = -1;
+                break;
+            default:
+                break;
+        }
+        PageRequest pageRequest = getPageRequest();
+        List<Ach_project> text_messages = achProjectService.getAchProjectProcessList(status);
 
         // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
         PageJson<Ach_project> page = new PageJson<>();
@@ -119,6 +165,76 @@ public class StaffController extends BaseController{
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             achProjectService.updateProject(name,desc,tech,area,func,format.parse(enddate),format.parse(startdate),id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //项目上级通过审批
+    @PutMapping("/project/{id}/accept")
+    @ResponseBody
+    public JsonResult acceptProject(@PathVariable("id") Integer id, HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();
+            Staff user = (Staff)session.getAttribute("user");
+            if(user == null)
+                return JsonResult.fail("user is null");
+            int status = -1;
+            //每个角色看到的不同 乳配置管理员 看到1-4
+            switch (user.getTitle()){
+                case "配置管理员":
+                    status = 1;
+                    break;
+                case "EPG Leader":
+                    status = 2;
+                    break;
+                case "QA管理员":
+                    status = 3;
+                    break;
+                case "项目上级":
+                    status = 0;
+                    break;
+                default:
+                    status = 4;
+                    break;
+            }
+            String[] returnFailString = new String[]{"项目通过失败","配置库建立失败","EPG分配失败","QA分配失败","没有权限"};
+            Ach_project project = achProjectService.getAchProject(id);
+            if(status == 4)//没有权限
+                return JsonResult.fail(returnFailString[status]);
+
+            //类似状态机的转移
+            if(project.getPro_status()==status){
+                achProjectService.updateStatus(status+1,id);
+                return JsonResult.ok();
+            } else {
+                return JsonResult.fail(returnFailString[status]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+    }
+    //项目上级通过审批
+    @PutMapping("/project/{id}/refuse")
+    @ResponseBody
+    public JsonResult refuseProject(@PathVariable("id") Integer id, HttpServletRequest request){
+        try {
+            HttpSession session = request.getSession();
+            Staff user = (Staff)session.getAttribute("user");
+            if(user == null)
+                return JsonResult.fail("user is null");
+            if (user.getTitle().equals("项目上级")){
+                Ach_project project = achProjectService.getAchProject(id);
+                if(project.getPro_status()==0){
+                    achProjectService.updateStatus(-1,id);
+                    return JsonResult.ok();
+                } else {
+                    return JsonResult.fail("项目拒绝失败");
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());

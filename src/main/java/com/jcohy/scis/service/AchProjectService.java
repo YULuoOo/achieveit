@@ -18,6 +18,12 @@ public interface AchProjectService {
     List<Ach_project> getAchProjectList();
 
     /**
+     *  项目需审批列表
+     * @return
+     */
+    List<Ach_project> getAchProjectProcessList(Integer status);
+
+    /**
      *  项目成员列表
      * @return
      */
@@ -49,4 +55,9 @@ public interface AchProjectService {
      * @throws Exception
      */
     int updateProject(String name, String desc, String tech, String area, String func,  Date enddate, Date startdate, Integer id) throws Exception;
+
+    /**
+     * 更新status
+     */
+    int updateStatus(Integer status,Integer id);
 }

@@ -26,6 +26,11 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
+    public List<Ach_project> getAchProjectProcessList(Integer status) {
+        return achProjectRepository.getAchProjectProcessList(status);
+    }
+
+    @Override
     public List<String> getProjectMemberList(Integer id) {
         if(id == null){
             throw new ServiceException("主键不能为空");
@@ -58,5 +63,13 @@ public class AchProjectServiceImpl implements AchProjectService{
             throw new ServiceException("主键不能为空");
         }
         return achProjectRepository.getOne(id);
+    }
+
+    @Override
+    public int updateStatus(Integer status, Integer id) {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.updateStatus(status,id);
     }
 }

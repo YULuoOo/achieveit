@@ -36,7 +36,7 @@
 <body>
 
 <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field">
-    <legend style="text-align:center;">AchieveIT我的项目</legend>
+    <legend style="text-align:center;">AchieveIT我的审批</legend>
 
     <button class="layui-btn" style="position: relative;float: right;right: 100px;" onclick="javascript:location.replace(location.href)">
         <i class="layui-icon">&#x1002;</i>
@@ -61,24 +61,44 @@
         <div id="dataContent" class="">
             <table class="layui-hide" id="student" lay-filter="table"></table>
             <script type="text/html" id="operator">
-                <a class="layui-btn layui-btn-normal" lay-event="detail">查看</a>
-                <#--TODO 编辑按钮是否显示-->
-                <#--<a class="layui-btn" lay-event="edit">编辑</a>-->
-                <a class="layui-btn layui-btn-danger " lay-event="del">删除</a>
+                <form class="layui-form" action="">
+                    <div class="layui-form-item" style="margin:0;">
+                        {{#  if("${Session.user.title}" == "项目上级"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">通过</a>
+                        <a class="layui-btn layui-btn-danger " lay-event="refuse">拒绝</a>
+                        {{#  } else if("${Session.user.title}" == "配置管理员"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">配置</a>
+                        {{#  } else if("${Session.user.title}" == "EPG Leader"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">分配EPG</a>
+                        {{#  } else if("${Session.user.title}" == "QA管理员"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">分配QA</a>
+                        {{#  } else if("${Session.user.title}" == "项目成员"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">啥也没有</a>
+                        {{#  } else if("${Session.user.title}" == "项目经理"){ }}
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">啥也没有</a>
+                        {{#  } }}
+                    </div>
+                </form>
             </script>
+
             <script type="text/html" id="status">
                 <form class="layui-form" action="">
                     <div class="layui-form-item" style="margin:0;">
                         {{#  if(d.pro_status == 0){ }}
                         项目待审批
                         {{#  } else if (d.pro_status == 1 ){ }}
-                        项目上级审批通过
+                        审批通过 等待配置
+                        {{#  } else if (d.pro_status == 2 ){ }}
+                        等待分配EPG
+                        {{#  } else if (d.pro_status == 3 ){ }}
+                        等待分配QA
+                        {{#  } else if (d.pro_status == 4 ){ }}
+                        项目分配完成
                         {{#  } else if (d.pro_status == -1 ){ }}
                         项目上级审批拒绝
                         {{#  } }}
                     </div>
                 </form>
-                <#--<button class="layui-btn layui-btn-small layui-btn-normal" onclick="layui.datalist.editData({{d.id}})"><i class="layui-icon">&#xe642;</i></button>-->
             </script>
         </div>
     </div>
@@ -90,7 +110,7 @@
 <script type="text/javascript">
     layui.config({
         base: '${ctx}/js/'
-    }).use('staff/index');
+    }).use('staff/process');
 </script>
 </body>
 </html>
