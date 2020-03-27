@@ -32,15 +32,37 @@ public class StaffControllerTest {
     @Autowired
     private AchProjectService achProjectService;
     @Test
-    public void all() {
+    public void all() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/list")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+
     }
 
     @Test
-    public void getProcess() {
+    public void getProcess() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void getMember() {
+    public void getMember() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/member")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
@@ -69,22 +91,60 @@ public class StaffControllerTest {
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
+
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void del() {
+    public void del() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/del")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void updateProject() {
+    public void updateProject() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/staff/project/1/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("name", "test")
+                        .param("desc","test")
+                        .param("tech","test")
+                        .param("area","test")
+                        .param("func","test")
+                        .param("enddate","1-1-1")
+                        .param("startdate","1-1-1")
+                        .param("id","1")
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void acceptProject() {
+    public void acceptProject() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void refuseProject() {
+    public void refuseProject() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/refuse")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 }
