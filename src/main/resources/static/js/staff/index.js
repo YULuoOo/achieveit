@@ -37,6 +37,8 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             del(data.id);
         } else if(obj.event === 'edit'){
             common.frame_show('编辑','/staff/form?id='+data.id);
+        }else if(obj.event === 'add'){
+            common.frame_show('添加成员','/staff/add?id='+data.id);
         }
     });
 

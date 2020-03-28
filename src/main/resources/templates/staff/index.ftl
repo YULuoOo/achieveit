@@ -61,10 +61,15 @@
         <div id="dataContent" class="">
             <table class="layui-hide" id="student" lay-filter="table"></table>
             <script type="text/html" id="operator">
-                <a class="layui-btn layui-btn-normal" lay-event="detail">查看</a>
-                <#--TODO 编辑按钮是否显示-->
-                <#--<a class="layui-btn" lay-event="edit">编辑</a>-->
-                <a class="layui-btn layui-btn-danger " lay-event="del">删除</a>
+                <#--TRY 改UI-->
+                <div class="layui-btn-container">
+                    <#--ADD 增加了添加成员按钮-->
+                    <a class="layui-btn layui-btn-xs" lay-event="add">增加成员</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">查看</a>
+                    <#--TODO 编辑按钮是否显示-->
+                    <#--<a class="layui-btn" lay-event="edit">编辑</a>-->
+                    <a class="layui-btn layui-btn-xs layui-btn-danger " lay-event="del">删除</a>
+                    </div>
             </script>
             <script type="text/html" id="status">
                 <form class="layui-form" action="">

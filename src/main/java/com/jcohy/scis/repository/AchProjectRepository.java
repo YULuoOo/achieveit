@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 蛟川小盆友 on 2020/3/17.
@@ -21,8 +22,11 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select * from ach_project where pro_status >= ?1", nativeQuery = true)
     List<Ach_project> getAchProjectProcessList(Integer status);
 
-    @Query(value = "select name from staff st inner join staff_project sp on st.id = sp.staff_id where sp.pro_id = ?1", nativeQuery = true)
+    @Query(value = "select st.name from staff st inner join staff_project sp on st.id = sp.staff_id where sp.pro_id = ?1", nativeQuery = true)
     List<String> getProjectMemberList(Integer integer);
+
+    @Query(value = "select id,num,name from staff where not exists (select * from staff_project where staff.id =staff_project.staff_id and pro_id = ?1)", nativeQuery = true)
+    List<Map<String,Object>> getOtherStaffs(Integer integer);
 
     @Query(value = "select * from ach_project where id = ?1",nativeQuery = true)
     Ach_project getOne(Integer integer);
@@ -41,4 +45,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Modifying
     @Query(value = "UPDATE ach_project SET pro_status=?1 WHERE id=?2",nativeQuery = true)
     int updateStatus(Integer status, Integer id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into staff_project (pro_id,staff_id) values(?1,?2)",nativeQuery = true)
+    int updateMembers(Integer project_id, Integer staff_id);
 }

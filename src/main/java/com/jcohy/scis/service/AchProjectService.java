@@ -5,6 +5,7 @@ import com.jcohy.scis.model.Staff;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 蛟川小盆友 on 2020/3/17.
@@ -24,10 +25,15 @@ public interface AchProjectService {
     List<Ach_project> getAchProjectProcessList(Integer status);
 
     /**
-     *  项目成员列表
+     *  项目成员名字列表
      * @return
      */
-    List<String> getProjectMemberList(Integer id);
+    List<String> getProjectMemberList(Integer pro_id);
+    /**
+     *  非项目成员的其他员工列表
+     * @return
+     */
+    List<Map<String,Object>> getOtherStaffs(Integer pro_id);
     /**
      * 申请立项
      *
@@ -60,4 +66,9 @@ public interface AchProjectService {
      * 更新status
      */
     int updateStatus(Integer status,Integer id);
+
+    /**
+     * 添加项目成员
+     */
+    int updateMembers(Integer project_id, Integer staff_id);
 }

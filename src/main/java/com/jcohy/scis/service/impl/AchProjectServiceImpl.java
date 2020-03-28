@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 蛟川小盆友 on 2020/3/17.
@@ -31,11 +32,19 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
-    public List<String> getProjectMemberList(Integer id) {
-        if(id == null){
+    public List<String> getProjectMemberList(Integer pro_id) {
+        if(pro_id == null){
             throw new ServiceException("主键不能为空");
         }
-        return achProjectRepository.getProjectMemberList(id);
+        return achProjectRepository.getProjectMemberList(pro_id);
+    }
+
+    @Override
+    public List<Map<String,Object>> getOtherStaffs(Integer pro_id) {
+        if(pro_id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.getOtherStaffs(pro_id);
     }
 
     @Override
@@ -71,5 +80,10 @@ public class AchProjectServiceImpl implements AchProjectService{
             throw new ServiceException("主键不能为空");
         }
         return achProjectRepository.updateStatus(status,id);
+    }
+
+    @Override
+    public int updateMembers(Integer project_id, Integer staff_id) {
+        return achProjectRepository.updateMembers(project_id, staff_id);
     }
 }

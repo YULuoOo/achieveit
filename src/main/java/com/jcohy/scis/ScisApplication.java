@@ -45,6 +45,8 @@ public class ScisApplication extends WebMvcConfigurerAdapter{
         registry.addViewController("/staff/detail").setViewName("/staff/detail");
 		registry.addViewController("/staff/process").setViewName("/staff/process");
 		registry.addViewController("/staff/workinghour").setViewName("/staff/workinghour");
+		registry.addViewController("/staff/add").setViewName("/staff/add");
+
 
 
 		//修改密码

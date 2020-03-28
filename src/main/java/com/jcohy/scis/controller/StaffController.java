@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -106,6 +107,7 @@ public class StaffController extends BaseController{
         return page;
     }
 
+    //返回参与项目成员列表
     @GetMapping("/project/{id}/member")
     @ResponseBody
     public JsonResult getMember(@PathVariable("id") Integer id) {
@@ -118,6 +120,22 @@ public class StaffController extends BaseController{
             return JsonResult.fail("获取数据失败");
         }
         return JsonResult.ok().set("data",members);
+    }
+
+    //返回该项目以外员工列表
+    @GetMapping("/project/{id}/others")
+    @ResponseBody
+    public PageJson getOtherStaffs(@PathVariable("id") Integer id) {
+        PageRequest pageRequest = getPageRequest();
+        List<Map<String,Object>> text_messages = achProjectService.getOtherStaffs(id);
+
+        // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
+        PageJson<Map<String,Object>> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
     }
 
     @GetMapping("/project/{id}/get")
@@ -259,4 +277,25 @@ public class StaffController extends BaseController{
         return JsonResult.ok();
     }
 
+    //为项目添加新成员
+    @PostMapping("/project/{id}/add")
+    @ResponseBody
+    public JsonResult updateMembers(@PathVariable("id") Integer pro_id, HttpServletRequest request
+    ){
+        String[] staff_ids = request.getParameterValues("check");
+        try {
+            for(int i=0;i<staff_ids.length;i++){
+                System.out.println(staff_ids[i]);
+                Integer staff_id_int = null;
+                if(staff_ids[i]!=null){
+                    staff_id_int = Integer.valueOf(staff_ids[i]);
+                }
+                achProjectService.updateMembers(pro_id,staff_id_int);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
 }
