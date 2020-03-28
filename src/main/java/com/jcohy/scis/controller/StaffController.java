@@ -34,12 +34,29 @@ public class StaffController extends BaseController{
     private AchProjectService achProjectService;
     @GetMapping("/project/list")
     @ResponseBody
-    public PageJson<Ach_project> all(){
+    public PageJson<Ach_project> allWorkingHour(){
         PageRequest pageRequest = getPageRequest();
         List<Ach_project> text_messages = achProjectService.getAchProjectList();
 
         // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
         PageJson<Ach_project> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    @Autowired
+    private WorkingHourService workingHourService;
+    @GetMapping("/workinghour/list")
+    @ResponseBody
+    public PageJson<WorkingHour> all(){
+        PageRequest pageRequest = getPageRequest();
+        List<WorkingHour> text_messages = workingHourService.getWorkingHourList();
+
+
+        PageJson<WorkingHour> page = new PageJson<>();
         page.setCode(0);
         page.setMsg("成功");
         page.setCount(text_messages.size());
