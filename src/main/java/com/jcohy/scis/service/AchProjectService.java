@@ -29,6 +29,13 @@ public interface AchProjectService {
      * @return
      */
     List<String> getProjectMemberList(Integer pro_id);
+
+    /**
+     *  员工参与的项目列表
+     * @return
+     */
+    List<Ach_project> getUserProjectList(Integer staff_id);
+
     /**
      *  非项目成员的其他员工列表
      * @return
