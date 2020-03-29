@@ -35,6 +35,8 @@ public class StaffController extends BaseController{
     @Autowired
     private AchProjectService achProjectService;
 
+    private SendMailService sendMailService=new SendMailService();
+
     @GetMapping("/project/list")
     @ResponseBody
     public PageJson<Ach_project> allProjectList(){
@@ -190,6 +192,7 @@ public class StaffController extends BaseController{
             Ach_project project=achProjectService.getAchProjectByName(name);
             Staff user= (Staff) session.getAttribute("user");
             achProjectService.updateMembers(project.getId(),user.getId() );
+            sendMailService.sendmail(user.getEmail(),user.getName());
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
