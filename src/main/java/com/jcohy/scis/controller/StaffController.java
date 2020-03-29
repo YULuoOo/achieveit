@@ -6,6 +6,7 @@ import com.jcohy.scis.common.PageJson;
 import com.jcohy.scis.model.*;
 import com.jcohy.scis.service.*;
 import com.sun.media.jfxmedia.logging.Logger;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -161,11 +162,16 @@ public class StaffController extends BaseController{
                                    @RequestParam(required = false)  String func,
 //                                   @RequestParam(required = false)  int status,
                                    @RequestParam(required = false) String enddate,
-                                   @RequestParam(required = false) String startdate
+                                   @RequestParam(required = false) String startdate,
+                                    HttpServletRequest request
                                    ){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        HttpSession session = request.getSession();
         try {
             achProjectService.createProject(name,desc,tech,area,func,0,format.parse(enddate),format.parse(startdate));
+            Ach_project project=achProjectService.getAchProjectByName(name);
+            Staff user= (Staff) session.getAttribute("user");
+            achProjectService.updateMembers(project.getId(),user.getId() );
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());

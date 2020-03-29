@@ -55,6 +55,12 @@ public interface AchProjectService {
     Ach_project getAchProject(Integer id);
 
     /**
+     * 查看项目
+     * @param name
+     */
+    Ach_project getAchProjectByName(String name);
+
+    /**
      * 编辑项目
      *
      * @return

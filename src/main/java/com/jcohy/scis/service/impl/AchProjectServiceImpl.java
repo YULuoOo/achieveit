@@ -75,6 +75,15 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
+    public Ach_project getAchProjectByName(String name)
+    {
+        if(name == null){
+            throw new ServiceException("名字不能为空");
+        }
+        return achProjectRepository.getProjectByName(name);
+    }
+
+    @Override
     public int updateStatus(Integer status, Integer id) {
         if(id == null){
             throw new ServiceException("主键不能为空");
