@@ -40,6 +40,14 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
+    public List<Ach_project> getUserProjectList(Integer staff_id) {
+        if(staff_id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.getUserProjectList(staff_id);
+    }
+
+    @Override
     public List<Map<String,Object>> getOtherStaffs(Integer pro_id) {
         if(pro_id == null){
             throw new ServiceException("主键不能为空");
@@ -72,6 +80,15 @@ public class AchProjectServiceImpl implements AchProjectService{
             throw new ServiceException("主键不能为空");
         }
         return achProjectRepository.getOne(id);
+    }
+
+    @Override
+    public Ach_project getAchProjectByName(String name)
+    {
+        if(name == null){
+            throw new ServiceException("名字不能为空");
+        }
+        return achProjectRepository.getProjectByName(name);
     }
 
     @Override

@@ -25,6 +25,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select st.name from staff st inner join staff_project sp on st.id = sp.staff_id where sp.pro_id = ?1", nativeQuery = true)
     List<String> getProjectMemberList(Integer integer);
 
+    @Query(value = "select * from ach_project pj inner join staff_project sp on pj.id = sp.pro_id where sp.staff_id = ?1", nativeQuery = true)
+    List<Ach_project> getUserProjectList(Integer integer);
+
     @Query(value = "select id,num,name from staff where not exists (select * from staff_project where staff.id =staff_project.staff_id and pro_id = ?1)", nativeQuery = true)
     List<Map<String,Object>> getOtherStaffs(Integer integer);
 
@@ -35,6 +38,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Modifying
     @Query(value = "insert into ach_project (pro_name,pro_desc,pro_tech,pro_area,pro_func,pro_status,pro_enddate,pro_startdate) values(?1,?2,?3,?4,?5,?6,?7,?8)",nativeQuery = true)
     int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate);
+
+    @Query(value = "select * from ach_project where pro_name = ?1",nativeQuery = true)
+    Ach_project getProjectByName(String name);
 
     @Transactional
     @Modifying

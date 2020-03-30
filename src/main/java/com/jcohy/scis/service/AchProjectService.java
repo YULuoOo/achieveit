@@ -29,6 +29,13 @@ public interface AchProjectService {
      * @return
      */
     List<String> getProjectMemberList(Integer pro_id);
+
+    /**
+     *  员工参与的项目列表
+     * @return
+     */
+    List<Ach_project> getUserProjectList(Integer staff_id);
+
     /**
      *  非项目成员的其他员工列表
      * @return
@@ -53,6 +60,12 @@ public interface AchProjectService {
      * @param id
      */
     Ach_project getAchProject(Integer id);
+
+    /**
+     * 查看项目
+     * @param name
+     */
+    Ach_project getAchProjectByName(String name);
 
     /**
      * 编辑项目

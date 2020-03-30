@@ -6,6 +6,7 @@ import com.jcohy.scis.common.PageJson;
 import com.jcohy.scis.model.*;
 import com.jcohy.scis.service.*;
 import com.sun.media.jfxmedia.logging.Logger;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class StaffController extends BaseController{
     private StaffService staffService;
     @Autowired
     private AchProjectService achProjectService;
+    private SendMailService sendMailService=new SendMailService();
 
     @GetMapping("/project/list")
     @ResponseBody
@@ -50,6 +52,23 @@ public class StaffController extends BaseController{
         page.setData(text_messages);
         return page;
     }
+
+    @GetMapping("/project/joinlist")
+    @ResponseBody
+    public PageJson<Ach_project> projectJoinList(HttpServletRequest request){
+        PageRequest pageRequest = getPageRequest();
+        HttpSession session = request.getSession();
+        Staff user= (Staff) session.getAttribute("user");
+        List<Ach_project> text_messages = achProjectService.getUserProjectList(user.getId());
+        // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
+        PageJson<Ach_project> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
 
     @Autowired
     private WorkingHourService workingHourService;
@@ -169,11 +188,17 @@ public class StaffController extends BaseController{
                                    @RequestParam(required = false)  String func,
 //                                   @RequestParam(required = false)  int status,
                                    @RequestParam(required = false) String enddate,
-                                   @RequestParam(required = false) String startdate
+                                   @RequestParam(required = false) String startdate,
+                                    HttpServletRequest request
                                    ){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        HttpSession session = request.getSession();
         try {
             achProjectService.createProject(name,desc,tech,area,func,0,format.parse(enddate),format.parse(startdate));
+            Ach_project project=achProjectService.getAchProjectByName(name);
+            Staff user= (Staff) session.getAttribute("user");
+            achProjectService.updateMembers(project.getId(),user.getId() );
+            sendMailService.sendmail(user.getEmail(),user.getName());
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
