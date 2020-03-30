@@ -1,5 +1,5 @@
 CREATE TABLE  `workinghour`(
-`id` int(11) NOT NULL,
+`id` int(11) NOT NULL AUTO_INCREMENT,
 `staff_id` int(11) NOT NULL,
 `work_content` varchar(255) DEFAULT NULL,
 `work_date` date DEFAULT NULL,

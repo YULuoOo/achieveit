@@ -7,15 +7,14 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         elem: '#student'
         ,height: 'full-200'
         ,method:'GET'
-        ,url: '/staff/project/list' //数据接口
+        ,url: '/staff/workinghour/list' //数据接口
         ,page: true //开启分页
         ,cols: [[ //表头
-            {field: 'pro_name', align:'center', title: '项目名称',unresize:true}
-            ,{field: 'pro_desc', align:'center', title: '项目描述',unresize:true}
-            ,{field: 'pro_tech', align:'center', title: '采用技术',unresize:true}
-            ,{field: 'pro_area', align:'center', title: '业务领域',unresize:true}
-            ,{field: 'pro_func', align:'center', title: '主要功能',unresize:true}
-            ,{title: '项目状态',templet: '#status',unresize:true,width:250}
+            {field: 'staff_num', align:'center', title: '用户账号',unresize:true}
+            ,{field: 'staff_name', align:'center', title: '用户名称',unresize:true}
+            ,{field: 'work_content', align:'center', title: '工作内容',unresize:true}
+            ,{field: 'work_date', align:'center', title: '工作日期',unresize:true,templet :'#createTime'}
+            ,{field: 'work_length', align:'center', title: '工作时长',unresize:true}
             ,{fixed: 'right',  title:'操作',align:'center', toolbar: '#operator',unresize:true}
         ]]
     });
@@ -23,7 +22,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
     //监听工具条
     table.on('tool(table)', function(obj){
         var data = obj.data;
-        if(obj.event === 'detail'){
+        /*if(obj.event === 'detail'){
             common.frame_show('查看','/staff/detail?id='+data.id);
             // if($("#detail-view-"+data.id).length > 0){
             //     $("#detail-view-"+data.id).hide();
@@ -37,15 +36,15 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             del(data.id);
         } else if(obj.event === 'edit'){
             common.frame_show('编辑','/staff/form?id='+data.id);
-        }
+        }*/
     });
 
-    //添加数据
-    $('#addProject').click(function () {
+    //添加工时
+    $('#addWorkingHour').click(function () {
         var index = layer.load(1);
         setTimeout(function () {
             layer.close(index);
-            common.frame_show('添加','/student/form');
+            common.frame_show('添加','/staff/addworkinghour');
             // layer.msg('打开添加窗口');
         }, 500);
     });
@@ -130,7 +129,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         });
     });
 
-    exports('staff/index', datalist);
+    exports('staff/workinghour', datalist);
 });
 
 

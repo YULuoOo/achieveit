@@ -48,4 +48,12 @@ public interface StaffService {
      */
     void updatePassword(Staff user);
 
+
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    Staff findById(Integer id);
+
 }

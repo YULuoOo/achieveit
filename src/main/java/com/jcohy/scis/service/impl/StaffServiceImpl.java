@@ -52,4 +52,9 @@ public class StaffServiceImpl implements StaffService {
     public void updatePassword(Staff user) {
         staffRepository.saveAndFlush(user);
     }
+
+    @Override
+    public Staff findById(Integer id) {
+        return staffRepository.getOne(id);
+    }
 }

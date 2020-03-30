@@ -36,7 +36,7 @@
 <body>
 
 <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field">
-    <legend style="text-align:center;">AchieveIT我的审批</legend>
+    <legend style="text-align:center;">AchieveIT项目审批</legend>
 
     <button class="layui-btn" style="position: relative;float: right;right: 100px;" onclick="javascript:location.replace(location.href)">
         <i class="layui-icon">&#x1002;</i>

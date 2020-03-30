@@ -36,11 +36,9 @@
 <body>
 
 <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field">
-    <legend style="text-align:center;">AchieveIT我的项目</legend>
+    <legend style="text-align:center;">AchieveIT工时管理</legend>
 
-    <button class="layui-btn" style="position: relative;float: right;right: 100px;" onclick="javascript:location.replace(location.href)">
-        <i class="layui-icon">&#x1002;</i>
-    </button>
+
     <#--<div class="layui-row">-->
         <#--<div class="layui-form layui-col-md12 star-so">-->
             <#--<input class="layui-input" placeholder="请输入关键字" name="keyword">-->
@@ -48,13 +46,16 @@
             <#--<button class="layui-btn" id="search" "><i class="layui-icon">&#xe615;</i></button>-->
         <#--</div>-->
     <#--</div>-->
-    <div style="padding: 40px 0px 0px 80px;">
-        <div class="layui-inline">
-            <div class="layui-input-inline" style="width:auto">
-                <#--<a id="addProject" class="layui-btn layui-btn-normal">添加</a>-->
+    <div style="padding: 40px 0px 0px 80px;position: relative;right: 100px;" align="right">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width:auto">
+                    <a id="addWorkingHour" class="layui-btn layui-btn-normal">提交工时</a>
+                </div>
+                <button class="layui-btn" onclick="javascript:location.replace(location.href)">
+                    <i class="layui-icon">&#x1002;</i>
+                </button>
             </div>
         </div>
-    </div>
 
 
     <div class="layui-field-box">
@@ -83,6 +84,14 @@
         </div>
     </div>
 </fieldset>
+
+<script src="${ctx!}/js/dateFormat.js" type="text/javascript" charset="utf-8"></script>
+<script id="createTime" type="text/html">
+    {{#
+    var date = new Date(d.work_date);
+    return date.Format("yyyy-MM-dd");
+    }}
+</script>
 
 <!-- layui.js -->
 <script src="${ctx!}/js/plugins/layui/layui.js"></script>

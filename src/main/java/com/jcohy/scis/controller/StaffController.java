@@ -32,10 +32,13 @@ import java.util.stream.Collectors;
 public class StaffController extends BaseController{
 
     @Autowired
+    private StaffService staffService;
+    @Autowired
     private AchProjectService achProjectService;
+
     @GetMapping("/project/list")
     @ResponseBody
-    public PageJson<Ach_project> allWorkingHour(){
+    public PageJson<Ach_project> all(){
         PageRequest pageRequest = getPageRequest();
         List<Ach_project> text_messages = achProjectService.getAchProjectList();
 
@@ -52,16 +55,21 @@ public class StaffController extends BaseController{
     private WorkingHourService workingHourService;
     @GetMapping("/workinghour/list")
     @ResponseBody
-    public PageJson<WorkingHour> all(){
+    public PageJson<WorkingHourTable> allWorkingHour(){
         PageRequest pageRequest = getPageRequest();
         List<WorkingHour> text_messages = workingHourService.getWorkingHourList();
+        List<WorkingHourTable> workingHourTableList = new ArrayList<>();
+        for(WorkingHour workingHour : text_messages){
+            Integer staff_id = workingHour.getStaff_id();
+            Staff staff = staffService.findById(staff_id);
+            workingHourTableList.add(new WorkingHourTable(workingHour,staff));
+        }
 
-
-        PageJson<WorkingHour> page = new PageJson<>();
+        PageJson<WorkingHourTable> page = new PageJson<>();
         page.setCode(0);
         page.setMsg("成功");
-        page.setCount(text_messages.size());
-        page.setData(text_messages);
+        page.setCount(workingHourTableList.size());
+        page.setData(workingHourTableList);
         return page;
     }
 
@@ -172,6 +180,27 @@ public class StaffController extends BaseController{
         }
         return JsonResult.ok();
     }
+
+    @PostMapping("/workinghour/create")
+    @ResponseBody
+    public JsonResult createWorkingHour(HttpServletRequest request,
+                                        @RequestParam(required = false)  Integer staff_id,
+                                        @RequestParam(required = false)  String work_content,
+                                        @RequestParam(required = false)  String work_date,
+                                        @RequestParam(required = false)  float work_length
+    ){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            workingHourService.createWorkingHour(user.getId(),work_content,format.parse(work_date),work_length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
 
     @DeleteMapping("/project/{id}/del")
     @ResponseBody

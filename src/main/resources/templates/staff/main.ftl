@@ -52,7 +52,7 @@
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/index" data-id="1">我的项目</a></dd>
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/form" data-id="2">项目申报</a></dd>
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/process" data-id="3">项目审批</a></dd>
-                            <dd><a href="javascript:;" data-url="${ctx!}/staff/workinghour" data-id="4">我的工时</a></dd>
+                            <dd><a href="javascript:;" data-url="${ctx!}/staff/workinghour" data-id="4">工时管理</a></dd>
                         </dl>
                     </li>
                 </ul>
