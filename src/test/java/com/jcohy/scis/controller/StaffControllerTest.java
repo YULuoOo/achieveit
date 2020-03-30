@@ -66,6 +66,17 @@ public class StaffControllerTest {
     }
 
     @Test
+    public void getOtherStaffs() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/others")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
     public void getProject() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 get("/staff/project/1/get")
@@ -141,6 +152,17 @@ public class StaffControllerTest {
     public void refuseProject() throws Exception{
         MvcResult mvcResult = mockMvc.perform(
                 get("/staff/project/1/refuse")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updateMembers() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/1/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSON.toJSONString("")))
                 .andReturn();
