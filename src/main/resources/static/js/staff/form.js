@@ -20,7 +20,10 @@
 
     });
 
-
+    laydate.render({
+        elem: '#test'
+        ,format: 'yyyy-MM-dd'
+    });
 
     form.on('submit(add)', function (data) {
         $.ajax({
