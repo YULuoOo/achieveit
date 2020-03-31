@@ -6,7 +6,6 @@ import com.jcohy.scis.common.PageJson;
 import com.jcohy.scis.model.*;
 import com.jcohy.scis.service.*;
 import com.sun.media.jfxmedia.logging.Logger;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -36,6 +35,8 @@ public class StaffController extends BaseController{
     private StaffService staffService;
     @Autowired
     private AchProjectService achProjectService;
+    @Autowired
+    private WorkingHourService workingHourService;
     private SendMailService sendMailService=new SendMailService();
 
     @GetMapping("/project/list")
@@ -70,8 +71,6 @@ public class StaffController extends BaseController{
     }
 
 
-    @Autowired
-    private WorkingHourService workingHourService;
     @GetMapping("/workinghour/list")
     @ResponseBody
     public PageJson<WorkingHourTable> allWorkingHour(){

@@ -144,7 +144,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">项目成员：</label>
                         <div class="layui-input-block">
-                            <input readonly="readonly" id="pro_member" type="text"  name="tech"   placeholder="无"
+                            <input readonly="readonly" id="pro_member" type="text"  name="menber"   placeholder="无"
                                    class="layui-input ">
                         </div>
                     </div>
