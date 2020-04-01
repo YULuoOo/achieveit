@@ -120,7 +120,7 @@
                     <div class="layui-form-item">
                     <label class="layui-form-label">开始时间：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="startdate"  id="test" placeholder="以“YYYY-MM-DD”为例(必填）"
+                        <input type="text" name="startdate"  id="start_date" placeholder="以“YYYY-MM-DD”为例(必填）"
                                autocomplete="off" class="layui-input ">
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">结束时间：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="enddate"  id="test" placeholder="以“YYYY-MM-DD”为例(必填）"
+                            <input type="text" name="enddate"  id="end_date" placeholder="以“YYYY-MM-DD”为例(必填）"
                                    autocomplete="off" class="layui-input ">
                         </div>
                     </div>

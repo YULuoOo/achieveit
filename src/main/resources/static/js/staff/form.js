@@ -21,9 +21,14 @@
     });
 
     laydate.render({
-        elem: '#test'
+        elem: '#start_date'
         ,format: 'yyyy-MM-dd'
     });
+
+    laydate.render({
+            elem: '#end_date'
+            ,format: 'yyyy-MM-dd'
+        });
 
     form.on('submit(add)', function (data) {
         $.ajax({
