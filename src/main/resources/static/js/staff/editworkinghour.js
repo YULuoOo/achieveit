@@ -20,37 +20,17 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
     //     // }
     //
     // });
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url:"/staff/project/"+getQueryVariable("id")+"/member",
-        success:function (ret) {
-            if(ret.isOk){
-                $("#pro_member").val(ret.data);
-            }else{
-                layer.msg(ret.msg, {time: 2000});
-            }
-        }
-    });
+
 
     $.ajax({
         type: "GET",
         dataType: "json",
-        url:"/staff/project/"+getQueryVariable("id")+"/get",
+        url:"/staff/workinghour/"+getQueryVariable("id")+"/get",
         success:function (ret) {
             if(ret.isOk){
-                console.log(ret.data.pro_name);
-                $("#pro_name").val(ret.data.pro_name);
-                $("#pro_tech").val(ret.data.pro_tech);
-                $("#pro_area").val(ret.data.pro_area);
-                $("#pro_func").val(ret.data.pro_func);
-                $("#pro_startdate").val(new Date(ret.data.pro_startdate).format("yyyy-MM-dd"));
-                $("#pro_enddate").val(new Date(ret.data.pro_enddate).format("yyyy-MM-dd"));
-                $("#pro_desc").val(ret.data.pro_desc);
-                console.log((new Date()).format("yyyy-MM-dd hh:mm:ss"));
-                console.log(new Date(ret.data.pro_startdate).format("yyyy-MM-dd"));
-                console.log(new Date(ret.data.pro_enddate).format("yyyy-MM-dd"));
-
+                $("#work_date").val(new Date(ret.data.work_date).format("yyyy-MM-dd"));
+                $("#work_length").val(ret.data.work_length);
+                $("#work_content").val(ret.data.work_content);
             }else{
                 layer.msg(ret.msg, {time: 2000});
             }
@@ -91,21 +71,21 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
     form.on('submit(edit)', function (data) {
         console.log("点击编辑按钮");
         if(state == 0){
-            $("#pro_name").removeAttr("readonly");
-            $("#pro_tech").removeAttr("readonly");
-            $("#pro_area").removeAttr("readonly");
-            $("#pro_func").removeAttr("readonly");
-            $("#pro_startdate").removeAttr("readonly");
-            $("#pro_enddate").removeAttr("readonly");
-            $("#pro_desc").removeAttr("readonly");
+            $("#work_date").removeAttr("readonly");
+            $("#work_length").removeAttr("readonly");
+            $("#work_content").removeAttr("readonly");
             $("#edit").html("提交");
+            laydate.render({
+             elem: '#work_date'
+             ,format: 'yyyy-MM-dd'
+            });
             state = 1;
          }else{
             $.ajax({
                         //TODO 【改】 将input变为readonly = false 将编辑按钮变为确定按钮 确定后update数据库
                         type: "PUT",
                         dataType: "json",
-                        url:"/staff/project/"+getQueryVariable("id")+"/update",
+                        url:"/staff/workinghour/"+getQueryVariable("id")+"/update",
                         data: data.field,
                         success: function(ret){
                             if(ret.isOk){
@@ -124,5 +104,5 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
         return false;
     });
 
-    exports('staff/detail', {});
+    exports('staff/editworkinghour', {});
 });

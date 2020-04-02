@@ -1,5 +1,7 @@
 package com.jcohy.scis.service.impl;
 
+import com.jcohy.scis.exception.ServiceException;
+import com.jcohy.scis.model.Ach_project;
 import com.jcohy.scis.model.WorkingHour;
 import com.jcohy.scis.repository.AchProjectRepository;
 import com.jcohy.scis.repository.WorkingHourRepository;
@@ -26,4 +28,25 @@ public class WorkingHourServiceImpl implements WorkingHourService {
     public int createWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length) throws Exception {
         return workingHourRepository.createWorkingHour(staff_id,work_content,work_date,work_length);
     }
+    @Override
+    public void delete(Integer id) {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        workingHourRepository.deleteById(id);
+    }
+
+    @Override
+    public WorkingHour getWorkingHour(Integer id) {
+        if(id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return workingHourRepository.getOne(id);
+    }
+
+    @Override
+    public int updateWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length, Integer id) throws Exception {
+        return workingHourRepository.updateWorkingHour(staff_id, work_content, work_date, work_length,id);
+    }
+
 }

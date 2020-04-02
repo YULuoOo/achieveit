@@ -22,8 +22,8 @@ layui.define([ 'layer',  'table','common'], function (exports) {
     //监听工具条
     table.on('tool(table)', function(obj){
         var data = obj.data;
-        /*if(obj.event === 'detail'){
-            common.frame_show('查看','/staff/detail?id='+data.id);
+        if(obj.event === 'detail'){
+            common.frame_show('查看','/staff/editworkinghour?id='+data.id);
             // if($("#detail-view-"+data.id).length > 0){
             //     $("#detail-view-"+data.id).hide();
             //     $("#detail-view-"+data.id).remove();
@@ -34,9 +34,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
 
         }else if(obj.event === 'del'){
             del(data.id);
-        } else if(obj.event === 'edit'){
-            common.frame_show('编辑','/staff/form?id='+data.id);
-        }*/
+        }
     });
 
     //添加工时
@@ -62,20 +60,20 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             });
         },
         editData: function (id) {
-            common.frame_show('编辑','/staff/form?id='+id);
+            common.frame_show('编辑','/staff/editworkinghour?id='+id);
         }
     };
     function del(id) {
-        layer.confirm('确定删除么？', function (index) {
+        layer.confirm('确定删除么？', function (workinghour) {
             $.ajax({
                 type: "DELETE",
                 dataType: "json",
-                url: "/staff/project/" + id + "/del",
+                url: "/staff/workinghour/" + id + "/del",
                 success: function (ret) {
                     if (ret.isOk) {
                         layer.msg("操作成功", {time: 2000}, function () {
-                            layer.close(index);
-                            window.location.href = "/staff/index";
+                            layer.close(workinghour);
+                            window.location.href = "/staff/workinghour";
                         });
                     } else {
                         layer.msg(ret.msg, {time: 2000});

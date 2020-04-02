@@ -71,7 +71,7 @@
 <body>
 
 <fieldset id="dataList" class="layui-elem-field layui-field-title sys-list-field">
-    <legend style="text-align:center;">AchieveIT项目申报</legend>
+    <legend style="text-align:center;">AchieveIT项目详情</legend>
 </fieldset>
 <div class="container-fluid larry-wrapper">
     <div class="row">

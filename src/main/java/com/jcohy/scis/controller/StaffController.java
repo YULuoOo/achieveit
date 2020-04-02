@@ -220,6 +220,9 @@ public class StaffController extends BaseController{
         HttpSession session = request.getSession();
         Staff user = (Staff)session.getAttribute("user");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if(work_length > 20 || work_length < 0){
+            return JsonResult.fail("请输入正确的工作时长");
+        }
         try {
             workingHourService.createWorkingHour(user.getId(),work_content,format.parse(work_date),work_length);
         } catch (Exception e) {
@@ -235,6 +238,18 @@ public class StaffController extends BaseController{
     public JsonResult del(@PathVariable("id") Integer id){
         try {
             achProjectService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail("删除失败");
+        }
+        return JsonResult.ok();
+    }
+
+    @DeleteMapping("/workinghour/{id}/del")
+    @ResponseBody
+    public JsonResult delete(@PathVariable("id") Integer id){
+        try {
+            workingHourService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail("删除失败");
@@ -349,6 +364,45 @@ public class StaffController extends BaseController{
                 }
                 achProjectService.updateMembers(pro_id,staff_id_int);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    @GetMapping("/workinghour/{id}/get")
+    @ResponseBody
+    public JsonResult getWorkingHour(@PathVariable("id") Integer id){
+        WorkingHour workingHour;
+        try
+        {
+            workingHour = workingHourService.getWorkingHour(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonResult.fail("获取数据失败");
+        }
+        return JsonResult.ok().set("data",workingHour);
+    }
+
+
+    //工时编辑提交
+    @PutMapping("/workinghour/{id}/update")
+    @ResponseBody
+    public JsonResult updateWorkingHour(HttpServletRequest request,
+                                        @RequestParam(required = false)  String work_content,
+                                        @RequestParam(required = false)  String work_date,
+                                        @RequestParam(required = false)  float work_length,
+                                        @PathVariable("id") Integer id
+    ){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if(work_length > 20 || work_length < 0){
+            return JsonResult.fail("请输入正确的工作时长");
+        }
+        try {
+            workingHourService.updateWorkingHour(user.getId(), work_content, format.parse(work_date), work_length, id);
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
