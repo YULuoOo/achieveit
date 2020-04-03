@@ -39,4 +39,34 @@ public class SendMailService {
             return false;
         }
     }
+
+    public  boolean sendmail_addmember(String mailto, String username,String project_name,String user_role){
+        String MailTo=mailto;
+        String MailSubject="AchieveIT : Welcome to Project Team";
+        String MailBCopyTo="";
+        String MailCopyTo="";
+        String MailBody="<h1>Dear "+username+",<br />" +
+                "<br />" +
+                "	^_^</h1>" +
+                "	<p>You have been added to the ["+ project_name +"] Project as a ["+user_role+"]</p>" +
+                "	<p>Best regards,<br />" +
+                "	  <br />	Software Group 4 Team </p>	<p>&nbsp;</p>";
+        String SMTPHost = "smtp.163.com";
+        String Port="25";
+        String MailUsername = "conglinyu1.0@163.com";
+        String MailPassword = "3137341644amd588";
+        String MailFrom = "conglinyu1.0@163.com";
+        if(SMTPHost==null||SMTPHost==""||MailUsername==null||MailUsername==""||MailPassword==null||MailPassword==""||MailFrom==null||MailFrom=="")
+        {
+            System.out.println("Servlet parameter Wrongs");
+        }
+        SendMail send=new SendMail(SMTPHost,Port,MailUsername,MailPassword);
+        if(send.sendingMimeMail(MailFrom, MailTo, MailCopyTo, MailBCopyTo, MailSubject, MailBody)){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

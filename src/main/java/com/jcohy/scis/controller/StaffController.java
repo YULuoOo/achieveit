@@ -367,8 +367,9 @@ public class StaffController extends BaseController{
 
                 //发邮件
                 Staff member = staffService.findById(staff_id_int);
+                Ach_project project = achProjectService.getAchProject(pro_id);
                 if(member.getEmail()!=null){
-                    sendMailService.sendmail(member.getEmail(), member.getName());
+                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
                 }
 
             }
