@@ -83,5 +83,5 @@ public interface AchProjectService {
     /**
      * 添加项目成员
      */
-    int updateMembers(Integer project_id, Integer staff_id);
+    int updateMembers(Integer project_id, Integer staff_id,String staff_role);
 }

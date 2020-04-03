@@ -8,62 +8,27 @@
     <title> - 员工</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <link href="${ctx!}/js/plugins/layui/css/layui.css" rel="stylesheet" />
+    <link href="${ctx!}/js/plugins/layui/css/layui.css" rel="stylesheet" media="all"/>
     <style type="text/css">
-        .layui-form-item{
-            margin: 20px 0 0 200px
-        }
         p{
             margin: 0;
             padding: 0;
         }
-        .layui-input-block {
-            margin-left: 150px;
+        .layui-input{
+            height:30px;
         }
-        .tag,
-        .tag-defined {
-            display: inline-block;
-            position: relative;
-            padding: 0 20px;
-            border: 1px solid #DDD;
-            border-radius: 2px;
-            cursor: pointer;
-            line-height: 36px;
-            margin: 0 10px 10px 0;
+        .layui-table-cell {
+            overflow: initial;
         }
-
-        .tag-selected {
-            border: 1px solid #5FB878;
-            color: #5FB878;
+        .layui-layer-content{
+            overflow: visible !important;
         }
-
-        .tick-box {
-            display: none;
-        }
-
-        .tag .tick-bg {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            border: 10px solid;
-            border-color: transparent #5FB878 #5FB878 transparent;
-        }
-
-        .tag .tick {
-            position: absolute;
-            right: 0;
-            bottom: -12px;
-            font-size: 10px;
-            color: #FFF;
-        }
-        .imgbox{
-            margin-top: 20px;
-            font-size: 16px;
-            color: red;
-        }
-        .layui-input-block{
-            margin-left: 110px;
+        .layui-form-selectup dl {
+            top: 42px;
+            bottom: unset;
         }
     </style>
 </head>
@@ -80,6 +45,14 @@
 <div class="container-fluid larry-wrapper">
     <div id="dataContent" class="">
         <table class="layui-hide" id="staff" lay-filter="table"></table>
+        <script type="text/html" id="selectTpl">
+            <select name="interest" lay-filter="classifyDemo">
+                <option value=""></option>
+                {{#  layui.each(options, function(index, option){ }}
+                <option value="{{option.value}}" {{option.value == d.classify ? 'selected=""': ''}}>{{option.text}}</option>
+                {{#  }); }}
+            </select>
+        </script>
     </div>
 
 </div>

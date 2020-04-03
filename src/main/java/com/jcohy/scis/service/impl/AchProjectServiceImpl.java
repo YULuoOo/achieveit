@@ -100,7 +100,7 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
-    public int updateMembers(Integer project_id, Integer staff_id) {
-        return achProjectRepository.updateMembers(project_id, staff_id);
+    public int updateMembers(Integer project_id, Integer staff_id,String staff_role) {
+        return achProjectRepository.updateMembers(project_id, staff_id,staff_role);
     }
 }

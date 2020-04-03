@@ -54,6 +54,6 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
 
     @Transactional
     @Modifying
-    @Query(value = "insert into staff_project (pro_id,staff_id) values(?1,?2)",nativeQuery = true)
-    int updateMembers(Integer project_id, Integer staff_id);
+    @Query(value = "insert into staff_project (pro_id,staff_id,staff_role) values(?1,?2,?3)",nativeQuery = true)
+    int updateMembers(Integer project_id, Integer staff_id,String staff_role);
 }
