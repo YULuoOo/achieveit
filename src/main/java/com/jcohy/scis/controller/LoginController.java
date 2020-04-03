@@ -132,6 +132,7 @@ public class LoginController {
                                @RequestParam(required = false) String role,
                                @RequestParam(required = false) String title,
                                @RequestParam(required = false) String sex,
+                               @RequestParam(required = false) String email,
                                HttpServletRequest request){
         try {
             if(num == null || StringUtils.isEmpty(password) || StringUtils.isEmpty(name)){
@@ -193,7 +194,7 @@ public class LoginController {
                     return JsonResult.fail("注册失败,用户名已存在");
                 }
                 else {
-                    staffService.register(num, name, password,sex,title);
+                    staffService.register(num, name, password,sex,title,email);
                     login = staffService.login(num, password);
                     session.setAttribute("user",login);
                     return JsonResult.ok().set("returnUrl", "/staff/main");

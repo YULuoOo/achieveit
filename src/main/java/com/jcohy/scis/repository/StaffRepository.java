@@ -19,8 +19,8 @@ public interface StaffRepository extends JpaRepository<Staff,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into staff (num,name,password,sex,title) values(?1,?2,?3,?4,?5)",nativeQuery = true)
-    int register(Long num, String name, String password, String sex, String title);
+    @Query(value = "insert into staff (num,name,password,sex,title,email) values(?1,?2,?3,?4,?5,?6)",nativeQuery = true)
+    int register(Long num, String name, String password, String sex, String title,String email);
 
     @Override
     Staff getOne(Integer integer);

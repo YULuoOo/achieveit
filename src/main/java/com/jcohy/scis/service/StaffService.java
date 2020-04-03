@@ -31,7 +31,7 @@ public interface StaffService {
      * @return
      * @throws Exception
      */
-    int register(Long num, String name, String password, String sex, String title) throws Exception;
+    int register(Long num, String name, String password, String sex, String title,String email) throws Exception;
 
     Staff findByNum(Long num);
 

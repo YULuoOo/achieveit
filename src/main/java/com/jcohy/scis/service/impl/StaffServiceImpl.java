@@ -31,8 +31,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public int register(Long num, String name ,String password, String sex, String title) throws Exception {
-        return staffRepository.register(num,name,password,sex,title);
+    public int register(Long num, String name ,String password, String sex, String title,String email) throws Exception {
+        return staffRepository.register(num,name,password,sex,title,email);
     }
 
 
