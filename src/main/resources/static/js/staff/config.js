@@ -44,11 +44,20 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
             data: data.field,
             success: function(ret){
                 if(ret.isOk){
+                    $.ajax({
+                        type: "PUT",
+                        dataType: "json",
+                        url: "/staff/project/" + getQueryVariable("id") + "/accept",
+                        success: function (ret) {
+                            
+                        }
+                    });
                     layer.msg("操作成功", {time: 2000},function(){
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index);
                         parent.location.reload()
                     });
+
                 }else{
                     layer.msg(ret.msg, {time: 2000});
                 }
