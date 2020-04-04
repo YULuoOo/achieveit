@@ -2,11 +2,8 @@ package com.jcohy.scis.service.impl;
 
 import com.jcohy.scis.exception.ServiceException;
 import com.jcohy.scis.model.Staff;
-import com.jcohy.scis.model.Teacher;
 import com.jcohy.scis.repository.StaffRepository;
-import com.jcohy.scis.repository.TeacherRepository;
 import com.jcohy.scis.service.StaffService;
-import com.jcohy.scis.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

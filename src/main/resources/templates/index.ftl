@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; Charset=utf-8">
     <meta http-equiv="Content-Language" content="zh-CN">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>双创信息</title>
+    <title>项目</title>
     <link rel="shortcut icon" href="${ctx!}/images/logo.png" type="image/x-icon">
     <!--Layui-->
     <link href="${ctx!}/js/plugins/layui/css/layui.css" rel="stylesheet" />
@@ -48,7 +48,7 @@
     <nav class="blog-nav layui-header">
         <div class="blog-container">
             <!-- 用户登陆 -->
-			<a class="blog-logo" href="/" style="top: -20px;">双创信息</a>
+			<a class="blog-logo" href="/" style="top: -20px;">项目</a>
 
             <div class="blog-user"></div>
 
@@ -75,143 +75,7 @@
 			</a>
         </div>
     </nav>
-    <!-- 主体（一般只改变这里的内容） -->
-    <div class="blog-body">
-
-    	<div class="layui-carousel blog-bg" id="carousel">
-		  <div carousel-item>
-              <@circularList>
-                  <#list list as x>
-                      <a href="${(x.url)!}" target="_blank"><img src="${(x.book.downloadUrl)!}" style="width: 100%;height: 100%"></a>
-                  </#list>
-              </@circularList>
-		  </div>
-		</div>
-
-        <div class="blog-container">
-            <div class="blog-main" id="project">
-                <div class="blog-main-left animated slideInLeft" id="projectLeft">
-					<@projectList>
-						<#list list as x>
-							<div class="article shadow animated fadeInLeft">
-                                <#--<div class="article-left ">-->
-                                    <#--<img src="${ctx!}/images/01.jpg" alt="${x.name}"/>-->
-                                <#--</div>-->
-                                <div class="article-right">
-                                    <div class="article-title">
-                                        <a href="/project/${x.id}">项目名称：${x.name}</a>
-                                    </div>
-                                    <div class="article-abstract">
-                                        项目来源：${x.proResource}   经费来源：${x.moneyResource}
-                                    </div>
-                                    <div class="article-abstract">
-                                        <a href="project/video/${(x.id)!}" target="_blank">项目视频地址 ${x.video.downloadUrl}</a>
-                                    </div>
-                                    <div class="article-abstract">
-                                        项目描述：${x.desc}
-                                    </div>
-                                    <#--<div class="article-abstract">-->
-                                        <#--指导老师：${x.teacher.name}-->
-                                    <#--</div>-->
-                                </div>
-                                <div class="clear"></div>
-                                <div class="article-footer">
-                                    <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;${x.student.name}</span>
-                                    <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;${x.teacher.name} 老师</span>
-                                    <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;${x.createDate}</span>
-                                </div>
-                            </div>
-						</#list>
-					</@projectList>
-                </div>
-                <!--右边小栏目-->
-                <#--<div class="blog-main-right" id="projectRight">-->
-                    <#--<@projectList>-->
-                        <#--<#list list as x>-->
-							<#--<div class="article shadow animated fadeInLeft" >-->
-                                <#--<#if (x.video.downloadUrl) == null >-->
-                                    <#--<div class="video_div" style="width: 73%">-->
-                                        <#--<img src="${ctx!}/images/01.jpg" alt="${x.name}"/>-->
-                                    <#--</div>-->
-                                    <#--<div style="float: right;width: 20%">-->
-                                        <#--${x.name}项目无参赛视频-->
-                                    <#--</div>-->
-                                <#--<#else >-->
-                                    <#--<div class="video_div">-->
-                                        <#--<video id="my-video" class="video-js vjs-default-skin" controls preload="none"  data-setup="{}" poster="http://vjs.zencdn.net/v/oceans.png">-->
-                                            <#--<source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">-->
-                                        <#--</video>-->
-                                    <#--</div>-->
-                                    <#--<div style="float: right;width: 20%">-->
-                                        <#--${x.name}项目参赛视频-->
-                                    <#--</div>-->
-                                <#--</#if>-->
-                            <#--</div>-->
-                        <#--</#list>-->
-                    <#--</@projectList>-->
-                <#--</div>-->
-                <div class="blog-main-right">
-                    <div class="blog-search">
-                        <form class="layui-form" action="">
-                            <div class="layui-form-item">
-                                <div class="search-keywords  shadow">
-                                    <input type="text" name="keyword" id="keyword" lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input ">
-                                </div>
-                                <div class="search-submit  shadow">
-                                    <a class="search-btn" lay-submit lay-filter="formSearch"><i class="fa fa-search"></i></a>
-                                </div>
-                                <#--<input class="layui-input" placeholder="请输入关键字" name="keyword" id="keyword">-->
-
-                                <#--<button class="layui-btn" id="search"><i class="layui-icon">&#xe615;</i></button>-->
-                            </div>
-                        </form>
-                    </div>
-                    <!--推荐/点击排行-->
-                    <div class="layui-tab layui-tab-brief shadow animated fadeInRight" lay-filter="docDemoTabBrief">
-                        <ul class="layui-tab-title">
-                            <li class="layui-this">点击排行</li>
-                            <!--<li>站长推荐</li>-->
-                        </ul>
-                        <div class="layui-tab-content">
-                            <div class="layui-tab-item layui-show">
-                                <ul class="blog-module-ul">
-                                    <@projectList>
-                                        <#list list as x>
-                                            <#if x_index == 0>
-                                                <li><i class="layui-badge-rim layui-bg-red">${x_index+1}</i>&nbsp;&nbsp;<a href="/project/${x.id}">${x.name}</a></li>
-                                            <#elseif x_index == 1>
-                                                <li><i class="layui-badge-rim layui-bg-orange">${x_index+1}</i>&nbsp;&nbsp;<a href="/project/${x.id}">${x.name}</a></li>
-                                            <#elseif x_index == 2>
-                                                <li><i class="layui-badge-rim layui-bg-green">${x_index+1}</i>&nbsp;&nbsp;<a href="/project/${x.id}">${x.name}</a></li>
-                                            <#else >
-                                               <li><i class="layui-badge-rim">${x_index+1}</i>&nbsp;&nbsp;<a href="/project/${x.id}">${x.name}</a></li>
-                                            </#if>
-
-                                        </#list>
-                                    </@projectList>
-
-                                <#--<li><i class="layui-badge-rim layui-bg-red">1</i>&nbsp;&nbsp;<a href="/jobSeeker/job/1">Java开发工程师</a></li>-->
-                                <#--<li><i class="layui-badge-rim layui-bg-orange">2</i>&nbsp;&nbsp;<a href="/jobSeeker/job/1">高级php开发工程师</a></li>-->
-                                <#--<li><i class="layui-badge-rim layui-bg-green">3</i>&nbsp;&nbsp;<a href="/jobSeeker/job/1">c#软件工程师!</a></li>-->
-                                <#--<li><i class="layui-badge-rim">4</i>&nbsp;&nbsp;<a href="/jobSeeker/job/1">办公室文员</a></li>-->
-                                <#--<li><i class="layui-badge-rim">5</i>&nbsp;&nbsp;<a href="/jobSeeker/job/1">销售总监/经理</a></li>-->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="blog-module shadow">
-                        <div class="blog-module-title">友情链接</div>
-                        <ul class="blogroll">
-                            <li><a target="_blank" href="http://www.layui.com/" title="Layui">Layui</a></li>
-                            <li><a target="_blank" href="http://www.pagemark.cn/" title="页签">页签</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>
+    
     <!-- 底部 -->
 	<footer class="blog-footer">
 		<p><span>Copyright</span><span>&copy;</span><span>2018</span><a href="localhost">SCIS</a></p>

@@ -32,17 +32,6 @@ public class LoginControllerTest
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private AdminService adminService;
-
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private TeacherService teacherService;
-
-    @Autowired
-    private ExpertService expertService;
 
     @Autowired
     private StaffService staffService;
