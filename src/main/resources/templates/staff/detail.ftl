@@ -148,6 +148,27 @@
                                    class="layui-input ">
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">项目仓库：</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" id="giturl" type="text"  name="giturl"   placeholder="无"
+                                   class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">根目录：</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" id="root" type="text"  name="root"   placeholder="无"
+                                   class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分配大小：</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" id="disk_size" type="text"  name="disk_size"   placeholder="无"
+                                   class="layui-input ">
+                        </div>
+                    </div>
 
                     <div class="layui-form-item" style="text-align:center;">
                         <button class="layui-btn" lay-submit lay-filter="edit" id ="edit">编辑</button>

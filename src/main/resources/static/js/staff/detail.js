@@ -33,6 +33,21 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
         }
     });
 
+     $.ajax({
+        type: "GET",
+        dataType: "json",
+        url:"/config/"+getQueryVariable("id")+"/get",
+        success:function (ret) {
+            if(ret.isOk){
+                $("#giturl").val(ret.data.giturl);
+                $("#root").val(ret.data.root);
+                $("#disk_size").val(ret.data.disk_size);
+            }else{
+                layer.msg(ret.msg, {time: 2000});
+            }
+        }
+    });
+
     $.ajax({
         type: "GET",
         dataType: "json",

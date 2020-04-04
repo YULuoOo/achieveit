@@ -49,7 +49,7 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
                         dataType: "json",
                         url: "/staff/project/" + getQueryVariable("id") + "/accept",
                         success: function (ret) {
-                            
+
                         }
                     });
                     layer.msg("操作成功", {time: 2000},function(){
