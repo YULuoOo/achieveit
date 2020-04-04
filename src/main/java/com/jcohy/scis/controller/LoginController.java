@@ -47,7 +47,6 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute("role",role);
             logger.error("name:{}  password:{}  type:{}",num,password,role);
-            if(StringUtils.trim(role).equals("staff")){
                 Staff login = staffService.login(num, password);
                 if(login == null){
                     return JsonResult.fail("登录失败,用户名不存在");
@@ -57,11 +56,9 @@ public class LoginController {
                 }
                 session.setAttribute("user",login);
                 return JsonResult.ok().set("returnUrl", "/staff/main");
-            }
         } catch (Exception e) {
             return JsonResult.fail(e.getMessage());
         }
-        return JsonResult.fail("角色不存在");
     }
 
     /**
@@ -92,7 +89,6 @@ public class LoginController {
             session.setAttribute("sex",sex);
 
             logger.error("num:{} name:{} password:{}  type:{}  sex:{}",num,name,password,role,sex);
-            if(StringUtils.trim(role).equals("staff")){
                 session.setAttribute("title",title);
                 Staff login = staffService.login(num, password);
                 if(login != null){
@@ -104,11 +100,9 @@ public class LoginController {
                     session.setAttribute("user",login);
                     return JsonResult.ok().set("returnUrl", "/staff/main");
                 }
-            }
         } catch (Exception e) {
             return JsonResult.fail(e.getMessage());
         }
-        return JsonResult.fail("角色不存在");
     }
 
     /**
