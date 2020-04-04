@@ -28,6 +28,8 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             accept(data.id);
         }else if(obj.event === 'refuse'){
             refuse(data.id);
+        }else if(obj.event === 'config'){
+            common.frame_show('配置','/staff/config?id='+data.id);
         }
     });
 
