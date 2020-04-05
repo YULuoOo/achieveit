@@ -10,12 +10,12 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         ,url: '/staff/project/joinlist' //数据接口
         ,page: true //开启分页
         ,cols: [[ //表头
-            {field: 'pro_name', align:'center', title: '项目名称',unresize:true}
+            {field: 'pro_name', align:'center', title: '项目名称',unresize:true,width: 100}
             ,{field: 'pro_desc', align:'center', title: '项目描述',unresize:true}
             ,{field: 'pro_tech', align:'center', title: '采用技术',unresize:true}
             ,{field: 'pro_area', align:'center', title: '业务领域',unresize:true}
             ,{field: 'pro_func', align:'center', title: '主要功能',unresize:true}
-            ,{title: '项目状态',templet: '#status',unresize:true,width:250}
+            ,{title: '项目状态',templet: '#status',unresize:true,width:100}
             ,{fixed: 'right',  title:'操作',align:'center', toolbar: '#operator',unresize:true}
         ]]
     });
@@ -39,6 +39,8 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             common.frame_show('编辑','/staff/form?id='+data.id);
         }else if(obj.event === 'add'){
             common.frame_show('添加成员','/staff/add?id='+data.id);
+        }else if(obj.event === 'modifyMemberRole'){
+            common.frame_show('调整成员角色','/staff/modifyMemberRole?id='+data.id);
         }
     });
 

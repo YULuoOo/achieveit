@@ -148,6 +148,22 @@ public class StaffController extends BaseController{
         return JsonResult.ok().set("data",members);
     }
 
+    //返回项目成员列表，包括id、工号、姓名、当前项目角色
+    @GetMapping("/project/{id}/projectStaffs")
+    @ResponseBody
+    public PageJson getProjectStaffs(@PathVariable("id") Integer id) {
+        PageRequest pageRequest = getPageRequest();
+        List<Map<String,Object>> text_messages = achProjectService.getProjectStaffs(id);
+
+        // List<Project> collect = projects.getContent().stream().filter(x -> x.getEStatus() == 1).collect(Collectors.toList());
+        PageJson<Map<String,Object>> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
     //返回该项目以外员工列表
     @GetMapping("/project/{id}/others")
     @ResponseBody
@@ -341,6 +357,37 @@ public class StaffController extends BaseController{
                 } else {
                     return JsonResult.fail("项目拒绝失败");
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //调整项目成员角色
+    @PostMapping("/project/{id}/modifyMemberRole")
+    @ResponseBody
+    public JsonResult updateMembersRole(@PathVariable("id") Integer pro_id, HttpServletRequest request
+    ){
+        String[] staff_ids = request.getParameterValues("check");
+        String[] staff_roles = request.getParameterValues("role");
+        try {
+            for(int i=0;i<staff_ids.length;i++){
+                System.out.println(staff_ids[i]);
+                Integer staff_id_int = null;
+                if(staff_ids[i]!=null){
+                    staff_id_int = Integer.valueOf(staff_ids[i]);
+                }
+                achProjectService.updateMembersRole(pro_id,staff_id_int,staff_roles[i]);
+
+                //发邮件
+                Staff member = staffService.findById(staff_id_int);
+                Ach_project project = achProjectService.getAchProject(pro_id);
+                if(member.getEmail()!=null){
+                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

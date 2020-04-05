@@ -56,6 +56,14 @@ public class AchProjectServiceImpl implements AchProjectService{
     }
 
     @Override
+    public List<Map<String,Object>> getProjectStaffs(Integer pro_id) {
+        if(pro_id == null){
+            throw new ServiceException("主键不能为空");
+        }
+        return achProjectRepository.getProjectStaffs(pro_id);
+    }
+
+    @Override
     public int createProject(String name, String desc, String tech, String area, String func, int status, Date enddate, Date startdate) throws Exception {
         return achProjectRepository.createProject(name,desc,tech,area,func,status,enddate,startdate);
     }
@@ -102,5 +110,10 @@ public class AchProjectServiceImpl implements AchProjectService{
     @Override
     public int updateMembers(Integer project_id, Integer staff_id,String staff_role) {
         return achProjectRepository.updateMembers(project_id, staff_id,staff_role);
+    }
+
+    @Override
+    public int updateMembersRole(Integer project_id, Integer staff_id,String staff_role) {
+        return achProjectRepository.updateMembersRole(project_id, staff_id,staff_role);
     }
 }
