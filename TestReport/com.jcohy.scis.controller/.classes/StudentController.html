@@ -1,0 +1,360 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StudentController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.jcohy.scis.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StudentController (com.jcohy.scis.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StudentController</td>
+<td class="coverageStat">
+  <span class="percent">
+    8.3%
+  </span>
+  <span class="absValue">
+    (1/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.6%
+  </span>
+  <span class="absValue">
+    (2/ 127)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">StudentController$$EnhancerBySpringCGLIB$$4b6c8af3</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    8.3%
+  </span>
+  <span class="absValue">
+    (1/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.6%
+  </span>
+  <span class="absValue">
+    (2/ 127)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.jcohy.scis.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.jcohy.lang.StringUtils;
+<i>4</i>&nbsp;import com.jcohy.scis.common.JsonResult;
+<i>5</i>&nbsp;import com.jcohy.scis.common.PageJson;
+<i>6</i>&nbsp;import com.jcohy.scis.model.*;
+<i>7</i>&nbsp;import com.jcohy.scis.repository.NoticeRepository;
+<i>8</i>&nbsp;import com.jcohy.scis.service.*;
+<i>9</i>&nbsp;import org.slf4j.Logger;
+<i>10</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>11</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>12</i>&nbsp;import org.springframework.data.domain.PageRequest;
+<i>13</i>&nbsp;import org.springframework.stereotype.Controller;
+<i>14</i>&nbsp;import org.springframework.ui.ModelMap;
+<i>15</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.util.ArrayList;
+<i>18</i>&nbsp;import java.util.List;
+<i>19</i>&nbsp;import java.util.stream.Collector;
+<i>20</i>&nbsp;import java.util.stream.Collectors;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;/**
+<i>23</i>&nbsp; * Created by jiac on 2018/4/3.
+<i>24</i>&nbsp; * Description  :
+<i>25</i>&nbsp; */
+<i>26</i>&nbsp;@Controller
+<i>27</i>&nbsp;@RequestMapping(&quot;/student&quot;)
+<b class="fc"><i>28</i>&nbsp;public class StudentController extends BaseController{</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Autowired
+<i>31</i>&nbsp;    private StudentService studentService;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    @Autowired
+<i>35</i>&nbsp;    private TeacherService teacherService;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    @Autowired
+<i>38</i>&nbsp;    private ProjectService projectService;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    @Autowired
+<i>41</i>&nbsp;    private AllotService allotService;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Autowired
+<i>44</i>&nbsp;    private NoticeService noticeService;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @Autowired
+<i>47</i>&nbsp;    private TypeService typeService;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    @Autowired
+<i>50</i>&nbsp;    private ExpertService expertService;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @Autowired
+<i>53</i>&nbsp;    private DeptService deptService;
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;    private Logger logger = LoggerFactory.getLogger(StudentController.class);</b>
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    @GetMapping(&quot;/main&quot;)
+<i>58</i>&nbsp;    public String main(ModelMap map){
+<b class="nc"><i>59</i>&nbsp;        List&lt;Notice&gt; notices = noticeService.findAll();</b>
+<b class="nc"><i>60</i>&nbsp;        map.put(&quot;size&quot;,notices.size());</b>
+<b class="nc"><i>61</i>&nbsp;        map.put(&quot;url&quot;,&quot;/notice/list&quot;);</b>
+<b class="nc"><i>62</i>&nbsp;        return &quot;/student/main&quot;;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @GetMapping(&quot;/notice/all&quot;)
+<i>66</i>&nbsp;    @ResponseBody
+<i>67</i>&nbsp;    public PageJson&lt;Notice&gt; notice(@SessionAttribute(&quot;user&quot;) Student student , ModelMap map){
+<b class="nc"><i>68</i>&nbsp;        List&lt;Notice&gt; notices = noticeService.findbyNum(student.getNum());</b>
+<b class="nc"><i>69</i>&nbsp;        List&lt;Notice&gt; noticeList = notices.stream().filter(x -&gt; x.getLevel() &lt;= 3).collect(Collectors.toList());</b>
+<b class="nc"><i>70</i>&nbsp;        PageJson&lt;Notice&gt; page = new PageJson&lt;&gt;();</b>
+<b class="nc"><i>71</i>&nbsp;        page.setCode(0);</b>
+<b class="nc"><i>72</i>&nbsp;        page.setMsg(&quot;成功&quot;);</b>
+<b class="nc"><i>73</i>&nbsp;        page.setCount(noticeList.size());</b>
+<b class="nc"><i>74</i>&nbsp;        page.setData(noticeList);</b>
+<b class="nc"><i>75</i>&nbsp;        return page;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    @DeleteMapping(&quot;/notice/{id}/del&quot;)
+<i>79</i>&nbsp;    @ResponseBody
+<i>80</i>&nbsp;    public JsonResult del(@PathVariable(&quot;id&quot;) Integer id){
+<i>81</i>&nbsp;        try {
+<b class="nc"><i>82</i>&nbsp;            noticeService.delete(id);</b>
+<b class="nc"><i>83</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>84</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>85</i>&nbsp;            return JsonResult.fail(&quot;删除失败&quot;);</b>
+<b class="nc"><i>86</i>&nbsp;        }</b>
+<b class="nc"><i>87</i>&nbsp;        return JsonResult.ok();</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    @GetMapping(&quot;/project/list&quot;)
+<i>91</i>&nbsp;    @ResponseBody
+<i>92</i>&nbsp;    public PageJson&lt;Project&gt; all(@SessionAttribute(&quot;user&quot;) Student student , ModelMap map){
+<i>93</i>&nbsp;//        Student student = studentService.findByNum(num);
+<b class="nc"><i>94</i>&nbsp;        List&lt;Project&gt; projects = projectService.findByStudent(student.getNum());</b>
+<b class="nc"><i>95</i>&nbsp;        for(Project project : projects){</b>
+<b class="nc"><i>96</i>&nbsp;            Expert expert = allotService.findByProject(project);</b>
+<b class="nc"><i>97</i>&nbsp;            if(expert == null){</b>
+<b class="nc"><i>98</i>&nbsp;                project.setExpert(null);</b>
+<i>99</i>&nbsp;            }
+<b class="nc"><i>100</i>&nbsp;            project.setExpert(expert);</b>
+<b class="nc"><i>101</i>&nbsp;        }</b>
+<b class="nc"><i>102</i>&nbsp;        PageJson&lt;Project&gt; page = new PageJson&lt;&gt;();</b>
+<b class="nc"><i>103</i>&nbsp;        page.setCode(0);</b>
+<b class="nc"><i>104</i>&nbsp;        page.setMsg(&quot;成功&quot;);</b>
+<b class="nc"><i>105</i>&nbsp;        page.setCount(projects.size());</b>
+<b class="nc"><i>106</i>&nbsp;        page.setData(projects);</b>
+<b class="nc"><i>107</i>&nbsp;        return page;</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    @GetMapping(&quot;/form&quot;)
+<i>111</i>&nbsp;    public String form(@RequestParam(required = false) Integer id, ModelMap map){
+<b class="nc"><i>112</i>&nbsp;        List&lt;Teacher&gt; teachers = teacherService.findAll();</b>
+<b class="nc"><i>113</i>&nbsp;        List&lt;Type&gt; types = typeService.findAll();</b>
+<b class="nc"><i>114</i>&nbsp;        map.put(&quot;types&quot;,types);</b>
+<b class="nc"><i>115</i>&nbsp;        map.put(&quot;teachers&quot;,teachers);</b>
+<b class="nc"><i>116</i>&nbsp;        if(id != null){</b>
+<b class="nc"><i>117</i>&nbsp;            Project project = projectService.findById(id);</b>
+<b class="nc"><i>118</i>&nbsp;            map.put(&quot;project&quot;,project);</b>
+<i>119</i>&nbsp;        }
+<b class="nc"><i>120</i>&nbsp;        return &quot;student/form&quot;;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    /**
+<i>125</i>&nbsp;     *
+<i>126</i>&nbsp;     * @return
+<i>127</i>&nbsp;     */
+<i>128</i>&nbsp;    @PostMapping(&quot;/save&quot;)
+<i>129</i>&nbsp;    @ResponseBody
+<i>130</i>&nbsp;    public JsonResult saveOrUpdate(@SessionAttribute(&quot;user&quot;) Student student,Project project){
+<i>131</i>&nbsp;
+<b class="nc"><i>132</i>&nbsp;        System.out.println(project.getGroups());</b>
+<b class="nc"><i>133</i>&nbsp;        if(!project.getGroups().equals(&quot;&quot;)&amp;&amp;project.getGroups()!=null){</b>
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;            String groups = project.getGroups();</b>
+<b class="nc"><i>136</i>&nbsp;            String[] group = groups.split(&quot;,&quot;);</b>
+<b class="nc"><i>137</i>&nbsp;            for(String num:group){</b>
+<b class="nc"><i>138</i>&nbsp;                Student stu = studentService.findByNum(Long.parseLong(num));</b>
+<b class="nc"><i>139</i>&nbsp;                if(stu==null){</b>
+<b class="nc"><i>140</i>&nbsp;                    return JsonResult.fail(&quot;学号：&quot;+num+&quot;的学生不存在&quot;);</b>
+<i>141</i>&nbsp;                }
+<i>142</i>&nbsp;            }
+<b class="nc"><i>143</i>&nbsp;        }else{</b>
+<b class="nc"><i>144</i>&nbsp;            project.setGroups(&quot;个人赛无团队&quot;);</b>
+<i>145</i>&nbsp;        }
+<i>146</i>&nbsp;
+<b class="nc"><i>147</i>&nbsp;        Project ret = projectService.findByName(project.getName());</b>
+<b class="nc"><i>148</i>&nbsp;        if(ret != null){</b>
+<b class="nc"><i>149</i>&nbsp;            return JsonResult.fail(&quot;此项目已经申报，请不要重复申报！&quot;);</b>
+<i>150</i>&nbsp;        }
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        project.setStudent(student);</b>
+<i>153</i>&nbsp;        try {
+<b class="nc"><i>154</i>&nbsp;            projectService.saveOrUpdate(project);</b>
+<b class="nc"><i>155</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>156</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>157</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
+<b class="nc"><i>158</i>&nbsp;        }</b>
+<b class="nc"><i>159</i>&nbsp;        return JsonResult.ok();</b>
+<i>160</i>&nbsp;    }
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;    @DeleteMapping(&quot;/project/{id}/del&quot;)
+<i>163</i>&nbsp;    @ResponseBody
+<i>164</i>&nbsp;    public JsonResult delproject(@PathVariable(&quot;id&quot;) Integer id){
+<i>165</i>&nbsp;        try {
+<b class="nc"><i>166</i>&nbsp;            List&lt;Allot&gt; allots = allotService.findByOtherId(id, &quot;project&quot;);</b>
+<b class="nc"><i>167</i>&nbsp;            if(allots.size()&gt;0){</b>
+<b class="nc"><i>168</i>&nbsp;                return JsonResult.fail(&quot;此项目已被分配，无法删除&quot;);</b>
+<i>169</i>&nbsp;            }
+<b class="nc"><i>170</i>&nbsp;            projectService.delete(id);</b>
+<b class="nc"><i>171</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>172</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>173</i>&nbsp;            return JsonResult.fail(&quot;&quot;);</b>
+<b class="nc"><i>174</i>&nbsp;        }</b>
+<b class="nc"><i>175</i>&nbsp;        return JsonResult.ok();</b>
+<i>176</i>&nbsp;    }
+<i>177</i>&nbsp;
+<i>178</i>&nbsp;    @GetMapping(&quot;/teacher&quot;)
+<i>179</i>&nbsp;    public String teacher(@RequestParam(required = false) Integer id, ModelMap map){
+<b class="nc"><i>180</i>&nbsp;        List&lt;Teacher&gt; teachers = teacherService.findAll();</b>
+<b class="nc"><i>181</i>&nbsp;        List&lt;Dept&gt; depts = deptService.findAll();</b>
+<b class="nc"><i>182</i>&nbsp;        map.put(&quot;depts&quot;,depts);</b>
+<b class="nc"><i>183</i>&nbsp;        map.put(&quot;teachers&quot;,teachers);</b>
+<b class="nc"><i>184</i>&nbsp;        if(id != null){</b>
+<b class="nc"><i>185</i>&nbsp;            Student student = studentService.findById(id);</b>
+<b class="nc"><i>186</i>&nbsp;            map.put(&quot;student&quot;,student);</b>
+<i>187</i>&nbsp;        }
+<b class="nc"><i>188</i>&nbsp;        return &quot;teacher/teacher&quot;;</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    @GetMapping(&quot;/expert&quot;)
+<i>192</i>&nbsp;    public String expert(@RequestParam(required = false) Integer id, ModelMap map){
+<b class="nc"><i>193</i>&nbsp;        List&lt;Expert&gt; experts = expertService.findAll();</b>
+<b class="nc"><i>194</i>&nbsp;        map.put(&quot;experts&quot;,experts);</b>
+<b class="nc"><i>195</i>&nbsp;        if(id != null){</b>
+<b class="nc"><i>196</i>&nbsp;            Student student = studentService.findById(id);</b>
+<b class="nc"><i>197</i>&nbsp;            map.put(&quot;student&quot;,student);</b>
+<i>198</i>&nbsp;        }
+<b class="nc"><i>199</i>&nbsp;        return &quot;expert/expert&quot;;</b>
+<i>200</i>&nbsp;    }
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    @GetMapping(&quot;/list&quot;)
+<i>203</i>&nbsp;    @ResponseBody
+<i>204</i>&nbsp;    public PageJson&lt;Student&gt; student(@SessionAttribute(&quot;user&quot;) Student student , ModelMap map){
+<b class="nc"><i>205</i>&nbsp;        List&lt;Student&gt; students = studentService.findAll();</b>
+<b class="nc"><i>206</i>&nbsp;        PageJson&lt;Student&gt; page = new PageJson&lt;&gt;();</b>
+<b class="nc"><i>207</i>&nbsp;        page.setCode(0);</b>
+<b class="nc"><i>208</i>&nbsp;        page.setMsg(&quot;成功&quot;);</b>
+<b class="nc"><i>209</i>&nbsp;        page.setCount(students.size());</b>
+<b class="nc"><i>210</i>&nbsp;        page.setData(students);</b>
+<b class="nc"><i>211</i>&nbsp;        return page;</b>
+<i>212</i>&nbsp;    }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;
+<i>215</i>&nbsp;    @GetMapping(&quot;/search&quot;)
+<i>216</i>&nbsp;    @ResponseBody
+<i>217</i>&nbsp;    public PageJson search(String keyword,String dept,String major){
+<b class="nc"><i>218</i>&nbsp;        List&lt;Student&gt; students = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>219</i>&nbsp;        PageJson&lt;Student&gt; page = new PageJson&lt;&gt;();</b>
+<b class="nc"><i>220</i>&nbsp;        if(StringUtils.isAllEmpty(keyword,dept,major)){</b>
+<b class="nc"><i>221</i>&nbsp;            students = studentService.findAll();</b>
+<b class="nc"><i>222</i>&nbsp;            page.setCode(0);</b>
+<b class="nc"><i>223</i>&nbsp;            page.setMsg(&quot;成功&quot;);</b>
+<b class="nc"><i>224</i>&nbsp;            page.setCount(students.size());</b>
+<b class="nc"><i>225</i>&nbsp;            page.setData(students);</b>
+<b class="nc"><i>226</i>&nbsp;            return page;</b>
+<i>227</i>&nbsp;        }
+<i>228</i>&nbsp;
+<b class="nc"><i>229</i>&nbsp;        if(!StringUtils.isEmpty(keyword)){</b>
+<b class="nc"><i>230</i>&nbsp;            boolean isNum = keyword.matches(&quot;[0-9]+&quot;);</b>
+<b class="nc"><i>231</i>&nbsp;            if(isNum){</b>
+<b class="nc"><i>232</i>&nbsp;                Student student = studentService.findByNum(Long.parseLong(keyword));</b>
+<b class="nc"><i>233</i>&nbsp;                if(dept != null &amp;&amp; !dept.equals(&quot;&quot;)){</b>
+<b class="nc"><i>234</i>&nbsp;                    if(major != null &amp;&amp; major.equals(&quot;&quot;)){</b>
+<b class="nc"><i>235</i>&nbsp;                        if(student != null &amp;&amp; student.getMajor().getName().equals(major)){</b>
+<b class="nc"><i>236</i>&nbsp;                            students.add(student);</b>
+<i>237</i>&nbsp;                        }
+<i>238</i>&nbsp;                    }
+<i>239</i>&nbsp;                }else{
+<b class="nc"><i>240</i>&nbsp;                    students.add(student);</b>
+<i>241</i>&nbsp;                }
+<b class="nc"><i>242</i>&nbsp;            }else{</b>
+<b class="nc"><i>243</i>&nbsp;                Student student = studentService.findByName(keyword);</b>
+<b class="nc"><i>244</i>&nbsp;                if(dept != null &amp;&amp; !dept.equals(&quot;&quot;)){</b>
+<b class="nc"><i>245</i>&nbsp;                    if(student != null &amp;&amp; student.getMajor().getName().equals(major)){</b>
+<b class="nc"><i>246</i>&nbsp;                        students.add(student);</b>
+<i>247</i>&nbsp;                    }
+<i>248</i>&nbsp;                }else{
+<b class="nc"><i>249</i>&nbsp;                    students.add(student);</b>
+<i>250</i>&nbsp;                }
+<i>251</i>&nbsp;            }
+<b class="nc"><i>252</i>&nbsp;        }else{</b>
+<b class="nc"><i>253</i>&nbsp;            List&lt;Student&gt; teacherList = studentService.findAll();</b>
+<b class="nc"><i>254</i>&nbsp;            if(!StringUtils.isEmpty(dept)){</b>
+<b class="nc"><i>255</i>&nbsp;                List&lt;Student&gt; list = teacherList.stream().filter(x -&gt; x.getMajor().getName().equals(major)).collect(Collectors.toList());</b>
+<b class="nc"><i>256</i>&nbsp;                students = list;</b>
+<b class="nc"><i>257</i>&nbsp;            }else{</b>
+<b class="nc"><i>258</i>&nbsp;                students = teacherList;</b>
+<i>259</i>&nbsp;            }
+<i>260</i>&nbsp;        }
+<b class="nc"><i>261</i>&nbsp;        page.setCode(0);</b>
+<b class="nc"><i>262</i>&nbsp;        page.setMsg(&quot;成功&quot;);</b>
+<b class="nc"><i>263</i>&nbsp;        page.setCount(students.size());</b>
+<b class="nc"><i>264</i>&nbsp;        page.setData(students);</b>
+<b class="nc"><i>265</i>&nbsp;        return page;</b>
+<i>266</i>&nbsp;    }
+<i>267</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-03 17:17</div>
+</div>
+</body>
+</html>

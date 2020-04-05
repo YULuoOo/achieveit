@@ -1,0 +1,369 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.jcohy.scis.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginController (com.jcohy.scis.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginController</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (2/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.4%
+  </span>
+  <span class="absValue">
+    (2/ 141)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LoginController$$EnhancerBySpringCGLIB$$e0140d3d</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (2/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.4%
+  </span>
+  <span class="absValue">
+    (2/ 141)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.jcohy.scis.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.jcohy.lang.StringUtils;
+<i>4</i>&nbsp;import com.jcohy.scis.common.JsonResult;
+<i>5</i>&nbsp;import com.jcohy.scis.exception.ServiceException;
+<i>6</i>&nbsp;import com.jcohy.scis.model.*;
+<i>7</i>&nbsp;import com.jcohy.scis.service.*;
+<i>8</i>&nbsp;import org.slf4j.Logger;
+<i>9</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>10</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>11</i>&nbsp;import org.springframework.stereotype.Controller;
+<i>12</i>&nbsp;import org.springframework.ui.ModelMap;
+<i>13</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import javax.servlet.http.HttpServletRequest;
+<i>16</i>&nbsp;import javax.servlet.http.HttpServletResponse;
+<i>17</i>&nbsp;import javax.servlet.http.HttpSession;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;/**
+<i>20</i>&nbsp; * ClassName  : LoginController
+<i>21</i>&nbsp; * Description  :登录模块处理
+<i>22</i>&nbsp; */
+<i>23</i>&nbsp;@Controller
+<b class="fc"><i>24</i>&nbsp;public class LoginController {</b>
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);</b>
+<i>27</i>&nbsp;    @Autowired
+<i>28</i>&nbsp;    private AdminService adminService;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    @Autowired
+<i>31</i>&nbsp;    private StudentService studentService;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @Autowired
+<i>34</i>&nbsp;    private TeacherService teacherService;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Autowired
+<i>37</i>&nbsp;    private ExpertService expertService;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    @Autowired
+<i>40</i>&nbsp;    private StaffService staffService;
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * 登录处理
+<i>45</i>&nbsp;     * @param num
+<i>46</i>&nbsp;     * @param password
+<i>47</i>&nbsp;     * @param role
+<i>48</i>&nbsp;     * @return
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    @PostMapping(&quot;/login&quot;)
+<i>51</i>&nbsp;    @ResponseBody
+<i>52</i>&nbsp;    public JsonResult login(Long num, String password,
+<i>53</i>&nbsp;                            @RequestParam(required = false) String role, HttpServletRequest request){
+<i>54</i>&nbsp;        try {
+<b class="nc"><i>55</i>&nbsp;            if(num == null || StringUtils.isEmpty(password)){</b>
+<b class="nc"><i>56</i>&nbsp;                return JsonResult.fail(&quot;用户名或者密码不能为空&quot;);</b>
+<i>57</i>&nbsp;            }
+<b class="nc"><i>58</i>&nbsp;            HttpSession session = request.getSession();</b>
+<b class="nc"><i>59</i>&nbsp;            session.setAttribute(&quot;role&quot;,role);</b>
+<b class="nc"><i>60</i>&nbsp;            logger.error(&quot;name:{}  password:{}  type:{}&quot;,num,password,role);</b>
+<b class="nc"><i>61</i>&nbsp;            if(StringUtils.trim(role).equals(&quot;student&quot;)){</b>
+<b class="nc"><i>62</i>&nbsp;                Student login = studentService.login(num, password);</b>
+<b class="nc"><i>63</i>&nbsp;                if(login == null){</b>
+<b class="nc"><i>64</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名不存在&quot;);</b>
+<i>65</i>&nbsp;                }
+<b class="nc"><i>66</i>&nbsp;                if(!login.getPassword().equals(password)){</b>
+<b class="nc"><i>67</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名账号密码不匹配&quot;);</b>
+<i>68</i>&nbsp;                }
+<b class="nc"><i>69</i>&nbsp;                session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>70</i>&nbsp;                return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/student/main&quot;);</b>
+<b class="nc"><i>71</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;teacher&quot;)){</b>
+<b class="nc"><i>72</i>&nbsp;                Teacher login = teacherService.login(num, password);</b>
+<b class="nc"><i>73</i>&nbsp;                if(login == null){</b>
+<b class="nc"><i>74</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名不存在&quot;);</b>
+<i>75</i>&nbsp;                }
+<b class="nc"><i>76</i>&nbsp;                if(!login.getPassword().equals(password)){</b>
+<b class="nc"><i>77</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名账号密码不匹配&quot;);</b>
+<i>78</i>&nbsp;                }
+<b class="nc"><i>79</i>&nbsp;                session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>80</i>&nbsp;                return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/teacher/main&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;expert&quot;)){</b>
+<b class="nc"><i>82</i>&nbsp;                Expert login = expertService.login(num, password);</b>
+<b class="nc"><i>83</i>&nbsp;                if(login == null){</b>
+<b class="nc"><i>84</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名不存在&quot;);</b>
+<i>85</i>&nbsp;                }
+<b class="nc"><i>86</i>&nbsp;                if(!login.getPassword().equals(password)){</b>
+<b class="nc"><i>87</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名账号密码不匹配&quot;);</b>
+<i>88</i>&nbsp;                }
+<b class="nc"><i>89</i>&nbsp;                session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>90</i>&nbsp;                return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/expert/main&quot;);</b>
+<b class="nc"><i>91</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;admin&quot;)){</b>
+<b class="nc"><i>92</i>&nbsp;                Admin login = adminService.login(num, password);</b>
+<b class="nc"><i>93</i>&nbsp;                if(login == null){</b>
+<b class="nc"><i>94</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名不存在&quot;);</b>
+<i>95</i>&nbsp;                }
+<b class="nc"><i>96</i>&nbsp;                if(!login.getPassword().equals(password)){</b>
+<b class="nc"><i>97</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名账号密码不匹配&quot;);</b>
+<i>98</i>&nbsp;                }
+<b class="nc"><i>99</i>&nbsp;                session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>100</i>&nbsp;                return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/admin/main&quot;);</b>
+<b class="nc"><i>101</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;staff&quot;)){</b>
+<b class="nc"><i>102</i>&nbsp;                Staff login = staffService.login(num, password);</b>
+<b class="nc"><i>103</i>&nbsp;                if(login == null){</b>
+<b class="nc"><i>104</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名不存在&quot;);</b>
+<i>105</i>&nbsp;                }
+<b class="nc"><i>106</i>&nbsp;                if(!login.getPassword().equals(password)){</b>
+<b class="nc"><i>107</i>&nbsp;                    return JsonResult.fail(&quot;登录失败,用户名账号密码不匹配&quot;);</b>
+<i>108</i>&nbsp;                }
+<b class="nc"><i>109</i>&nbsp;                session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>110</i>&nbsp;                return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/staff/main&quot;);</b>
+<i>111</i>&nbsp;            }
+<b class="nc"><i>112</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>113</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
+<b class="nc"><i>114</i>&nbsp;        }</b>
+<b class="nc"><i>115</i>&nbsp;        return JsonResult.fail(&quot;角色不存在&quot;);</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    /**
+<i>119</i>&nbsp;     * 注册处理
+<i>120</i>&nbsp;     * @param num
+<i>121</i>&nbsp;     * @param name
+<i>122</i>&nbsp;     * @param password
+<i>123</i>&nbsp;     * @param role
+<i>124</i>&nbsp;     * @param sex
+<i>125</i>&nbsp;     * @return
+<i>126</i>&nbsp;     */
+<i>127</i>&nbsp;    @PostMapping(&quot;/regi&quot;)
+<i>128</i>&nbsp;    @ResponseBody
+<i>129</i>&nbsp;    public JsonResult register(Long num,
+<i>130</i>&nbsp;                               String name,
+<i>131</i>&nbsp;                               String password,
+<i>132</i>&nbsp;                               @RequestParam(required = false) String role,
+<i>133</i>&nbsp;                               @RequestParam(required = false) String title,
+<i>134</i>&nbsp;                               @RequestParam(required = false) String sex,
+<i>135</i>&nbsp;                               HttpServletRequest request){
+<i>136</i>&nbsp;        try {
+<b class="nc"><i>137</i>&nbsp;            if(num == null || StringUtils.isEmpty(password) || StringUtils.isEmpty(name)){</b>
+<b class="nc"><i>138</i>&nbsp;                return JsonResult.fail(&quot;用户名或者名字或者密码不能为空&quot;);</b>
+<i>139</i>&nbsp;            }
+<b class="nc"><i>140</i>&nbsp;            HttpSession session = request.getSession();</b>
+<b class="nc"><i>141</i>&nbsp;            session.setAttribute(&quot;role&quot;,role);</b>
+<b class="nc"><i>142</i>&nbsp;            session.setAttribute(&quot;sex&quot;,sex);</b>
+<i>143</i>&nbsp;
+<b class="nc"><i>144</i>&nbsp;            logger.error(&quot;num:{} name:{} password:{}  type:{}  sex:{}&quot;,num,name,password,role,sex);</b>
+<b class="nc"><i>145</i>&nbsp;            if(StringUtils.trim(role).equals(&quot;student&quot;)){</b>
+<b class="nc"><i>146</i>&nbsp;                Student login = studentService.login(num, password);</b>
+<b class="nc"><i>147</i>&nbsp;                if(login != null){</b>
+<b class="nc"><i>148</i>&nbsp;                    return JsonResult.fail(&quot;注册失败,用户名已存在&quot;);</b>
+<i>149</i>&nbsp;                }
+<i>150</i>&nbsp;                else {
+<b class="nc"><i>151</i>&nbsp;                    studentService.register(num, name, password,sex);</b>
+<b class="nc"><i>152</i>&nbsp;                    login = studentService.login(num, password);</b>
+<b class="nc"><i>153</i>&nbsp;                    session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>154</i>&nbsp;                    return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/student/main&quot;);</b>
+<i>155</i>&nbsp;                }
+<b class="nc"><i>156</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;teacher&quot;)){</b>
+<b class="nc"><i>157</i>&nbsp;                Teacher login = teacherService.login(num, password);</b>
+<b class="nc"><i>158</i>&nbsp;                if(login != null){</b>
+<b class="nc"><i>159</i>&nbsp;                    return JsonResult.fail(&quot;注册失败,用户名已存在&quot;);</b>
+<i>160</i>&nbsp;                }
+<i>161</i>&nbsp;                else {
+<b class="nc"><i>162</i>&nbsp;                    teacherService.register(num, name, password,sex);</b>
+<b class="nc"><i>163</i>&nbsp;                    login = teacherService.login(num, password);</b>
+<b class="nc"><i>164</i>&nbsp;                    session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>165</i>&nbsp;                    return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/teacher/main&quot;);</b>
+<i>166</i>&nbsp;                }
+<b class="nc"><i>167</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;expert&quot;)){</b>
+<b class="nc"><i>168</i>&nbsp;                Expert login = expertService.login(num, password);</b>
+<b class="nc"><i>169</i>&nbsp;                if(login != null){</b>
+<b class="nc"><i>170</i>&nbsp;                    return JsonResult.fail(&quot;注册失败,用户名已存在&quot;);</b>
+<i>171</i>&nbsp;                }
+<i>172</i>&nbsp;                else {
+<b class="nc"><i>173</i>&nbsp;                    expertService.register(num, name, password,sex);</b>
+<b class="nc"><i>174</i>&nbsp;                    login = expertService.login(num, password);</b>
+<b class="nc"><i>175</i>&nbsp;                    session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>176</i>&nbsp;                    return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/expert/main&quot;);</b>
+<i>177</i>&nbsp;                }
+<b class="nc"><i>178</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;admin&quot;)){</b>
+<b class="nc"><i>179</i>&nbsp;                Admin login = adminService.login(num, password);</b>
+<b class="nc"><i>180</i>&nbsp;                if(login != null){</b>
+<b class="nc"><i>181</i>&nbsp;                    return JsonResult.fail(&quot;注册失败,用户名已存在&quot;);</b>
+<i>182</i>&nbsp;                }
+<i>183</i>&nbsp;                else {
+<b class="nc"><i>184</i>&nbsp;                    adminService.register(num, name, password,sex);</b>
+<b class="nc"><i>185</i>&nbsp;                    login = adminService.login(num, password);</b>
+<b class="nc"><i>186</i>&nbsp;                    session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>187</i>&nbsp;                    return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/admin/main&quot;);</b>
+<i>188</i>&nbsp;                }
+<b class="nc"><i>189</i>&nbsp;            }else if(StringUtils.trim(role).equals(&quot;staff&quot;)){</b>
+<b class="nc"><i>190</i>&nbsp;                session.setAttribute(&quot;title&quot;,title);</b>
+<b class="nc"><i>191</i>&nbsp;                Staff login = staffService.login(num, password);</b>
+<b class="nc"><i>192</i>&nbsp;                if(login != null){</b>
+<b class="nc"><i>193</i>&nbsp;                    return JsonResult.fail(&quot;注册失败,用户名已存在&quot;);</b>
+<i>194</i>&nbsp;                }
+<i>195</i>&nbsp;                else {
+<b class="nc"><i>196</i>&nbsp;                    staffService.register(num, name, password,sex,title);</b>
+<b class="nc"><i>197</i>&nbsp;                    login = staffService.login(num, password);</b>
+<b class="nc"><i>198</i>&nbsp;                    session.setAttribute(&quot;user&quot;,login);</b>
+<b class="nc"><i>199</i>&nbsp;                    return JsonResult.ok().set(&quot;returnUrl&quot;, &quot;/staff/main&quot;);</b>
+<i>200</i>&nbsp;                }
+<i>201</i>&nbsp;            }
+<b class="nc"><i>202</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>203</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
+<b class="nc"><i>204</i>&nbsp;        }</b>
+<b class="nc"><i>205</i>&nbsp;        return JsonResult.fail(&quot;角色不存在&quot;);</b>
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;    /**
+<i>209</i>&nbsp;     * 注销用户
+<i>210</i>&nbsp;     * @param request
+<i>211</i>&nbsp;     * @param response
+<i>212</i>&nbsp;     * @return
+<i>213</i>&nbsp;     */
+<i>214</i>&nbsp;    @GetMapping(&quot;/logout&quot;)
+<i>215</i>&nbsp;    public String logout(HttpServletRequest request, HttpServletResponse response){
+<i>216</i>&nbsp;
+<b class="nc"><i>217</i>&nbsp;        return &quot;redirect:/&quot;;</b>
+<i>218</i>&nbsp;    }
+<i>219</i>&nbsp;
+<i>220</i>&nbsp;
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;    @PostMapping(&quot;/admin/update/&quot;)
+<i>223</i>&nbsp;    @ResponseBody
+<i>224</i>&nbsp;    public JsonResult updatePassword(@SessionAttribute(&quot;role&quot;) String role,@RequestParam Long num,@RequestParam String oldPassword, @RequestParam String newPassword,
+<i>225</i>&nbsp;                                 @RequestParam String rePassword, ModelMap map){
+<b class="nc"><i>226</i>&nbsp;        logger.error(&quot;role:{}&quot;,role);</b>
+<b class="nc"><i>227</i>&nbsp;        if(StringUtils.isEmpty(role)){</b>
+<b class="nc"><i>228</i>&nbsp;            return JsonResult.fail(&quot;此用户不存在&quot;);</b>
+<i>229</i>&nbsp;        }
+<b class="nc"><i>230</i>&nbsp;        if(StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword) || StringUtils.isBlank(rePassword)){</b>
+<b class="nc"><i>231</i>&nbsp;            return JsonResult.fail(&quot;参数不完整&quot;);</b>
+<i>232</i>&nbsp;        }
+<b class="nc"><i>233</i>&nbsp;        if(!newPassword.equals(rePassword)){</b>
+<b class="nc"><i>234</i>&nbsp;            return JsonResult.fail(&quot;两次输入密码不一致&quot;);</b>
+<i>235</i>&nbsp;        }
+<b class="nc"><i>236</i>&nbsp;        if(role.equals(&quot;student&quot;)){</b>
+<b class="nc"><i>237</i>&nbsp;            Student dbUser = studentService.findByNum(num);</b>
+<b class="nc"><i>238</i>&nbsp;            if(!dbUser.getPassword().equals(oldPassword)){</b>
+<b class="nc"><i>239</i>&nbsp;                return JsonResult.fail(&quot;旧密码不正确&quot;);</b>
+<i>240</i>&nbsp;            }
+<b class="nc"><i>241</i>&nbsp;            dbUser.setPassword(newPassword);</b>
+<b class="nc"><i>242</i>&nbsp;            studentService.updatePassword(dbUser);</b>
+<b class="nc"><i>243</i>&nbsp;        }else if(role.equals(&quot;teacher&quot;)){</b>
+<b class="nc"><i>244</i>&nbsp;            Teacher dbUser = teacherService.findByNum(num);</b>
+<b class="nc"><i>245</i>&nbsp;            if(!dbUser.getPassword().equals(oldPassword)){</b>
+<b class="nc"><i>246</i>&nbsp;                return JsonResult.fail(&quot;旧密码不正确&quot;);</b>
+<i>247</i>&nbsp;            }
+<b class="nc"><i>248</i>&nbsp;            dbUser.setPassword(newPassword);</b>
+<b class="nc"><i>249</i>&nbsp;            teacherService.updatePassword(dbUser);</b>
+<b class="nc"><i>250</i>&nbsp;        }else if(role.equals(&quot;expert&quot;)){</b>
+<b class="nc"><i>251</i>&nbsp;            Expert dbUser = expertService.findByNum(num);</b>
+<b class="nc"><i>252</i>&nbsp;            if(!dbUser.getPassword().equals(oldPassword)){</b>
+<b class="nc"><i>253</i>&nbsp;                return JsonResult.fail(&quot;旧密码不正确&quot;);</b>
+<i>254</i>&nbsp;            }
+<b class="nc"><i>255</i>&nbsp;            dbUser.setPassword(newPassword);</b>
+<b class="nc"><i>256</i>&nbsp;            expertService.updatePassword(dbUser);</b>
+<b class="nc"><i>257</i>&nbsp;        }else if(role.equals(&quot;admin&quot;)){</b>
+<b class="nc"><i>258</i>&nbsp;            Admin dbUser = adminService.findByNum(num);</b>
+<b class="nc"><i>259</i>&nbsp;            if(!dbUser.getPassword().equals(oldPassword)){</b>
+<b class="nc"><i>260</i>&nbsp;                return JsonResult.fail(&quot;旧密码不正确&quot;);</b>
+<i>261</i>&nbsp;            }
+<b class="nc"><i>262</i>&nbsp;            dbUser.setPassword(newPassword);</b>
+<b class="nc"><i>263</i>&nbsp;            adminService.updatePassword(dbUser);</b>
+<b class="nc"><i>264</i>&nbsp;        }else if(role.equals(&quot;staff&quot;)){</b>
+<b class="nc"><i>265</i>&nbsp;            Staff dbUser = staffService.findByNum(num);</b>
+<b class="nc"><i>266</i>&nbsp;            if(!dbUser.getPassword().equals(oldPassword)){</b>
+<b class="nc"><i>267</i>&nbsp;                return JsonResult.fail(&quot;旧密码不正确&quot;);</b>
+<i>268</i>&nbsp;            }
+<b class="nc"><i>269</i>&nbsp;            dbUser.setPassword(newPassword);</b>
+<b class="nc"><i>270</i>&nbsp;            staffService.updatePassword(dbUser);</b>
+<i>271</i>&nbsp;        }
+<b class="nc"><i>272</i>&nbsp;        return JsonResult.ok();</b>
+<i>273</i>&nbsp;    }
+<i>274</i>&nbsp;
+<i>275</i>&nbsp;
+<i>276</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-03 17:17</div>
+</div>
+</body>
+</html>
