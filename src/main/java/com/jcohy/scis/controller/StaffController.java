@@ -196,7 +196,7 @@ public class StaffController extends BaseController{
             achProjectService.createProject(name,desc,tech,area,func,0,format.parse(enddate),format.parse(startdate));
             Ach_project project=achProjectService.getAchProjectByName(name);
             Staff user= (Staff) session.getAttribute("user");
-            achProjectService.updateMembers(project.getId(),user.getId() );
+            achProjectService.updateMembers(project.getId(),user.getId() ,"项目经理");
             try {
                 sendMailService.sendmail(user.getEmail(), user.getName());
             }catch (Exception e){
@@ -355,6 +355,7 @@ public class StaffController extends BaseController{
     public JsonResult updateMembers(@PathVariable("id") Integer pro_id, HttpServletRequest request
     ){
         String[] staff_ids = request.getParameterValues("check");
+        String[] staff_roles = request.getParameterValues("role");
         try {
             for(int i=0;i<staff_ids.length;i++){
                 System.out.println(staff_ids[i]);
@@ -362,7 +363,15 @@ public class StaffController extends BaseController{
                 if(staff_ids[i]!=null){
                     staff_id_int = Integer.valueOf(staff_ids[i]);
                 }
-                achProjectService.updateMembers(pro_id,staff_id_int);
+                achProjectService.updateMembers(pro_id,staff_id_int,staff_roles[i]);
+
+                //发邮件
+                Staff member = staffService.findById(staff_id_int);
+                Ach_project project = achProjectService.getAchProject(pro_id);
+                if(member.getEmail()!=null){
+                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

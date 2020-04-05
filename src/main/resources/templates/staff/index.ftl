@@ -77,7 +77,13 @@
                         {{#  if(d.pro_status == 0){ }}
                         项目待审批
                         {{#  } else if (d.pro_status == 1 ){ }}
-                        项目上级审批通过
+                        审批通过 等待配置
+                        {{#  } else if (d.pro_status == 2 ){ }}
+                        等待分配EPG
+                        {{#  } else if (d.pro_status == 3 ){ }}
+                        等待分配QA
+                        {{#  } else if (d.pro_status == 4 ){ }}
+                        项目分配完成
                         {{#  } else if (d.pro_status == -1 ){ }}
                         项目上级审批拒绝
                         {{#  } }}

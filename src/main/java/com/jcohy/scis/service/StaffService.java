@@ -2,7 +2,6 @@ package com.jcohy.scis.service;
 
 import com.jcohy.scis.exception.ServiceException;
 import com.jcohy.scis.model.Staff;
-import com.jcohy.scis.model.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -31,7 +30,7 @@ public interface StaffService {
      * @return
      * @throws Exception
      */
-    int register(Long num, String name, String password, String sex, String title) throws Exception;
+    int register(Long num, String name, String password, String sex, String title,String email) throws Exception;
 
     Staff findByNum(Long num);
 

@@ -67,7 +67,7 @@
                         <a class="layui-btn layui-btn-normal" lay-event="accept">通过</a>
                         <a class="layui-btn layui-btn-danger " lay-event="refuse">拒绝</a>
                         {{#  } else if("${Session.user.title}" == "配置管理员"){ }}
-                        <a class="layui-btn layui-btn-normal" lay-event="accept">配置</a>
+                        <a class="layui-btn layui-btn-normal" lay-event="config">配置</a>
                         {{#  } else if("${Session.user.title}" == "EPG Leader"){ }}
                         <a class="layui-btn layui-btn-normal" lay-event="accept">分配EPG</a>
                         {{#  } else if("${Session.user.title}" == "QA管理员"){ }}
