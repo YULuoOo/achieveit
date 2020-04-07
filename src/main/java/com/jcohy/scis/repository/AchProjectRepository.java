@@ -31,6 +31,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Query(value = "select id,num,name from staff where not exists (select * from staff_project where staff.id =staff_project.staff_id and pro_id = ?1)", nativeQuery = true)
     List<Map<String,Object>> getOtherStaffs(Integer integer);
 
+    @Query(value = "select st.id,st.num,st.name,sp.staff_role from staff st inner join staff_project sp on st.id = sp.staff_id where sp.pro_id = ?1", nativeQuery = true)
+    List<Map<String,Object>> getProjectStaffs(Integer integer);
+
     @Query(value = "select * from ach_project where id = ?1",nativeQuery = true)
     Ach_project getOne(Integer integer);
 
@@ -56,4 +59,9 @@ public interface AchProjectRepository extends JpaRepository<Ach_project,Integer>
     @Modifying
     @Query(value = "insert into staff_project (pro_id,staff_id,staff_role) values(?1,?2,?3)",nativeQuery = true)
     int updateMembers(Integer project_id, Integer staff_id,String staff_role);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE staff_project SET  staff_role=?3 WHERE pro_id=?1 and staff_id=?2", nativeQuery = true)
+    int updateMembersRole(Integer project_id, Integer staff_id,String staff_role);
 }

@@ -37,6 +37,12 @@ public interface AchProjectService {
     List<Ach_project> getUserProjectList(Integer staff_id);
 
     /**
+     *  项目成员列表,包括id、num、name、role
+     * @return
+     */
+    List<Map<String,Object>> getProjectStaffs(Integer pro_id);
+
+    /**
      *  非项目成员的其他员工列表
      * @return
      */
@@ -84,4 +90,9 @@ public interface AchProjectService {
      * 添加项目成员
      */
     int updateMembers(Integer project_id, Integer staff_id,String staff_role);
+
+    /**
+     * 调整项目成员角色
+     */
+    int updateMembersRole(Integer project_id, Integer staff_id,String staff_role);
 }

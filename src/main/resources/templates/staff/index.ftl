@@ -63,6 +63,8 @@
             <script type="text/html" id="operator">
                 <#--TRY 改UI-->
                 <div class="layui-btn-container">
+                    <#--MODIFYMEMBERROLE 增加了调整成员角色按钮-->
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="modifyMemberRole">调整成员角色</a>
                     <#--ADD 增加了添加成员按钮-->
                     <a class="layui-btn layui-btn-xs" lay-event="add">增加成员</a>
                     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">查看</a>
