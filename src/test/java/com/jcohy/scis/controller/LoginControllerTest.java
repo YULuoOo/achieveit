@@ -5,6 +5,7 @@ import com.jcohy.scis.ScisApplication;
 import com.jcohy.scis.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.MockitoSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,8 +37,9 @@ public class LoginControllerTest
     @Autowired
     private StaffService staffService;
 
+    //登录
     @Test
-    public void loginTest() throws Exception {
+    public void loginNormalTest() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -50,7 +52,47 @@ public class LoginControllerTest
     }
 
     @Test
-    public void registerTest() throws Exception{
+    public void loginNullNumTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("num","")
+                        .param("password","123456")
+                        .param("role","staff"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void loginNumNotExistTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("num","0000000000000")
+                        .param("password","123456")
+                        .param("role","staff"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void loginWrongPasswordTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("num","10001")
+                        .param("password","000000")
+                        .param("role","staff"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //注册
+    @Test
+    public void registerNormalTest() throws Exception{
         MvcResult mvcResult = mockMvc.perform(
                 post("/regi")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,12 +108,50 @@ public class LoginControllerTest
     }
 
     @Test
-    public void logoutTest()
-    {
+    public void registerNullNumTest() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                post("/regi")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("num","")
+                        .param("name","test")
+                        .param("password","999999")
+                        .param("role","staff")
+                        .param("title","项目经理")
+                        .param("sex","男"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
     @Test
-    public void updatePasswordTest() throws Exception {
+    public void registerExistNumTest() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                post("/regi")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("num","10001")
+                        .param("name","test")
+                        .param("password","999999")
+                        .param("role","staff")
+                        .param("title","项目经理")
+                        .param("sex","男"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void logoutTest()throws Exception
+    {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/logout")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updatePasswordNormalTest() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 post("/admin/update/")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -79,6 +159,70 @@ public class LoginControllerTest
                         .param("role","staff")
                         .param("num","10001")
                         .param("oldPassword","123456")
+                        .param("newPassword","999999")
+                        .param("rePassword","999999"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updatePasswordRoleNotExistTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/admin/update/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .sessionAttr("role","")
+                        .param("role","")
+                        .param("num","000000000")
+                        .param("oldPassword","123456")
+                        .param("newPassword","999999")
+                        .param("rePassword","999999"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updatePasswordParametersIncompleteTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/admin/update/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .sessionAttr("role","staff")
+                        .param("role","staff")
+                        .param("num","10001")
+                        .param("oldPassword","  ")
+                        .param("newPassword","")
+                        .param("rePassword",""))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updatePasswordDifferentPasswordTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/admin/update/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .sessionAttr("role","staff")
+                        .param("role","staff")
+                        .param("num","10001")
+                        .param("oldPassword","123456")
+                        .param("newPassword","999999")
+                        .param("rePassword","999999999"))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updatePasswordWrongOldPasswordTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/admin/update/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .sessionAttr("role","staff")
+                        .param("role","staff")
+                        .param("num","10001")
+                        .param("oldPassword","000000000")
                         .param("newPassword","999999")
                         .param("rePassword","999999"))
                 .andReturn();

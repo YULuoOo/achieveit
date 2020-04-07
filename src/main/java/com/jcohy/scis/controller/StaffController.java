@@ -247,7 +247,7 @@ public class StaffController extends BaseController{
 
     @DeleteMapping("/workinghour/{id}/del")
     @ResponseBody
-    public JsonResult delete(@PathVariable("id") Integer id){
+    public JsonResult delWorkingHour(@PathVariable("id") Integer id){
         try {
             workingHourService.delete(id);
         } catch (Exception e) {

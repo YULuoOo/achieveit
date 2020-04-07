@@ -38,8 +38,9 @@ public class ConfigControllerTest {
     private AchProjectService achProjectService;
     @Autowired
     private ConfigService configService;
+
     @Test
-    public void getConfig() throws Exception {
+    public void getConfigTest() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 get("/config/1/get")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -50,7 +51,17 @@ public class ConfigControllerTest {
     }
 
     @Test
-    public void createConfig() throws Exception{
+    public void getConfigNullIdTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/config/null/get")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void createConfigTest() throws Exception{
         MvcResult mvcResult = mockMvc.perform(
                 post("/config/1/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,9 +76,39 @@ public class ConfigControllerTest {
     }
 
     @Test
-    public void updateConfig() throws Exception {
+    public void createConfigNullIdTest() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                post("/config/0/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("giturl","aaa")
+                        .param("root","test")
+                        .param("disk_size","8gb")
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updateConfigTest1() throws Exception {
         MvcResult mvcResult = mockMvc.perform(
                 post("/config/1/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("giturl","bbb")
+                        .param("root","test")
+                        .param("disk_size","8gb")
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void updateConfigTest2() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                post("/config/0/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("giturl","bbb")
                         .param("root","test")

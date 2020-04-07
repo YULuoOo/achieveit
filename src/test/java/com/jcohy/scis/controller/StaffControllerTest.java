@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.jcohy.scis.ScisApplication;
 import com.jcohy.scis.model.Staff;
 import com.jcohy.scis.service.AchProjectService;
+import com.jcohy.scis.service.StaffService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -53,6 +54,8 @@ public class StaffControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private AchProjectService achProjectService;
+    @Autowired
+    private StaffService staffService;
 
     //OK
     @Test
@@ -103,9 +106,129 @@ public class StaffControllerTest {
 
     //OK
     @Test
-    public void getProcessTest() throws Exception{
+    public void getProcessTest1() throws Exception{
         Staff user = new Staff();
         user.setTitle("项目经理");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void getProcessTest2() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("项目成员");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void getProcessTest3() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("配置管理员");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void getProcessTest4() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("EPG Leader");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void getProcessTest5() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("QA管理员");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/process")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void getProcessTest6() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("项目上级");
         HttpSession session = mock(HttpSession.class);
         when(session.getAttribute("user")).thenReturn(user);
         MvcResult mvcResult = mockMvc.perform(
@@ -137,6 +260,18 @@ public class StaffControllerTest {
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
+    //OK
+    @Test
+    public void getMemberNullIdTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/-1/member")
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
     //not OK
     @Test
     public void getOtherStaffsTest() throws Exception {
@@ -156,6 +291,16 @@ public class StaffControllerTest {
                 get("/staff/project/1/get")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JSON.toJSONString("")))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+    //OK
+    @Test
+    public void getProjectNullIdTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/project/0.0/get")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         System.out.println(mvcResult.getResponse().getContentAsString());
@@ -198,7 +343,7 @@ public class StaffControllerTest {
 
     //OK
     @Test
-    public void createWorkingHourTest() throws Exception{
+    public void createWorkingHourNormalTest() throws Exception{
         Staff user = new Staff();
         user.setId(1);
         HttpSession session = mock(HttpSession.class);
@@ -227,11 +372,52 @@ public class StaffControllerTest {
 
     //OK
     @Test
+    public void createWorkingHourWrongLengthTest() throws Exception{
+        Staff user = new Staff();
+        user.setId(1);
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                post("/staff/workinghour/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("work_content", "test content")
+                        .param("work_date","2020-01-01")
+                        .param("work_length","50")
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        })
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
     public void delTest() throws Exception{
         MvcResult mvcResult = mockMvc.perform(
-                delete("/staff/project/4/del")
+                delete("/staff/project/1/del")
                         .contentType(MediaType.APPLICATION_JSON)
                         )
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void delWorkingHourTest() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                delete("/staff/workinghour/1/del")
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
                 .andReturn();
 
         System.out.println(mvcResult.getResponse().getContentAsString());
@@ -260,7 +446,79 @@ public class StaffControllerTest {
 
     //OK
     @Test
-    public void acceptProjectTest() throws Exception {
+    public void acceptProjectTest1() throws Exception {
+        Staff user = new Staff();
+        user.setTitle("配置管理员");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void acceptProjectTest2() throws Exception {
+        Staff user = new Staff();
+        user.setTitle("EPG Leader");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void acceptProjectTest3() throws Exception {
+        Staff user = new Staff();
+        user.setTitle("QA管理员");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void acceptProjectTest4() throws Exception {
         Staff user = new Staff();
         user.setTitle("项目上级");
         HttpSession session = mock(HttpSession.class);
@@ -282,12 +540,128 @@ public class StaffControllerTest {
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
+    //OK
     @Test
-    public void refuseProjectTest() throws Exception{
+    public void acceptProjectTest5() throws Exception {
+        Staff user = new Staff();
+        user.setTitle("项目经理");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void acceptProjectNullUserTest() throws Exception {
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(null);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/accept")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void refuseProjectTest1() throws Exception{
         Staff user = new Staff();
         user.setTitle("项目上级");
         HttpSession session = mock(HttpSession.class);
         when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/1/refuse")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+    //OK
+    @Test
+    public void refuseProjectTest2() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("项目上级");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/2/refuse")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void refuseProjectTest3() throws Exception{
+        Staff user = new Staff();
+        user.setTitle("项目经理");
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/project/2/refuse")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        }))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void refuseProjectNullUserTest() throws Exception{
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(null);
         MvcResult mvcResult = mockMvc.perform(
                 put("/staff/project/1/refuse")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -309,6 +683,7 @@ public class StaffControllerTest {
     @Test
     public void updateMembersTest() throws Exception{
         String[] staff_ids = {"1","2"};
+        String[] staff_roles = {"staff","staff"};
         MvcResult mvcResult = mockMvc.perform(
                 post("/staff/project/1/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -318,6 +693,7 @@ public class StaffControllerTest {
                             public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
                             {
                                 mockHttpServletRequest.addParameter("check",staff_ids);
+                                mockHttpServletRequest.addParameter("role",staff_roles);
                                 return mockHttpServletRequest;
                             }
                         })
@@ -327,5 +703,72 @@ public class StaffControllerTest {
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
+    //OK
+    @Test
+    public void getWorkingHourTest() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(
+                get("/staff/workinghour/1/get")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
 
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void updateWorkingHourTest() throws Exception {
+        Staff user = new Staff();
+        user.setId(1);
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/workinghour/1/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("work_content", "test content")
+                        .param("work_date","2020-01-01")
+                        .param("work_length","8")
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        })
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    //OK
+    @Test
+    public void updateWorkingHourWrongLengthTest() throws Exception {
+        Staff user = new Staff();
+        user.setId(1);
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute("user")).thenReturn(user);
+        MvcResult mvcResult = mockMvc.perform(
+                put("/staff/workinghour/1/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("work_content", "test content")
+                        .param("work_date","2020-01-01")
+                        .param("work_length","-5")
+                        .with(new RequestPostProcessor()
+                        {
+                            @Override
+                            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+                            {
+                                mockHttpServletRequest.setSession(session);
+                                return mockHttpServletRequest;
+                            }
+                        })
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
 }

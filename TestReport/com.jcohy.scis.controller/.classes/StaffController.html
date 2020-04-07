@@ -39,26 +39,26 @@
   <td class="name">StaffController</td>
 <td class="coverageStat">
   <span class="percent">
-    83.3%
+    100%
   </span>
   <span class="absValue">
-    (15/ 18)
+    (18/ 18)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    60.1%
+    81.3%
   </span>
   <span class="absValue">
-    (116/ 193)
+    (161/ 198)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">StaffController$$EnhancerBySpringCGLIB$$e8c577c2</td>
+    <td class="name">StaffController$$EnhancerBySpringCGLIB$$486e6e49</td>
   </tr>
   <tr>
-    <td class="name">StaffController$$EnhancerBySpringCGLIB$$e8c577c2$$FastClassBySpringCGLIB$$617e5d83</td>
+    <td class="name">StaffController$$EnhancerBySpringCGLIB$$486e6e49$$FastClassBySpringCGLIB$$353f4db6</td>
   </tr>
   <tr>
     <td class="name">StaffController$$FastClassBySpringCGLIB$$6bc9906a</td>
@@ -67,18 +67,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    83.3%
+    100%
   </span>
   <span class="absValue">
-    (15/ 18)
+    (18/ 18)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    60.1%
+    81.3%
   </span>
   <span class="absValue">
-    (116/ 193)
+    (161/ 198)
   </span>
 </td>
 </tr>
@@ -194,20 +194,20 @@
 <b class="fc"><i>104</i>&nbsp;                status = -1;</b>
 <b class="fc"><i>105</i>&nbsp;                break;</b>
 <i>106</i>&nbsp;            case &quot;项目成员&quot;:
-<b class="nc"><i>107</i>&nbsp;                status = -1;</b>
-<b class="nc"><i>108</i>&nbsp;                break;</b>
+<b class="fc"><i>107</i>&nbsp;                status = -1;</b>
+<b class="fc"><i>108</i>&nbsp;                break;</b>
 <i>109</i>&nbsp;            case &quot;配置管理员&quot;:
-<b class="nc"><i>110</i>&nbsp;                status = 1;</b>
-<b class="nc"><i>111</i>&nbsp;                break;</b>
+<b class="fc"><i>110</i>&nbsp;                status = 1;</b>
+<b class="fc"><i>111</i>&nbsp;                break;</b>
 <i>112</i>&nbsp;            case &quot;EPG Leader&quot;:
-<b class="nc"><i>113</i>&nbsp;                status = 2;</b>
-<b class="nc"><i>114</i>&nbsp;                break;</b>
+<b class="fc"><i>113</i>&nbsp;                status = 2;</b>
+<b class="fc"><i>114</i>&nbsp;                break;</b>
 <i>115</i>&nbsp;            case &quot;QA管理员&quot;:
-<b class="nc"><i>116</i>&nbsp;                status = 3;</b>
-<b class="nc"><i>117</i>&nbsp;                break;</b>
+<b class="fc"><i>116</i>&nbsp;                status = 3;</b>
+<b class="fc"><i>117</i>&nbsp;                break;</b>
 <i>118</i>&nbsp;            case &quot;项目上级&quot;:
-<b class="nc"><i>119</i>&nbsp;                status = -1;</b>
-<b class="nc"><i>120</i>&nbsp;                break;</b>
+<b class="fc"><i>119</i>&nbsp;                status = -1;</b>
+<b class="fc"><i>120</i>&nbsp;                break;</b>
 <i>121</i>&nbsp;            default:
 <i>122</i>&nbsp;                break;
 <i>123</i>&nbsp;        }
@@ -286,7 +286,7 @@
 <b class="fc"><i>196</i>&nbsp;            achProjectService.createProject(name,desc,tech,area,func,0,format.parse(enddate),format.parse(startdate));</b>
 <b class="fc"><i>197</i>&nbsp;            Ach_project project=achProjectService.getAchProjectByName(name);</b>
 <b class="fc"><i>198</i>&nbsp;            Staff user= (Staff) session.getAttribute(&quot;user&quot;);</b>
-<b class="fc"><i>199</i>&nbsp;            achProjectService.updateMembers(project.getId(),user.getId() );</b>
+<b class="fc"><i>199</i>&nbsp;            achProjectService.updateMembers(project.getId(),user.getId() ,&quot;项目经理&quot;);</b>
 <i>200</i>&nbsp;            try {
 <b class="fc"><i>201</i>&nbsp;                sendMailService.sendmail(user.getEmail(), user.getName());</b>
 <b class="nc"><i>202</i>&nbsp;            }catch (Exception e){</b>
@@ -311,7 +311,7 @@
 <b class="fc"><i>221</i>&nbsp;        Staff user = (Staff)session.getAttribute(&quot;user&quot;);</b>
 <b class="fc"><i>222</i>&nbsp;        DateFormat format = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</b>
 <b class="fc"><i>223</i>&nbsp;        if(work_length &gt; 20 || work_length &lt; 0){</b>
-<b class="nc"><i>224</i>&nbsp;            return JsonResult.fail(&quot;请输入正确的工作时长&quot;);</b>
+<b class="fc"><i>224</i>&nbsp;            return JsonResult.fail(&quot;请输入正确的工作时长&quot;);</b>
 <i>225</i>&nbsp;        }
 <i>226</i>&nbsp;        try {
 <b class="fc"><i>227</i>&nbsp;            workingHourService.createWorkingHour(user.getId(),work_content,format.parse(work_date),work_length);</b>
@@ -337,14 +337,14 @@
 <i>247</i>&nbsp;
 <i>248</i>&nbsp;    @DeleteMapping(&quot;/workinghour/{id}/del&quot;)
 <i>249</i>&nbsp;    @ResponseBody
-<i>250</i>&nbsp;    public JsonResult delete(@PathVariable(&quot;id&quot;) Integer id){
+<i>250</i>&nbsp;    public JsonResult delWorkingHour(@PathVariable(&quot;id&quot;) Integer id){
 <i>251</i>&nbsp;        try {
-<b class="nc"><i>252</i>&nbsp;            workingHourService.delete(id);</b>
+<b class="fc"><i>252</i>&nbsp;            workingHourService.delete(id);</b>
 <b class="nc"><i>253</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>254</i>&nbsp;            e.printStackTrace();</b>
 <b class="nc"><i>255</i>&nbsp;            return JsonResult.fail(&quot;删除失败&quot;);</b>
-<b class="nc"><i>256</i>&nbsp;        }</b>
-<b class="nc"><i>257</i>&nbsp;        return JsonResult.ok();</b>
+<b class="fc"><i>256</i>&nbsp;        }</b>
+<b class="fc"><i>257</i>&nbsp;        return JsonResult.ok();</b>
 <i>258</i>&nbsp;    }
 <i>259</i>&nbsp;
 <i>260</i>&nbsp;    @PutMapping(&quot;/project/{id}/update&quot;)
@@ -377,37 +377,37 @@
 <b class="fc"><i>287</i>&nbsp;            HttpSession session = request.getSession();</b>
 <b class="fc"><i>288</i>&nbsp;            Staff user = (Staff)session.getAttribute(&quot;user&quot;);</b>
 <b class="fc"><i>289</i>&nbsp;            if(user == null)</b>
-<b class="nc"><i>290</i>&nbsp;                return JsonResult.fail(&quot;user is null&quot;);</b>
+<b class="fc"><i>290</i>&nbsp;                return JsonResult.fail(&quot;user is null&quot;);</b>
 <b class="fc"><i>291</i>&nbsp;            int status = -1;</b>
 <i>292</i>&nbsp;            //每个角色看到的不同 乳配置管理员 看到1-4
 <b class="fc"><i>293</i>&nbsp;            switch (user.getTitle()){</b>
 <i>294</i>&nbsp;                case &quot;配置管理员&quot;:
-<b class="nc"><i>295</i>&nbsp;                    status = 1;</b>
-<b class="nc"><i>296</i>&nbsp;                    break;</b>
+<b class="fc"><i>295</i>&nbsp;                    status = 1;</b>
+<b class="fc"><i>296</i>&nbsp;                    break;</b>
 <i>297</i>&nbsp;                case &quot;EPG Leader&quot;:
-<b class="nc"><i>298</i>&nbsp;                    status = 2;</b>
-<b class="nc"><i>299</i>&nbsp;                    break;</b>
+<b class="fc"><i>298</i>&nbsp;                    status = 2;</b>
+<b class="fc"><i>299</i>&nbsp;                    break;</b>
 <i>300</i>&nbsp;                case &quot;QA管理员&quot;:
-<b class="nc"><i>301</i>&nbsp;                    status = 3;</b>
-<b class="nc"><i>302</i>&nbsp;                    break;</b>
+<b class="fc"><i>301</i>&nbsp;                    status = 3;</b>
+<b class="fc"><i>302</i>&nbsp;                    break;</b>
 <i>303</i>&nbsp;                case &quot;项目上级&quot;:
 <b class="fc"><i>304</i>&nbsp;                    status = 0;</b>
 <b class="fc"><i>305</i>&nbsp;                    break;</b>
 <i>306</i>&nbsp;                default:
-<b class="nc"><i>307</i>&nbsp;                    status = 4;</b>
+<b class="fc"><i>307</i>&nbsp;                    status = 4;</b>
 <i>308</i>&nbsp;                    break;
 <i>309</i>&nbsp;            }
 <b class="fc"><i>310</i>&nbsp;            String[] returnFailString = new String[]{&quot;项目通过失败&quot;,&quot;配置库建立失败&quot;,&quot;EPG分配失败&quot;,&quot;QA分配失败&quot;,&quot;没有权限&quot;};</b>
 <b class="fc"><i>311</i>&nbsp;            Ach_project project = achProjectService.getAchProject(id);</b>
 <b class="fc"><i>312</i>&nbsp;            if(status == 4)//没有权限</b>
-<b class="nc"><i>313</i>&nbsp;                return JsonResult.fail(returnFailString[status]);</b>
+<b class="fc"><i>313</i>&nbsp;                return JsonResult.fail(returnFailString[status]);</b>
 <i>314</i>&nbsp;
 <i>315</i>&nbsp;            //类似状态机的转移
 <b class="fc"><i>316</i>&nbsp;            if(project.getPro_status()==status){</b>
 <b class="fc"><i>317</i>&nbsp;                achProjectService.updateStatus(status+1,id);</b>
 <b class="fc"><i>318</i>&nbsp;                return JsonResult.ok();</b>
 <i>319</i>&nbsp;            } else {
-<b class="nc"><i>320</i>&nbsp;                return JsonResult.fail(returnFailString[status]);</b>
+<b class="fc"><i>320</i>&nbsp;                return JsonResult.fail(returnFailString[status]);</b>
 <i>321</i>&nbsp;            }
 <b class="nc"><i>322</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>323</i>&nbsp;            e.printStackTrace();</b>
@@ -422,21 +422,21 @@
 <b class="fc"><i>332</i>&nbsp;            HttpSession session = request.getSession();</b>
 <b class="fc"><i>333</i>&nbsp;            Staff user = (Staff)session.getAttribute(&quot;user&quot;);</b>
 <b class="fc"><i>334</i>&nbsp;            if(user == null)</b>
-<b class="nc"><i>335</i>&nbsp;                return JsonResult.fail(&quot;user is null&quot;);</b>
+<b class="fc"><i>335</i>&nbsp;                return JsonResult.fail(&quot;user is null&quot;);</b>
 <b class="fc"><i>336</i>&nbsp;            if (user.getTitle().equals(&quot;项目上级&quot;)){</b>
 <b class="fc"><i>337</i>&nbsp;                Ach_project project = achProjectService.getAchProject(id);</b>
 <b class="fc"><i>338</i>&nbsp;                if(project.getPro_status()==0){</b>
 <b class="fc"><i>339</i>&nbsp;                    achProjectService.updateStatus(-1,id);</b>
 <b class="fc"><i>340</i>&nbsp;                    return JsonResult.ok();</b>
 <i>341</i>&nbsp;                } else {
-<b class="nc"><i>342</i>&nbsp;                    return JsonResult.fail(&quot;项目拒绝失败&quot;);</b>
+<b class="fc"><i>342</i>&nbsp;                    return JsonResult.fail(&quot;项目拒绝失败&quot;);</b>
 <i>343</i>&nbsp;                }
 <i>344</i>&nbsp;            }
 <b class="nc"><i>345</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>346</i>&nbsp;            e.printStackTrace();</b>
 <b class="nc"><i>347</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
-<b class="nc"><i>348</i>&nbsp;        }</b>
-<b class="nc"><i>349</i>&nbsp;        return JsonResult.ok();</b>
+<b class="fc"><i>348</i>&nbsp;        }</b>
+<b class="fc"><i>349</i>&nbsp;        return JsonResult.ok();</b>
 <i>350</i>&nbsp;    }
 <i>351</i>&nbsp;
 <i>352</i>&nbsp;    //为项目添加新成员
@@ -445,67 +445,76 @@
 <i>355</i>&nbsp;    public JsonResult updateMembers(@PathVariable(&quot;id&quot;) Integer pro_id, HttpServletRequest request
 <i>356</i>&nbsp;    ){
 <b class="fc"><i>357</i>&nbsp;        String[] staff_ids = request.getParameterValues(&quot;check&quot;);</b>
-<i>358</i>&nbsp;        try {
-<b class="fc"><i>359</i>&nbsp;            for(int i=0;i&lt;staff_ids.length;i++){</b>
-<b class="fc"><i>360</i>&nbsp;                System.out.println(staff_ids[i]);</b>
-<b class="fc"><i>361</i>&nbsp;                Integer staff_id_int = null;</b>
-<b class="fc"><i>362</i>&nbsp;                if(staff_ids[i]!=null){</b>
-<b class="fc"><i>363</i>&nbsp;                    staff_id_int = Integer.valueOf(staff_ids[i]);</b>
-<i>364</i>&nbsp;                }
-<b class="fc"><i>365</i>&nbsp;                achProjectService.updateMembers(pro_id,staff_id_int);</b>
-<i>366</i>&nbsp;            }
-<b class="nc"><i>367</i>&nbsp;        } catch (Exception e) {</b>
-<b class="nc"><i>368</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>369</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
-<b class="fc"><i>370</i>&nbsp;        }</b>
-<b class="fc"><i>371</i>&nbsp;        return JsonResult.ok();</b>
-<i>372</i>&nbsp;    }
-<i>373</i>&nbsp;
-<i>374</i>&nbsp;    @GetMapping(&quot;/workinghour/{id}/get&quot;)
-<i>375</i>&nbsp;    @ResponseBody
-<i>376</i>&nbsp;    public JsonResult getWorkingHour(@PathVariable(&quot;id&quot;) Integer id){
-<i>377</i>&nbsp;        WorkingHour workingHour;
-<i>378</i>&nbsp;        try
-<i>379</i>&nbsp;        {
-<b class="nc"><i>380</i>&nbsp;            workingHour = workingHourService.getWorkingHour(id);</b>
-<b class="nc"><i>381</i>&nbsp;        }catch (Exception e){</b>
-<b class="nc"><i>382</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>383</i>&nbsp;            return JsonResult.fail(&quot;获取数据失败&quot;);</b>
-<b class="nc"><i>384</i>&nbsp;        }</b>
-<b class="nc"><i>385</i>&nbsp;        return JsonResult.ok().set(&quot;data&quot;,workingHour);</b>
-<i>386</i>&nbsp;    }
-<i>387</i>&nbsp;
-<i>388</i>&nbsp;
-<i>389</i>&nbsp;    //工时编辑提交
-<i>390</i>&nbsp;    @PutMapping(&quot;/workinghour/{id}/update&quot;)
-<i>391</i>&nbsp;    @ResponseBody
-<i>392</i>&nbsp;    public JsonResult updateWorkingHour(HttpServletRequest request,
-<i>393</i>&nbsp;                                        @RequestParam(required = false)  String work_content,
-<i>394</i>&nbsp;                                        @RequestParam(required = false)  String work_date,
-<i>395</i>&nbsp;                                        @RequestParam(required = false)  float work_length,
-<i>396</i>&nbsp;                                        @PathVariable(&quot;id&quot;) Integer id
-<i>397</i>&nbsp;    ){
-<b class="nc"><i>398</i>&nbsp;        HttpSession session = request.getSession();</b>
-<b class="nc"><i>399</i>&nbsp;        Staff user = (Staff)session.getAttribute(&quot;user&quot;);</b>
-<b class="nc"><i>400</i>&nbsp;        DateFormat format = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</b>
-<b class="nc"><i>401</i>&nbsp;        if(work_length &gt; 20 || work_length &lt; 0){</b>
-<b class="nc"><i>402</i>&nbsp;            return JsonResult.fail(&quot;请输入正确的工作时长&quot;);</b>
-<i>403</i>&nbsp;        }
-<i>404</i>&nbsp;        try {
-<b class="nc"><i>405</i>&nbsp;            workingHourService.updateWorkingHour(user.getId(), work_content, format.parse(work_date), work_length, id);</b>
-<b class="nc"><i>406</i>&nbsp;        } catch (Exception e) {</b>
-<b class="nc"><i>407</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>408</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
-<b class="nc"><i>409</i>&nbsp;        }</b>
-<b class="nc"><i>410</i>&nbsp;        return JsonResult.ok();</b>
-<i>411</i>&nbsp;    }
-<i>412</i>&nbsp;}
+<b class="fc"><i>358</i>&nbsp;        String[] staff_roles = request.getParameterValues(&quot;role&quot;);</b>
+<i>359</i>&nbsp;        try {
+<b class="fc"><i>360</i>&nbsp;            for(int i=0;i&lt;staff_ids.length;i++){</b>
+<b class="fc"><i>361</i>&nbsp;                System.out.println(staff_ids[i]);</b>
+<b class="fc"><i>362</i>&nbsp;                Integer staff_id_int = null;</b>
+<b class="fc"><i>363</i>&nbsp;                if(staff_ids[i]!=null){</b>
+<b class="fc"><i>364</i>&nbsp;                    staff_id_int = Integer.valueOf(staff_ids[i]);</b>
+<i>365</i>&nbsp;                }
+<b class="fc"><i>366</i>&nbsp;                achProjectService.updateMembers(pro_id,staff_id_int,staff_roles[i]);</b>
+<i>367</i>&nbsp;
+<i>368</i>&nbsp;                //发邮件
+<b class="fc"><i>369</i>&nbsp;                Staff member = staffService.findById(staff_id_int);</b>
+<b class="fc"><i>370</i>&nbsp;                Ach_project project = achProjectService.getAchProject(pro_id);</b>
+<b class="fc"><i>371</i>&nbsp;                if(member.getEmail()!=null){</b>
+<b class="fc"><i>372</i>&nbsp;                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);</b>
+<i>373</i>&nbsp;                }
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;            }
+<b class="fc"><i>376</i>&nbsp;        } catch (Exception e) {</b>
+<b class="fc"><i>377</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i>378</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
+<b class="nc"><i>379</i>&nbsp;        }</b>
+<b class="nc"><i>380</i>&nbsp;        return JsonResult.ok();</b>
+<i>381</i>&nbsp;    }
+<i>382</i>&nbsp;
+<i>383</i>&nbsp;    @GetMapping(&quot;/workinghour/{id}/get&quot;)
+<i>384</i>&nbsp;    @ResponseBody
+<i>385</i>&nbsp;    public JsonResult getWorkingHour(@PathVariable(&quot;id&quot;) Integer id){
+<i>386</i>&nbsp;        WorkingHour workingHour;
+<i>387</i>&nbsp;        try
+<i>388</i>&nbsp;        {
+<b class="fc"><i>389</i>&nbsp;            workingHour = workingHourService.getWorkingHour(id);</b>
+<b class="nc"><i>390</i>&nbsp;        }catch (Exception e){</b>
+<b class="nc"><i>391</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>392</i>&nbsp;            return JsonResult.fail(&quot;获取数据失败&quot;);</b>
+<b class="fc"><i>393</i>&nbsp;        }</b>
+<b class="fc"><i>394</i>&nbsp;        return JsonResult.ok().set(&quot;data&quot;,workingHour);</b>
+<i>395</i>&nbsp;    }
+<i>396</i>&nbsp;
+<i>397</i>&nbsp;
+<i>398</i>&nbsp;    //工时编辑提交
+<i>399</i>&nbsp;    @PutMapping(&quot;/workinghour/{id}/update&quot;)
+<i>400</i>&nbsp;    @ResponseBody
+<i>401</i>&nbsp;    public JsonResult updateWorkingHour(HttpServletRequest request,
+<i>402</i>&nbsp;                                        @RequestParam(required = false)  String work_content,
+<i>403</i>&nbsp;                                        @RequestParam(required = false)  String work_date,
+<i>404</i>&nbsp;                                        @RequestParam(required = false)  float work_length,
+<i>405</i>&nbsp;                                        @PathVariable(&quot;id&quot;) Integer id
+<i>406</i>&nbsp;    ){
+<b class="fc"><i>407</i>&nbsp;        HttpSession session = request.getSession();</b>
+<b class="fc"><i>408</i>&nbsp;        Staff user = (Staff)session.getAttribute(&quot;user&quot;);</b>
+<b class="fc"><i>409</i>&nbsp;        DateFormat format = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</b>
+<b class="fc"><i>410</i>&nbsp;        if(work_length &gt; 20 || work_length &lt; 0){</b>
+<b class="fc"><i>411</i>&nbsp;            return JsonResult.fail(&quot;请输入正确的工作时长&quot;);</b>
+<i>412</i>&nbsp;        }
+<i>413</i>&nbsp;        try {
+<b class="fc"><i>414</i>&nbsp;            workingHourService.updateWorkingHour(user.getId(), work_content, format.parse(work_date), work_length, id);</b>
+<b class="nc"><i>415</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>416</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>417</i>&nbsp;            return JsonResult.fail(e.getMessage());</b>
+<b class="fc"><i>418</i>&nbsp;        }</b>
+<b class="fc"><i>419</i>&nbsp;        return JsonResult.ok();</b>
+<i>420</i>&nbsp;    }
+<i>421</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-04-03 17:17</div>
+    <div style="float:right;">generated on 2020-04-05 22:16</div>
 </div>
 </body>
 </html>
