@@ -75,7 +75,8 @@
                         {{#  } else if("${Session.user.title}" == "项目成员"){ }}
                         <a class="layui-btn layui-btn-normal" lay-event="accept">啥也没有</a>
                         {{#  } else if("${Session.user.title}" == "项目经理"){ }}
-                        <a class="layui-btn layui-btn-normal" lay-event="accept">啥也没有</a>
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">交付项目</a>
+                        <a class="layui-btn layui-btn-normal" lay-event="accept">完成项目</a>
                         {{#  } }}
                     </div>
                 </form>
@@ -94,6 +95,10 @@
                         等待分配QA
                         {{#  } else if (d.pro_status == 4 ){ }}
                         项目分配完成
+                        {{#  } else if (d.pro_status == 5 ){ }}
+                        项目已交付
+                        {{#  } else if (d.pro_status == 6 ){ }}
+                        项目完成
                         {{#  } else if (d.pro_status == -1 ){ }}
                         项目上级审批拒绝
                         {{#  } }}

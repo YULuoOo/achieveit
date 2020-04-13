@@ -319,15 +319,28 @@ public class StaffController extends BaseController{
                 case "项目上级":
                     status = 0;
                     break;
-                default:
+                case "项目经理":
                     status = 4;
+                    break;
+                default:
+                    status = 9;
                     break;
             }
             String[] returnFailString = new String[]{"项目通过失败","配置库建立失败","EPG分配失败","QA分配失败","没有权限"};
             Ach_project project = achProjectService.getAchProject(id);
-            if(status == 4)//没有权限
-                return JsonResult.fail(returnFailString[status]);
-
+            if(status == 9)//没有权限
+                return JsonResult.fail(returnFailString[4]);
+            if(user.getTitle().equals("项目经理")){
+                if(project.getPro_status() == 4){
+                    achProjectService.updateStatus(5,id);
+                    return JsonResult.ok("交付成功");
+                }
+                if(project.getPro_status() == 5){
+                    achProjectService.updateStatus(6,id);
+                    return JsonResult.ok("项目完成");
+                }
+                return JsonResult.fail(returnFailString[4]);
+            }
             //类似状态机的转移
             if(project.getPro_status()==status){
                 achProjectService.updateStatus(status+1,id);

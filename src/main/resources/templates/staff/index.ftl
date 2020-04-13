@@ -86,6 +86,10 @@
                         等待分配QA
                         {{#  } else if (d.pro_status == 4 ){ }}
                         项目分配完成
+                        {{#  } else if (d.pro_status == 5 ){ }}
+                        项目已交付
+                        {{#  } else if (d.pro_status == 6 ){ }}
+                        项目完成
                         {{#  } else if (d.pro_status == -1 ){ }}
                         项目上级审批拒绝
                         {{#  } }}

@@ -24,7 +24,6 @@ layui.define([ 'layer',  'table','common'], function (exports) {
     table.on('tool(table)', function(obj){
         var data = obj.data;
         if(obj.event === 'accept'){
-            console.log(111);
             accept(data.id);
         }else if(obj.event === 'refuse'){
             refuse(data.id);
@@ -36,7 +35,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
 
 
     function accept(id) {
-        layer.confirm('确定通过审批？', function (index) {
+        layer.confirm('确定？', function (index) {
             $.ajax({
                 type: "PUT",
                 dataType: "json",
@@ -55,7 +54,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         });
     }
     function refuse(id) {
-        layer.confirm('确定拒绝审批？', function (index) {
+        layer.confirm('确定？', function (index) {
             $.ajax({
                 type: "PUT",
                 dataType: "json",
