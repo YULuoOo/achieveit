@@ -98,7 +98,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <p style="padding: 10px 15px; margin-bottom: 20px; margin-top: 10px; border:1px solid #ddd;display:inline-block;">
-                            双创项目信息管理系统
+                            公司项目信息管理系统
                             <span style="padding-left:1em;">用户帐号：${Session.user.num?c}</span>
                             <span style="padding-left:1em;">用户姓名：${Session.user.name}</span>
                             <span style="padding-left:1em;">角色：${Session.role}</span>
