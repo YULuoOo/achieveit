@@ -50,6 +50,12 @@ public class ScisApplication extends WebMvcConfigurerAdapter{
 		registry.addViewController("/staff/add").setViewName("/staff/add");
 		registry.addViewController("/staff/modifyMemberRole").setViewName("/staff/modifyMemberRole");
 
+		//设备
+		registry.addViewController("/staff/deviceManage").setViewName("/staff/deviceManage");
+		registry.addViewController("/staff/deviceAdd").setViewName("/staff/deviceAdd");
+		registry.addViewController("/staff/deviceBorrow").setViewName("/staff/deviceBorrow");
+		registry.addViewController("/staff/deviceMy").setViewName("/staff/deviceMy");
+		registry.addViewController("/staff/deviceBorrowable").setViewName("/staff/deviceBorrowable");
 
 		//配置
 		registry.addViewController("/staff/config").setViewName("/staff/config");

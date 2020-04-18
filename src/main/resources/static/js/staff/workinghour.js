@@ -64,7 +64,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
         }
     };
     function del(id) {
-        layer.confirm('确定删除么？', function (workinghour) {
+        layer.confirm('确定删除么？', function (index) {
             $.ajax({
                 type: "DELETE",
                 dataType: "json",
@@ -72,7 +72,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
                 success: function (ret) {
                     if (ret.isOk) {
                         layer.msg("操作成功", {time: 2000}, function () {
-                            layer.close(workinghour);
+                            layer.close(index);
                             window.location.href = "/staff/workinghour";
                         });
                     } else {

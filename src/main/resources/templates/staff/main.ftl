@@ -53,6 +53,8 @@
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/form" data-id="2">项目申报</a></dd>
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/process" data-id="3">项目审批</a></dd>
                             <dd><a href="javascript:;" data-url="${ctx!}/staff/workinghour" data-id="4">工时管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${ctx!}/staff/deviceManage" data-id="5">设备管理</a></dd>
+                            <dd><a href="javascript:;" data-url="${ctx!}/staff/deviceMy" data-id="6">设备借用</a></dd>
                         </dl>
                     </li>
                 </ul>

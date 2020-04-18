@@ -12,3 +12,4 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 INSERT INTO `staff` VALUES (1, 10001, '员工1', '123456', '女', '2018-04-04 10:28:51', '123456', '111@qq.com', '项目经理');
+INSERT INTO `staff` VALUES (2, 10002, '员工2', '123456', '男', '2020-04-04 10:28:51', '123456', '222@qq.com', '项目上级');

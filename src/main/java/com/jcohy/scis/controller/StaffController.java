@@ -37,6 +37,8 @@ public class StaffController extends BaseController{
     private AchProjectService achProjectService;
     @Autowired
     private WorkingHourService workingHourService;
+    @Autowired
+    private DeviceService deviceService;
     private SendMailService sendMailService=new SendMailService();
 
     @GetMapping("/project/list")
@@ -472,6 +474,170 @@ public class StaffController extends BaseController{
         }
         try {
             workingHourService.updateWorkingHour(user.getId(), work_content, format.parse(work_date), work_length, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //获取设备列表
+    @GetMapping("/device/list")
+    @ResponseBody
+    public PageJson<Device> getDeviceList(){
+        List<Device> text_messages = deviceService.getDeviceList();
+        PageJson<Device> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //通过ownerId获取设备列表
+    @GetMapping("/device/listbyowner")
+    @ResponseBody
+    public PageJson<Device> getDeviceListByOwnerId(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        List<Device> text_messages = deviceService.getDeviceListByOwnerId(user.getId());
+        PageJson<Device> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //创建设备
+    @PostMapping("/device/create")
+    @ResponseBody
+    public JsonResult createDevice(HttpServletRequest request,
+                                        @RequestParam(required = false)  String name,
+                                        @RequestParam(required = false)  String category,
+                                        @RequestParam(required = false)  String condition
+    ){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        try {
+            Staff owner = staffService.findById(user.getId());
+            deviceService.createDevice(name,category,owner.getId(),owner.getName(),"可借用",condition,"");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    @DeleteMapping("/device/{id}/del")
+    @ResponseBody
+    public JsonResult deleteDevice(@PathVariable("id") Integer id){
+        try {
+            deviceService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail("删除失败");
+        }
+        return JsonResult.ok();
+    }
+
+    //通过ownerId获取设备列表
+    @GetMapping("/device/{id}/borrowlist")
+    @ResponseBody
+    public PageJson<Map<String,Object>> getDeviceBorrowList(@PathVariable("id") Integer id){
+
+        List<Map<String,Object>> text_messages = deviceService.getDeviceBorrowList(id);
+        PageJson<Map<String,Object>> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //通过borrowerId获取设备列表
+    @GetMapping("/device/listbyborrower")
+    @ResponseBody
+    public PageJson<Map<String,Object>> getDeviceListByBorrowerId(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        List<Map<String,Object>> text_messages = deviceService.getDeviceListByBorrowerId(user.getId());
+        PageJson<Map<String,Object>> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //通过
+    @GetMapping("/device/listborrowable")
+    @ResponseBody
+    public PageJson<Device> getBorrowableDeviceList(){
+        List<Device> text_messages = deviceService.getBorrowableDeviceList();
+        PageJson<Device> page = new PageJson<>();
+        page.setCode(0);
+        page.setMsg("成功");
+        page.setCount(text_messages.size());
+        page.setData(text_messages);
+        return page;
+    }
+
+    //申请借用设备
+    @PostMapping("/device/{id}/borrow")
+    @ResponseBody
+    public JsonResult createBorrowDeviceRequest(HttpServletRequest request,
+                                                @PathVariable("id") Integer id
+    ){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        String state = "借用审核中";
+        Date borrowDate = new Date();
+        Date returnDate = null;
+        String condition = "";
+        String detail = "";
+        try {
+            deviceService.createBorrowDeviceRequest(id, user.getId(),state,borrowDate,returnDate,condition,detail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //通过申请
+    @PutMapping("/device/{id}/borrowaccept")
+    @ResponseBody
+    public JsonResult acceptBorrowDeviceRequest(@PathVariable("id") Integer id,
+                                                @RequestParam(required = false)  Integer device_id,
+                                                @RequestParam(required = false)  String state,
+                                                @RequestParam(required = false)  String condition,
+                                                @RequestParam(required = false)  String detail
+    ){
+        String nextState = "借用中";
+        Date returnDate = null;
+        if(state.equals("归还审核中")){
+            nextState = "已归还";
+            returnDate = new Date();
+        }
+        try {
+            deviceService.updateDeviceBorrowRecord(id,device_id,nextState,returnDate,condition,detail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //申请归还设备
+    @PutMapping("/device/{id}/return")
+    @ResponseBody
+    public JsonResult createReturnDeviceRequest(@PathVariable("id") Integer id,
+                                                @RequestParam(required = false)  Integer device_id
+    ){
+        String state = "归还审核中";
+        try {
+            deviceService.updateDeviceBorrowRecord(id,device_id,state);
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
