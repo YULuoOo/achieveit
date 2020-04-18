@@ -24,7 +24,7 @@
             <div class="carousel_div3"></div>
         </div>
         <div class="login layui-anim layui-anim-up">
-            <h1>双创项目信息管理系统</h1>
+            <h1>公司项目信息管理系统</h1>
             <form class="layui-form" action="${ctx!}/login" method="post">
                 <div class="layui-form-item">
                     <input type="text" name="num" lay-verify="number" placeholder="请输入学号或者帐号" autocomplete="off"  value="" class="layui-input">

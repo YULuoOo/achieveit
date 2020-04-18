@@ -3,7 +3,7 @@
 <html >
 <head>
     <meta charset="utf-8" />
-    <title>双创项目信息管理系统</title>
+    <title>公司项目信息管理系统</title>
     <link rel="shortcut icon" href="${ctx}/images/jcohy.png" type="image/x-icon">
     <!-- layui.css -->
     <link href="${ctx!}/js/plugins/layui/css/layui.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
                     <a class="ht-user-name">${role}</a>
                 </div>
             </div>
-            <span class="sys-title">双创项目信息管理系统</span>
+            <span class="sys-title">公司项目信息管理系统</span>
             <ul class="ht-nav">
                 <li class="ht-nav-item">
                     <a id="updatePassword" style="cursor: pointer"><i class="fa fa-power-off fa-fw"></i>修改密码</a>
@@ -115,7 +115,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <p style="padding: 10px 15px; margin-bottom: 20px; margin-top: 10px; border:1px solid #ddd;display:inline-block;">
-                            双创项目信息管理系统
+                            公司项目信息管理系统
                             <span style="padding-left:1em;">用户帐号：${Session.user.num?c}</span>
                             <span style="padding-left:1em;">用户姓名：${Session.user.name}</span>
                             <span style="padding-left:1em;">角色：${Session.role}</span>

@@ -21,7 +21,7 @@
     <nav class="blog-nav layui-header">
         <div class="blog-container">
 
-            <a class="blog-logo" href="/" style="top: -20px;">双创信息</a>
+            <a class="blog-logo" href="/" style="top: -20px;">公司信息</a>
             <!-- 用户登陆 -->
             <div class="blog-user"></div>
 
