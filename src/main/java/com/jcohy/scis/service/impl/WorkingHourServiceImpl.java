@@ -25,8 +25,14 @@ public class WorkingHourServiceImpl implements WorkingHourService {
     }
 
     @Override
-    public int createWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length) throws Exception {
-        return workingHourRepository.createWorkingHour(staff_id,work_content,work_date,work_length);
+    public List<WorkingHour> getWorkingHourListByStaffId(Integer staffId)
+    {
+        return workingHourRepository.getWorkingHourListByStaffId(staffId);
+    }
+
+    @Override
+    public int createWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length, String state) throws Exception {
+        return workingHourRepository.createWorkingHour(staff_id,work_content,work_date,work_length,state);
     }
     @Override
     public void delete(Integer id) {
@@ -47,6 +53,12 @@ public class WorkingHourServiceImpl implements WorkingHourService {
     @Override
     public int updateWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length, Integer id) throws Exception {
         return workingHourRepository.updateWorkingHour(staff_id, work_content, work_date, work_length,id);
+    }
+
+    @Override
+    public int updateWorkingHour(Integer id, String state) throws Exception
+    {
+        return workingHourRepository.updateWorkingHour(id,state);
     }
 
 }

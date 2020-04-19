@@ -109,9 +109,17 @@
                         </div>
                     </div>
 
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">工时状态：</label>
+                        <div class="layui-input-inline">
+                            <input readonly="readonly" id="state" type="text"  name="state" class="layui-input ">
+                        </div>
+                    </div>
 
-                    <div class="layui-form-item" style="text-align:center;">
+                    <div class="layui-form-item" style="style="margin-left: 230px">
                        <button class="layui-btn" lay-submit lay-filter="edit" id ="edit">编辑</button>
+                       <button class="layui-btn" lay-submit lay-filter="accept" id ="accept">通过</button>
+                       <button class="layui-btn" lay-submit lay-filter="refuse" id ="refuse">拒绝</button>
                      </div>
                 </form>
             </section>

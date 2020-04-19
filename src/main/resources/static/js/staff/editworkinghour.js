@@ -31,6 +31,17 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
                 $("#work_date").val(new Date(ret.data.work_date).format("yyyy-MM-dd"));
                 $("#work_length").val(ret.data.work_length);
                 $("#work_content").val(ret.data.work_content);
+                $("#state").val(ret.data.state);
+                if (ret.data.state == "审批通过" || ret.data.state == "审批拒绝") {
+                    $("#edit").hide();
+                    $("#accept").hide();
+                    $("#refuse").hide();
+                    } else if (ret.data.staff_id != sessionStorage.getItem("userId")){
+                        $("#edit").hide();
+                    }else if(sessionStorage.getItem("userTitle") != "项目经理"){
+                        $("#accept").hide();
+                        $("#refuse").hide();
+                }
             }else{
                 layer.msg(ret.msg, {time: 2000});
             }
@@ -69,12 +80,13 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
 
 
     form.on('submit(edit)', function (data) {
-        console.log("点击编辑按钮");
         if(state == 0){
             $("#work_date").removeAttr("readonly");
             $("#work_length").removeAttr("readonly");
             $("#work_content").removeAttr("readonly");
             $("#edit").html("提交");
+            $("#accept").hide();
+            $("#refuse").hide();
             laydate.render({
              elem: '#work_date'
              ,format: 'yyyy-MM-dd'
@@ -82,7 +94,6 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
             state = 1;
          }else{
             $.ajax({
-                        //TODO 【改】 将input变为readonly = false 将编辑按钮变为确定按钮 确定后update数据库
                         type: "PUT",
                         dataType: "json",
                         url:"/staff/workinghour/"+getQueryVariable("id")+"/update",
@@ -100,9 +111,46 @@ layui.define(['element', 'layer', 'form','laydate','upload','tags'], function (e
                         }
                     });
         }
-        console.log(data);
         return false;
     });
+
+    form.on('submit(accept)', function (data) {
+            $.ajax({
+                type: "PUT",
+                dataType: "json",
+                url:"/staff/workinghour/"+getQueryVariable("id")+"/accept",
+                success: function(ret){
+                    if(ret.isOk){
+                        layer.msg("操作成功", {time: 2000},function(){
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index);
+                            parent.location.reload()
+                        });
+                    }else{
+                        layer.msg(ret.msg, {time: 2000});
+                    }}
+            });
+            return false;
+        });
+
+    form.on('submit(refuse)', function (data) {
+            $.ajax({
+                type: "PUT",
+                dataType: "json",
+                url:"/staff/workinghour/"+getQueryVariable("id")+"/refuse",
+                success: function(ret){
+                    if(ret.isOk){
+                        layer.msg("操作成功", {time: 2000},function(){
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index);
+                            parent.location.reload()
+                        });
+                    }else{
+                        layer.msg(ret.msg, {time: 2000});
+                    }}
+            });
+            return false;
+       });
 
     exports('staff/editworkinghour', {});
 });

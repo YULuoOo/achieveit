@@ -15,12 +15,19 @@ public interface WorkingHourService {
     List<WorkingHour> getWorkingHourList();
 
     /**
+     *  员工工时列表
+     *
+     * @return
+     */
+    List<WorkingHour> getWorkingHourListByStaffId(Integer staffId);
+
+    /**
      * 提交工时
      *
      * @return
      * @throws Exception
      */
-    int createWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length) throws Exception;
+    int createWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length,String state) throws Exception;
 
     /**
      * 删除工时
@@ -43,4 +50,11 @@ public interface WorkingHourService {
     int updateWorkingHour(Integer staff_id, String work_content, Date work_date, float work_length, Integer id) throws Exception;
 
 
+    /**
+     * 通过/拒绝审批
+     *
+     * @return
+     * @throws Exception
+     */
+    int updateWorkingHour(Integer id, String state) throws Exception;
 }

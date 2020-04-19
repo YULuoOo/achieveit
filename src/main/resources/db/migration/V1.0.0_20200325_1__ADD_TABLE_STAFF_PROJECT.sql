@@ -12,3 +12,5 @@ FOREIGN KEY(`staff_id`) REFERENCES staff(`id`) on delete cascade on update casca
 -- Records of staff_project
 -- ----------------------------
 INSERT INTO `staff_project` VALUES (1,1,1,'项目经理');
+INSERT INTO `staff_project` VALUES (2,1,2,'项目上级');
+INSERT INTO `staff_project` VALUES (3,1,3,'项目成员');

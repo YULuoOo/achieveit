@@ -28,7 +28,9 @@ public class WorkingHour implements Serializable{
     //时长
     @Column(name = "work_length")
     private Float work_length;
-
+    //时长
+    @Column(name = "state")
+    private String state;
 
     public Integer getId() {
         return id;
@@ -68,5 +70,15 @@ public class WorkingHour implements Serializable{
 
     public void setWork_length(Float work_length) {
         this.work_length = work_length;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
     }
 }

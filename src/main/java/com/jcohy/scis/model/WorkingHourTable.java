@@ -12,6 +12,7 @@ public class WorkingHourTable extends WorkingHour
         setWork_content(workingHour.getWork_content());
         setWork_date(workingHour.getWork_date());
         setWork_length(workingHour.getWork_length());
+        setState(workingHour.getState());
         staff_num = staff.getNum();
         staff_name = staff.getName();
     }

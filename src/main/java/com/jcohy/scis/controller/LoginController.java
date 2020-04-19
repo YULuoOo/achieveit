@@ -55,7 +55,7 @@ public class LoginController {
                     return JsonResult.fail("登录失败,用户名账号密码不匹配");
                 }
                 session.setAttribute("user",login);
-                return JsonResult.ok().set("returnUrl", "/staff/main");
+                return JsonResult.ok().set("returnUrl", "/staff/main").set("userId",login.getId()).set("userTitle",login.getTitle());
         } catch (Exception e) {
             return JsonResult.fail(e.getMessage());
         }

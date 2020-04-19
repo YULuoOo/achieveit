@@ -15,6 +15,7 @@ layui.define([ 'layer',  'table','common'], function (exports) {
             ,{field: 'work_content', align:'center', title: '工作内容',unresize:true}
             ,{field: 'work_date', align:'center', title: '工作日期',unresize:true,templet :'#createTime'}
             ,{field: 'work_length', align:'center', title: '工作时长',unresize:true}
+            ,{field: 'state', align:'center', title: '状态',unresize:true}
             ,{fixed: 'right',  title:'操作',align:'center', toolbar: '#operator',unresize:true}
         ]]
     });

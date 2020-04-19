@@ -75,9 +75,15 @@ public class StaffController extends BaseController{
 
     @GetMapping("/workinghour/list")
     @ResponseBody
-    public PageJson<WorkingHourTable> allWorkingHour(){
-        PageRequest pageRequest = getPageRequest();
-        List<WorkingHour> text_messages = workingHourService.getWorkingHourList();
+    public PageJson<WorkingHourTable> allWorkingHour(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Staff user = (Staff)session.getAttribute("user");
+        List<WorkingHour> text_messages;
+        if(user.getTitle().equals("项目经理")){
+            text_messages = workingHourService.getWorkingHourList();
+        }else{
+            text_messages = workingHourService.getWorkingHourListByStaffId(user.getId());
+        }
         List<WorkingHourTable> workingHourTableList = new ArrayList<>();
         for(WorkingHour workingHour : text_messages){
             Integer staff_id = workingHour.getStaff_id();
@@ -242,7 +248,7 @@ public class StaffController extends BaseController{
             return JsonResult.fail("请输入正确的工作时长");
         }
         try {
-            workingHourService.createWorkingHour(user.getId(),work_content,format.parse(work_date),work_length);
+            workingHourService.createWorkingHour(user.getId(),work_content,format.parse(work_date),work_length,"未审批");
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
@@ -644,4 +650,35 @@ public class StaffController extends BaseController{
         }
         return JsonResult.ok();
     }
+
+    //工时审批通过
+    @PutMapping("/workinghour/{id}/accept")
+    @ResponseBody
+    public JsonResult acceptWorkingHour(@PathVariable("id") Integer id
+    ){
+        String nextState = "审批通过";
+        try {
+            workingHourService.updateWorkingHour(id,nextState);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
+    //工时审批拒绝
+    @PutMapping("/workinghour/{id}/refuse")
+    @ResponseBody
+    public JsonResult refuseWorkingHour(@PathVariable("id") Integer id
+    ){
+        String nextState = "审批拒绝";
+        try {
+            workingHourService.updateWorkingHour(id,nextState);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.fail(e.getMessage());
+        }
+        return JsonResult.ok();
+    }
+
 }
