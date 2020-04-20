@@ -220,12 +220,14 @@ public class StaffController extends BaseController{
             achProjectService.createProject(name,desc,tech,area,func,0,format.parse(enddate),format.parse(startdate));
             Ach_project project=achProjectService.getAchProjectByName(name);
             Staff user= (Staff) session.getAttribute("user");
+            if(!user.getTitle().equals("项目经理"))
+                return JsonResult.fail("没有权限创建");
             achProjectService.updateMembers(project.getId(),user.getId() ,"项目经理");
-            try {
-                sendMailService.sendmail(user.getEmail(), user.getName());
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+//            try {
+//                sendMailService.sendmail(user.getEmail(), user.getName());
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.fail(e.getMessage());
@@ -405,9 +407,9 @@ public class StaffController extends BaseController{
                 //发邮件
                 Staff member = staffService.findById(staff_id_int);
                 Ach_project project = achProjectService.getAchProject(pro_id);
-                if(member.getEmail()!=null){
-                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
-                }
+//                if(member.getEmail()!=null){
+//                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
+//                }
 
             }
         } catch (Exception e) {
@@ -436,9 +438,9 @@ public class StaffController extends BaseController{
                 //发邮件
                 Staff member = staffService.findById(staff_id_int);
                 Ach_project project = achProjectService.getAchProject(pro_id);
-                if(member.getEmail()!=null){
-                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
-                }
+//                if(member.getEmail()!=null){
+//                    sendMailService.sendmail_addmember(member.getEmail(), member.getName(),project.getPro_name(),staff_roles[i]);
+//                }
 
             }
         } catch (Exception e) {
